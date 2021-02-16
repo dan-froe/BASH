@@ -16,9 +16,15 @@ if [[ "${hasWget}" -ne 0 ]] && [[ "${hasCurl}" -ne 0 ]]; then
 	exit 1
 fi
 
-#function inst_deb() {
-#	sudo sudo apt-get update; curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv7l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \";
-#}
+function inst_compile() {
+	cd ~/hyperion/build/ && sudo make uninstall && sudo git pull https://github.com/hyperion-project/hyperion.ng.git master &&
+	sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
+}
+
+function inst_deb() {
+		sudo sudo apt-get update; curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv7l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \";
+		sudo apt-get install $rel_latest
+}
 
 #function request_call() {
 #	if [ $hasWget -eq 0 ]; then
@@ -31,7 +37,7 @@ fi
 # Set welcome message
 echo '*******************************************************************************'
 echo 'This script will update Hyperion.ng for Raspbian/HyperBian/LibreELEC'
-echo 'Created by Paulchen-Panther - hyperion-project.org - the official Hyperion source.'
+echo 'Created by Daniel Froebe.'
 echo '*******************************************************************************'
 
 # Find out which system we are on
@@ -50,7 +56,7 @@ fi
 
 if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
 	echo 'We are on Raspbina/HyperBian'
-	actual_os=Raspbian
+	actual_os=1
 	exit 0
 fi
 
@@ -61,7 +67,7 @@ fi
 
 if [ $OS_LIBREELEC -eq 1 ]; then
 	echo 'We are on LibreELEC'
-	actual_os=LibreELEC
+	actual_os=2
 	exit 0
 fi
 
@@ -99,3 +105,32 @@ else
 	echo "---> Critical Error: Target platform unknown -> abort"
 	exit 1
 fi
+
+if [$actual_os -eq 1] && [-d ~/hyperion/] ; then
+	echo 'Did you compile Hyperion on Raspbian?'
+	echo 'Type Yes or No and press enter'
+	read yes_no
+	case $yes_no in
+		Yes)
+			echo 'Updating Hyperion by compiling'
+#			inst_compile
+			;;
+
+		*)
+			echo ''
+			;;
+	esac
+
+	if [$actual_os -eq 1]; then
+		echo 'Did you install via .deb package?'
+		echo 'Type Yes or No and press enter'
+		read yes_no
+		case $yes_no in
+			Yes)
+				echo 'Updating with the package $rel_latest'
+#				inst_deb
+				;;
+			*)
+				echo 'I can not help you'
+				exit 1
+		esac
