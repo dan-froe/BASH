@@ -57,7 +57,6 @@ fi
 if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
 	echo 'We are on Raspbina/HyperBian'
 	actual_os=1
-	exit 0
 fi
 
 #if [ $OS_RASPLEX -eq 1 ]; then
@@ -68,7 +67,6 @@ fi
 if [ $OS_LIBREELEC -eq 1 ]; then
 	echo 'We are on LibreELEC'
 	actual_os=2
-	exit 0
 fi
 
 #if [ $OS_OSMC -eq 1 ]; then
