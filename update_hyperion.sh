@@ -112,15 +112,15 @@ if [$actual_os -eq 1] && [-d ~/hyperion/] ; then
 		Yes)
 			echo 'Updating Hyperion by compiling'
 #			inst_compile
+			exit 0
 			;;
 
 		*)
 			echo ''
 			;;
 	esac
-fi
 
-	if [$actual_os -eq 1]; then
+else [$actual_os -eq 1]; then
 		echo 'Did you install via .deb package?'
 		echo 'Type Yes or No and press enter'
 		read yes_no
