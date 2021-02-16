@@ -44,8 +44,8 @@ if [ $OS_RASPBIAN -ne 1 ] && [ $OS_HYPERBIAN -ne 1 ] && [ $OS_RASPLEX -ne 1 ] &&
 	exit 1
 fi
 
-if [ $OS_RASPBIAN -eq 1 ] && [ $OS_HYPERBIAN -eq 1 ]; then
-	echo '---> Critical Error: We are not on Raspbian/HyperBian/RasPlex/OSMC/RetroPie/LibreELEC/Lakka -> abort'
+if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
+	echo 'We are on Raspbina/HYperBIAN'
 	exit 1
 fi
 
