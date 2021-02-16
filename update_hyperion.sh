@@ -118,6 +118,7 @@ if [$actual_os -eq 1] && [-d ~/hyperion/] ; then
 			echo ''
 			;;
 	esac
+fi
 
 	if [$actual_os -eq 1]; then
 		echo 'Did you install via .deb package?'
@@ -132,3 +133,4 @@ if [$actual_os -eq 1] && [-d ~/hyperion/] ; then
 				echo 'I can not help you'
 				exit 1
 		esac
+fi
