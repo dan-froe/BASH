@@ -1,4 +1,4 @@
-!#!/usr/bin/env bash
+!#/usr/bin/env bash
 
 # Script for downloading a specific open Pull Request Artifact from Hyperion.NG on
 # Raspbian/HyperBian/RasPlex/OSMC/RetroPie/LibreELEC/Lakka
