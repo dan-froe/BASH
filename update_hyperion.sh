@@ -127,7 +127,7 @@ if [ $actual_os -eq 1 ]; then
 		read yes_no
 		case $yes_no in
 			Yes)
-				echo 'Updating with the package $rel_latest'
+				echo "Updating with the package $rel_latest"
 #				inst_deb
 				;;
 			*)
