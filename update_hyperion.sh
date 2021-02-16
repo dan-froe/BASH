@@ -104,7 +104,7 @@ else
 	exit 1
 fi
 
-if [$actual_os -eq 1] && [-d ~/hyperion/] ; then
+if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 	echo 'Did you compile Hyperion on Raspbian?'
 	echo 'Type Yes or No and press enter'
 	read yes_no
@@ -121,7 +121,7 @@ if [$actual_os -eq 1] && [-d ~/hyperion/] ; then
 	esac
 fi
 
-if [$actual_os -eq 1]; then
+if [ $actual_os -eq 1 ]; then
 		echo 'Did you install via .deb package?'
 		echo 'Type Yes or No and press enter'
 		read yes_no
