@@ -16,21 +16,13 @@ if [[ "${hasWget}" -ne 0 ]] && [[ "${hasCurl}" -ne 0 ]]; then
 	exit 1
 fi
 
-function request_call() {
-	if [ $hasWget -eq 0 ]; then
-		echo $(wget --quiet --header="Authorization: token ${pr_token}" -O - $1)
-	elif [ $hasCurl -eq 0 ]; then
-		echo $(curl -skH "Authorization: token ${pr_token}" $1)
-	fi
-}
-
-# Check for a command line argument (PR number)
-if [ "$1" == "" ] || [ $# -gt 1 ]; then
-	echo "Usage: $0 <PR_NUMBER>" >&2
-	exit 1
-else
-	pr_number="$1"
-fi
+#function request_call() {
+#	if [ $hasWget -eq 0 ]; then
+#		echo $(wget --quiet --header="Authorization: token ${pr_token}" -O - $1)
+#	elif [ $hasCurl -eq 0 ]; then
+#		echo $(curl -skH "Authorization: token ${pr_token}" $1)
+#	fi
+#}
 
 # Set welcome message
 echo '*******************************************************************************'
