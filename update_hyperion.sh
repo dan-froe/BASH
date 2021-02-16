@@ -5,16 +5,20 @@
 
 # Fixed variables
 api_url="https://api.github.com/repos/hyperion-project/hyperion.ng"
-pr_token="a1ef79fcd73a28b893752e498296fb0d28d0f0e1"
 type wget > /dev/null 2> /dev/null
 hasWget=$?
 type curl > /dev/null 2> /dev/null
 hasCurl=$?
+rel_latest=$(curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv7l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \")
 
 if [[ "${hasWget}" -ne 0 ]] && [[ "${hasCurl}" -ne 0 ]]; then
 	echo '---> Critical Error: wget or curl required to download pull request artifacts'
 	exit 1
 fi
+
+#function inst_deb() {
+#	sudo sudo apt-get update; curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv7l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \";
+#}
 
 #function request_call() {
 #	if [ $hasWget -eq 0 ]; then
@@ -26,7 +30,7 @@ fi
 
 # Set welcome message
 echo '*******************************************************************************'
-echo 'This script will download a specific open Pull Request Artifact from Hyperion.NG'
+echo 'This script will update Hyperion.ng for Raspbian/HyperBian/LibreELEC'
 echo 'Created by Paulchen-Panther - hyperion-project.org - the official Hyperion source.'
 echo '*******************************************************************************'
 
@@ -45,29 +49,31 @@ if [ $OS_RASPBIAN -ne 1 ] && [ $OS_HYPERBIAN -ne 1 ] && [ $OS_RASPLEX -ne 1 ] &&
 fi
 
 if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
-	echo 'We are on Raspbina/HYperBIAN'
-	exit 1
+	echo 'We are on Raspbina/HyperBian'
+	actual_os=Raspbian
+	exit 0
 fi
 
-if [ $OS_RASPBIAN -ne 1 ] && [ $OS_HYPERBIAN -ne 1 ] && [ $OS_RASPLEX -ne 1 ] && [ $OS_LIBREELEC -ne 1 ] && [ $OS_OSMC -ne 1 ] && [ $OS_LAKKA -ne 1 ]; then
-	echo '---> Critical Error: We are not on Raspbian/HyperBian/RasPlex/OSMC/RetroPie/LibreELEC/Lakka -> abort'
-	exit 1
+#if [ $OS_RASPLEX -eq 1 ]; then
+#	echo 'We are on RASPLEX'
+#	exit 0
+#fi
+
+if [ $OS_LIBREELEC -eq 1 ]; then
+	echo 'We are on LibreELEC'
+	actual_os=LibreELEC
+	exit 0
 fi
 
-if [ $OS_RASPBIAN -ne 1 ] && [ $OS_HYPERBIAN -ne 1 ] && [ $OS_RASPLEX -ne 1 ] && [ $OS_LIBREELEC -ne 1 ] && [ $OS_OSMC -ne 1 ] && [ $OS_LAKKA -ne 1 ]; then
-	echo '---> Critical Error: We are not on Raspbian/HyperBian/RasPlex/OSMC/RetroPie/LibreELEC/Lakka -> abort'
-	exit 1
-fi
+#if [ $OS_OSMC -eq 1 ]; then
+#	echo 'We are on OSMC'
+#	exit 0
+#fi
 
-if [ $OS_RASPBIAN -ne 1 ] && [ $OS_HYPERBIAN -ne 1 ] && [ $OS_RASPLEX -ne 1 ] && [ $OS_LIBREELEC -ne 1 ] && [ $OS_OSMC -ne 1 ] && [ $OS_LAKKA -ne 1 ]; then
-	echo '---> Critical Error: We are not on Raspbian/HyperBian/RasPlex/OSMC/RetroPie/LibreELEC/Lakka -> abort'
-	exit 1
-fi
-
-if [ $OS_RASPBIAN -ne 1 ] && [ $OS_HYPERBIAN -ne 1 ] && [ $OS_RASPLEX -ne 1 ] && [ $OS_LIBREELEC -ne 1 ] && [ $OS_OSMC -ne 1 ] && [ $OS_LAKKA -ne 1 ]; then
-	echo '---> Critical Error: We are not on Raspbian/HyperBian/RasPlex/OSMC/RetroPie/LibreELEC/Lakka -> abort'
-	exit 1
-fi
+#if [ $OS_LAKKA -eq 1 ]; then
+#	echo 'We are on LAKKA'
+#	exit 0
+#fi
 
 # Find out if we are on an Raspberry Pi or x86_64
 CPU_RPI=`grep -m1 -c 'BCM2708\|BCM2709\|BCM2710\|BCM2835\|BCM2836\|BCM2837\|BCM2711' /proc/cpuinfo`
