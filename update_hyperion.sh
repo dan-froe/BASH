@@ -225,6 +225,7 @@ if [ $actual_os -eq 1 ]; then
 		SERVICE_CONTENT_MULTI="[Unit]
 Description=Hyperion ambient light systemd service  for user %i
 After=network.target
+
 [Service]
 ExecStart=/usr/bin/hyperiond
 WorkingDirectory=/usr/share/hyperion/bin
@@ -233,23 +234,26 @@ TimeoutStopSec=5
 KillMode=mixed
 Restart=on-failure
 RestartSec=2
+
 [Install]
 WantedBy=multi-user.target"
 		echo "$SERVICE_CONTENT_MULTI" > hyperion@pi.service
 
 		SERVICE_CONTENT="[Unit]
 		Description=Hyperion ambient light systemd service  for user %i
-		After=network.target
-		[Service]
-		ExecStart=/usr/bin/hyperiond
-		WorkingDirectory=/usr/share/hyperion/bin
-		User=pi
-		TimeoutStopSec=5
-		KillMode=mixed
-		Restart=on-failure
-		RestartSec=2
-		[Install]
-		WantedBy=multi-user.target"
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/hyperiond
+WorkingDirectory=/usr/share/hyperion/bin
+User=pi
+TimeoutStopSec=5
+KillMode=mixed
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target"
 		echo "$SERVICE_CONTENT" > hyperion@.service
 		echo
 		echo 'Files created.'
@@ -263,16 +267,17 @@ elif [ $actual_os -eq 2 ]; then
 		echo 'hyperion.service ----- >/storage/.config/system.d/'
 # Service file for LibreELEC
 		SERVICE_CONTENT="[Unit]
-		Description=Hyperion ambient light systemd service
-		After=network.target
-		[Service]
-		Environment=DISPLAY=:0.0
-		ExecStart=/storage/hyperion/bin/hyperiond --userdata /storage/hyperion/
-		TimeoutStopSec=2
-		Restart=always
-		RestartSec=10
-		[Install]
-		WantedBy=default.target"
+Description=Hyperion ambient light systemd service
+After=network.target
+[Service]
+Environment=DISPLAY=:0.0
+ExecStart=/storage/hyperion/bin/hyperiond --userdata /storage/hyperion/
+TimeoutStopSec=2
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target"
 		echo "$SERVICE_CONTENT" > hyperion.service
 		echo
 		echo 'File created'
