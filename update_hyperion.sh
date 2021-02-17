@@ -223,18 +223,18 @@ if [ $actual_os -eq 1 ]; then
 		echo 'hyperiond@pi.service ---> /etc/systemd/system/multi-user.target.wants/'
 		echo 'hyperiond@.service -----> /etc/systemd/system/'
 		SERVICE_CONTENT_MULTI="[Unit]
-		Description=Hyperion ambient light systemd service  for user %i
-		After=network.target
-		[Service]
-		ExecStart=/usr/bin/hyperiond
-		WorkingDirectory=/usr/share/hyperion/bin
-		User=%i
-		TimeoutStopSec=5
-		KillMode=mixed
-		Restart=on-failure
-		RestartSec=2
-		[Install]
-		WantedBy=multi-user.target"
+Description=Hyperion ambient light systemd service  for user %i
+After=network.target
+[Service]
+ExecStart=/usr/bin/hyperiond
+WorkingDirectory=/usr/share/hyperion/bin
+User=%i
+TimeoutStopSec=5
+KillMode=mixed
+Restart=on-failure
+RestartSec=2
+[Install]
+WantedBy=multi-user.target"
 		echo "$SERVICE_CONTENT_MULTI" > hyperion@pi.service
 
 		SERVICE_CONTENT="[Unit]
