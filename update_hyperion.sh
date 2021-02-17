@@ -131,7 +131,7 @@ if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 	echo $'\033[1;33m Type Yes or No and press enter'
 	echo
 	echo
-	read yes_no
+	echo read -p '>>>' yes_no
 	echo
 	echo
 	echo
@@ -153,7 +153,7 @@ if [ $actual_os -eq 1 ] && [ $jump -ne 0 ]; then
 	if [ $(lsb_release -i | cut -d : -f 2) = "Raspbian" ]; then
 			echo $'\033[1;33m Did you install via .deb package?'
 			echo $'\033[1;33m Type Yes or No and press enter'
-			read yes_no
+			read -p '>>>' yes_no
 			case $yes_no in
 				(Yes | yes)
 					if [ $arch_x -eq 7 ]; then
@@ -217,7 +217,7 @@ if [ $? -eq 0 ]; then
 	echo
 	echo $'\033[1;33m I can create the files needed for a backgound process for you'
 	echo $'\033[1;33m Type Yes if you want them created'
-	read yes_no
+	read -p '>>>' yes_no
 	case $yes_no in
 		Yes | yes )
 			;;
@@ -268,7 +268,7 @@ RestartSec=2
 WantedBy=multi-user.target"
 		echo "$SERVICE_CONTENT" > hyperion@.service
 		echo
-		echo $'Files created.'
+		echo $'\033[0;32m Files created.'
 		echo
 		echo $'\033[1;33m You should activate autologin in raspi-config before copying the files'
 		echo
@@ -297,7 +297,7 @@ WantedBy=default.target"
 		echo
 		echo $'\033[0;32m File created'
 		echo
-		echo $'\033[0;32mYou are all set. Thank you for using this script.'
+		echo $'\033[0;32m You are all set. Thank you for using this script.'
 		echo
 		echo
 		echo
