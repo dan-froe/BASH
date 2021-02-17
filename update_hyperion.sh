@@ -30,6 +30,11 @@ function inst_deb() {
 		sudo apt-get install $rel_latest
 }
 
+function inst_deb_armv6l() {
+		sudo sudo apt-get update; curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv6l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \";
+		sudo apt-get install $rel_latest_armv6l
+}
+
 #function request_call() {
 #	if [ $hasWget -eq 0 ]; then
 #		echo $(wget --quiet --header="Authorization: token ${pr_token}" -O - $1)
@@ -133,14 +138,24 @@ if [ $actual_os -eq 1 ]; then
 			(Yes | yes)
 				if [ $arch_x -eq 7 ]; then
 					version_deb=$(echo $rel_latest | cut -d "/" -f 9)
+					echo
 					echo Updating with the package $version_deb
-#					inst_deb
+					echo
+#					inst_deb && echo && echo 'You are up to date!'
+					echo
+					exit 0
 				elif [ $arch_x -eq 6 ]; then
-					version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)                                                                                              echo Updating with the package $version_deb
+					version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)
+					echo
+					echo Updating with the package $version_deb
+					echo
+#					inst_deb_armv6l && echo && echo 'You are up to date!'
+					exit 0
 				fi
 				;;
 			*)
 				echo 'I can not help you'
 				exit 1
+				;;
 		esac
 fi
