@@ -131,7 +131,7 @@ if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 fi
 
 if [ $actual_os -eq 1 ]; then
-	if [ $(lsb_release -i | cut -d : -f 2) = "Rraspbian" ]; then
+	if [ $(lsb_release -i | cut -d : -f 2) = "Raspbian" ]; then
 			echo 'Did you install via .deb package?'
 			echo 'Type Yes or No and press enter'
 			read yes_no
