@@ -217,11 +217,14 @@ if [ $? -eq 0 ]; then
 	echo
 	echo $'\033[1;33m I can create the files needed for a backgound process for you'
 	echo $'\033[1;33m Type Yes if you want them created'
+	echo
 	read -p '>>>' yes_no
 	case $yes_no in
 		Yes | yes )
 			;;
 		*)
+		echo
+		echo
 		echo $'\033[0;32m No files created. Your are all set. Thank you for using my script!'
 		exit 0
 	esac
