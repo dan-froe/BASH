@@ -198,7 +198,8 @@ elif [ $OS = "HyperBian" ]; then
 
 #Installation LibreELEC
 if [ $OS = "LibreELEC" ]; then
-#	rm -R /storage/hyperion; wget -qO- https://git.io/JU4Zx | bash && echo $'\033[0;32m Your update process is complete!'; $(exit 0)
+		echo
+#		rm -R /storage/hyperion; wget -qO- https://git.io/JU4Zx | bash && echo $'\033[0;32m Your update process is complete!'; $(exit 0)
 fi
 
 if [ $? -eq 1 ]; then
