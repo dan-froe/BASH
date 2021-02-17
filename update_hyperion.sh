@@ -177,3 +177,4 @@ if [ $actual_os -eq 1 ]; then
 			exit 0
 		fi
 fi
+exit 0
