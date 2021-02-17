@@ -126,10 +126,7 @@ fi
 #Installation for Raspbian/HyperBian
 if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 	echo $'\033[1;33m Did you compile Hyperion on Raspbian?'
-	echo
-	echo
 	echo $'\033[1;33m Type Yes or No and press enter'
-	echo
 	echo
 	read -p '>>>' yes_no
 	echo
@@ -139,7 +136,7 @@ if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 		(Yes | yes)
 			echo $'\033[0;32m Updating Hyperion by compiling'
 #			inst_compile
-			jump=0
+			$(jump=0)
 			$(exit 0)
 			;;
 
@@ -213,7 +210,10 @@ fi
 #Exit or File creation
 if [ $? -eq 0 ]; then
 	echo
+	echo
 	echo $'\033[0;31m Please reboot when this skript has exited'
+	echo
+	echo
 	echo
 	echo $'\033[1;33m I can create the files needed for a backgound process for you'
 	echo $'\033[1;33m Type Yes if you want them created'
@@ -226,6 +226,10 @@ if [ $? -eq 0 ]; then
 		echo
 		echo
 		echo $'\033[0;32m No files created. Your are all set. Thank you for using my script!'
+		echo
+		echo
+		echo
+		echo
 		exit 0
 	esac
 fi
