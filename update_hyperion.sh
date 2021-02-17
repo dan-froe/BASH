@@ -3,6 +3,8 @@
 # Script for downloading a specific open Pull Request Artifact from Hyperion.NG on
 # Raspbian/HyperBian/RasPlex/OSMC/RetroPie/LibreELEC/Lakka
 
+clear
+
 # Fixed variables
 api_url="https://api.github.com/repos/hyperion-project/hyperion.ng"
 type wget > /dev/null 2> /dev/null
@@ -10,6 +12,8 @@ hasWget=$?
 type curl > /dev/null 2> /dev/null
 hasCurl=$?
 rel_latest=$(curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv7l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \")
+rel_latest_armv6l=$(curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv6l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \")
+
 
 if [[ "${hasWget}" -ne 0 ]] && [[ "${hasCurl}" -ne 0 ]]; then
 	echo '---> Critical Error: wget or curl required to download pull request artifacts'
@@ -35,10 +39,10 @@ function inst_deb() {
 #}
 
 # Set welcome message
-echo '*******************************************************************************'
+echo '***************************************************************************'
 echo 'This script will update Hyperion.ng for Raspbian/HyperBian/LibreELEC'
 echo 'Created by Daniel Froebe.'
-echo '*******************************************************************************'
+echo '***************************************************************************'
 
 # Find out which system we are on
 OS_RASPBIAN=`grep -m1 -c 'Raspbian\|RetroPie' /etc/issue` # /home/pi
@@ -90,13 +94,13 @@ fi
 
 # Check if RPi or x86_64
 RPI_1_2_3_4=`grep -m1 -c 'BCM2708\|BCM2709\|BCM2710\|BCM2835\|BCM2836\|BCM2837\|BCM2711' /proc/cpuinfo`
-Intel_AMD=`grep -m1 -c 'Intel\|AMD' /proc/cpuinfo`
+#Intel_AMD=`grep -m1 -c 'Intel\|AMD' /proc/cpuinfo`
 
 # Select the architecture
 if [ $RPI_1_2_3_4 -eq 1 ]; then
-	arch_old="armv6hf"
-	arch_new="armv6l"
-elif [ $Intel_AMD -eq 1 ]; then
+	arch_x=$(uname -m | tr -d 'armvl')
+#	arch_new="armv6l"
+#elif [ $Intel_AMD -eq 1 ]; then
 	arch_old="windows"
 	arch_new="x68_64"
 else
@@ -109,7 +113,7 @@ if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 	echo 'Type Yes or No and press enter'
 	read yes_no
 	case $yes_no in
-		Yes)
+		(Yes | yes)
 			echo 'Updating Hyperion by compiling'
 #			inst_compile
 			exit 0
@@ -126,10 +130,14 @@ if [ $actual_os -eq 1 ]; then
 		echo 'Type Yes or No and press enter'
 		read yes_no
 		case $yes_no in
-			Yes)
-				version_deb=$(echo $rel_latest | cut -d "/" -f 9)
-				echo Updating with the package $version_deb
-#				inst_deb
+			(Yes | yes)
+				if [ $arch_x -eq 7 ]; then
+					version_deb=$(echo $rel_latest | cut -d "/" -f 9)
+					echo Updating with the package $version_deb
+#					inst_deb
+				elif [ $arch_x -eq 6 ]; then
+					version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)                                                                                              echo Updating with the package $version_deb
+				fi
 				;;
 			*)
 				echo 'I can not help you'
