@@ -158,7 +158,7 @@ if [ $actual_os -eq 1 ] && [ $jump -eq 0 ]; then
 					if [ $arch_x -eq 7 ]; then
 						version_deb=$(echo $rel_latest | cut -d "/" -f 9)
 						echo
-						echo $' \033[1;33m Updating with package $version_deb'
+						echo $'\033[1;33m Updating with package ' "$version_deb"
 						echo
 #						inst_deb && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
 						echo
@@ -166,7 +166,7 @@ if [ $actual_os -eq 1 ] && [ $jump -eq 0 ]; then
 					elif [ $arch_x -eq 6 ]; then
 						version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)
 						echo
-						echo Updating with package $version_deb
+						echo $'\033[1;33m Updating with package ' "$version_deb"
 						echo
 #						inst_deb_armv6l && && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
 						$(exit 0)
