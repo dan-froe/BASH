@@ -207,7 +207,7 @@ if [ $? -eq 1 ]; then
 	exit 1
 
 #Exit or File creation
-elif [ $? -eq 0 ]; then
+else
 		echo
 		echo
 		echo $'\033[0;31m ********** Please reboot when this skript has exited **********'
