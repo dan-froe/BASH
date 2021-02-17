@@ -64,12 +64,16 @@ OS_LAKKA=`grep -m1 -c Lakka /etc/issue` # /storage
 
 # Check that
 if [ $OS_RASPBIAN -ne 1 ] && [ $OS_HYPERBIAN -ne 1 ] && [ $OS_RASPLEX -ne 1 ] && [ $OS_LIBREELEC -ne 1 ] && [ $OS_OSMC -ne 1 ] && [ $OS_LAKKA -ne 1 ]; then
-	echo '---> Critical Error: We are not on Raspbian/HyperBian/RasPlex/OSMC/RetroPie/LibreELEC/Lakka -> abort'
+	echo $'\033[0;31m ---> Critical Error: We are not on Raspbian/HyperBian/RasPlex/OSMC/RetroPie/LibreELEC/Lakka -> abort'
 	exit 1
 fi
 
 if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
 	echo 'We are on Raspbina/HyperBian'
+	echo
+	echo
+	echo
+	echo
 	actual_os=1
 fi
 
@@ -97,8 +101,9 @@ fi
 CPU_RPI=`grep -m1 -c 'BCM2708\|BCM2709\|BCM2710\|BCM2835\|BCM2836\|BCM2837\|BCM2711' /proc/cpuinfo`
 CPU_x86_64=`grep -m1 -c 'Intel\|AMD' /proc/cpuinfo`
 # Check that
-if [ $CPU_RPI -ne 1 ] && [ $CPU_x86_64 -ne 1 ]; then
-	echo '---> Critical Error: We are not on an Raspberry Pi or an x86_64 CPU -> abort'
+#if [ $CPU_RPI -ne 1 ] && [ $CPU_x86_64 -ne 1 ]; then
+if [ $CPU_RPI -ne 1 ]; then
+	echo $'\033[0;31m ---> Critical Error: We are not on an Raspberry Pi -> abort'
 	exit 1
 fi
 
@@ -114,18 +119,25 @@ if [ $RPI_1_2_3_4 -eq 1 ]; then
 	arch_old="windows"
 	arch_new="x68_64"
 else
-	echo "---> Critical Error: Target platform unknown -> abort"
+	echo $'\033[0;31m ---> Critical Error: Target platform unknown -> abort'
 	exit 1
 fi
 
 #Installation for Raspbian/HyperBian
 if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
-	echo 'Did you compile Hyperion on Raspbian?'
-	echo 'Type Yes or No and press enter'
+	echo $'\033[1;33m Did you compile Hyperion on Raspbian?'
+	echo
+	echo
+	echo $'\033[1;33m Type Yes or No and press enter'
+	echo
+	echo
 	read yes_no
+	echo
+	echo
+	echo
 	case $yes_no in
 		(Yes | yes)
-			echo 'Updating Hyperion by compiling'
+			echo $'\033[0;32m Updating Hyperion by compiling'
 #			inst_compile
 			jump=0
 			$(exit 0)
@@ -139,17 +151,17 @@ fi
 #Check if RaspBian and installation method and ARM
 if [ $actual_os -eq 1 ] && [ $jump -ne 0 ]; then
 	if [ $(lsb_release -i | cut -d : -f 2) = "Raspbian" ]; then
-			echo 'Did you install via .deb package?'
-			echo 'Type Yes or No and press enter'
+			echo $'\033[1;33m Did you install via .deb package?'
+			echo $'\033[1;33m Type Yes or No and press enter'
 			read yes_no
 			case $yes_no in
 				(Yes | yes)
 					if [ $arch_x -eq 7 ]; then
 						version_deb=$(echo $rel_latest | cut -d "/" -f 9)
 						echo
-						echo Updating with package $version_deb
+						echo $' \033[1;33m Updating with package $version_deb'
 						echo
-#						inst_deb && sudo apt -f install && echo && echo 'You are up to date!'
+#						inst_deb && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
 						echo
 						$(exit 0)
 					elif [ $arch_x -eq 6 ]; then
@@ -157,7 +169,7 @@ if [ $actual_os -eq 1 ] && [ $jump -ne 0 ]; then
 						echo
 						echo Updating with package $version_deb
 						echo
-#						inst_deb_armv6l && && sudo apt -f install && echo && echo 'You are up to date!'
+#						inst_deb_armv6l && && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
 						$(exit 0)
 					fi
 					;;
@@ -171,7 +183,7 @@ if [ $actual_os -eq 1 ] && [ $jump -ne 0 ]; then
 		if [ $arch_x -eq 7 ]; then
 			version_deb=$(echo $rel_latest | cut -d "/" -f 9)
 			echo
-			echo Updating HyperBian with package $version_deb
+			echo $'\033[1;33m Updating HyperBian with package $version_deb'
 			echo
 #						inst_deb && sudo apt -f install && echo && echo 'You are up to date!'
 			echo
@@ -179,7 +191,7 @@ if [ $actual_os -eq 1 ] && [ $jump -ne 0 ]; then
 		elif [ $arch_x -eq 6 ]; then
 			version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)
 			echo
-			echo Updating HyperBian with package $version_deb
+			echo $'\033[1;33m Updating HyperBian with package $version_deb'
 			echo
 #						inst_deb_armv6l && sudo apt -f install && echo && echo 'You are up to date!'
 			$(exit 0)
@@ -191,9 +203,9 @@ fi
 if [ $(lsb_release -i | cut -d : -f 2) = "LibreELEC" ]; then
 #	rm -R /storage/hyperion; wget -qO- https://git.io/JU4Zx | bash && $(exit 0)
 		if [ $? -eq 0 ]; then
-			echo 'Your update process is complete!'; $(exit 0)
+			echo $'\033[0;32m Your update process is complete!'; $(exit 0)
 		else
-			echo 'Something went wrong installation incomplete'
+			echo $'\033[0;31m Something went wrong installation incomplete'
 			exit 1
 		fi
 fi
@@ -201,27 +213,27 @@ fi
 #Exit or File creation
 if [ $? -eq 0 ]; then
 	echo
-	echo 'Please reboot when this skript has exited'
+	echo $'\033[0;31m Please reboot when this skript has exited'
 	echo
-	echo 'I can create the files needed for a backgound process for you'
-	echo 'Type Yes if you want them created'
+	echo $'\033[1;33m I can create the files needed for a backgound process for you'
+	echo $'\033[1;33m Type Yes if you want them created'
 	read yes_no
 	case $yes_no in
 		Yes | yes )
 			;;
 		*)
-		echo 'No files created. Your are all set. Thank you for using my script!'
+		echo $'\033[0;32m No files created. Your are all set. Thank you for using my script!'
 		exit 0
 	esac
 fi
 
 echo
-echo 'These files will be created in current directory. You have to copy files into:'
+echo $'\033[1;33m These files will be created in current directory. You have to copy files into:'
 echo
 if [ $actual_os -eq 1 ]; then
 #Service files for RaspBian/HyperBian
-		echo 'hyperiond@pi.service ---> /etc/systemd/system/multi-user.target.wants/'
-		echo 'hyperiond@.service -----> /etc/systemd/system/'
+		echo $'\033[1;33m hyperiond@pi.service ---> /etc/systemd/system/multi-user.target.wants/'
+		echo $'\033[1;33m hyperiond@.service -----> /etc/systemd/system/'
 		SERVICE_CONTENT_MULTI="[Unit]
 Description=Hyperion ambient light systemd service  for user %i
 After=network.target
@@ -256,18 +268,18 @@ RestartSec=2
 WantedBy=multi-user.target"
 		echo "$SERVICE_CONTENT" > hyperion@.service
 		echo
-		echo 'Files created.'
+		echo $'Files created.'
 		echo
-		echo 'You should activate autologin in raspi-config before copying the files'
+		echo $'\033[1;33m You should activate autologin in raspi-config before copying the files'
 		echo
-		echo 'You are all set. Thank you for using this script.'
+		echo $'\033[0;32m You are all set. Thank you for using this script.'
 		echo
 		echo
 		echo
 		exit 0
 
 elif [ $actual_os -eq 2 ]; then
-		echo 'hyperion.service ----- >/storage/.config/system.d/'
+		echo $'\033[1;33m hyperion.service ----- >/storage/.config/system.d/'
 # Service file for LibreELEC
 		SERVICE_CONTENT="[Unit]
 Description=Hyperion ambient light systemd service
@@ -283,15 +295,16 @@ RestartSec=10
 WantedBy=default.target"
 		echo "$SERVICE_CONTENT" > hyperion.service
 		echo
-		echo 'File created'
-		echo 'You are all set. Thank you for using this script.'
+		echo $'\033[0;32m File created'
+		echo
+		echo $'\033[0;32mYou are all set. Thank you for using this script.'
 		echo
 		echo
 		echo
 		exit 0
 
 else
-		echo 'Unsupported OS. No files created. Quitting!'
+		echo $'\033[0;31m Unsupported OS. No files created. Quitting!'
 		echo
 		echo
 		exit 1
