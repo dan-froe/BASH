@@ -127,8 +127,8 @@ if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 		(Yes | yes)
 			echo 'Updating Hyperion by compiling'
 #			inst_compile
+			jump=0
 			$(exit 0)
-			continue
 			;;
 
 		*)
@@ -137,7 +137,7 @@ if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 	esac
 fi
 #Check if RaspBian and installation method and ARM
-if [ $actual_os -eq 1 ]; then
+if [ $actual_os -eq 1 ] && [ $jump -ne 0 ]; then
 	if [ $(lsb_release -i | cut -d : -f 2) = "Raspbian" ]; then
 			echo 'Did you install via .deb package?'
 			echo 'Type Yes or No and press enter'
