@@ -143,13 +143,13 @@ if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 
 fi
 #Check if RaspBian and installation method and ARM
-if [ $OS = "RaspBian" ] && [ $jump -eq 0 ]; then
-	if [ $(lsb_release -i | cut -d : -f 2) = "Raspbian" ]; then
-			echo $'\033[1;33m Did you install via .deb package?'
-			echo $'\033[1;33m Type Yes or No and press enter'
-			read -p '>>>' yes_no
-			case $yes_no in
-				(Yes | yes)
+if [ $OS = "Raspbian" ] && [ $jump -eq 0 ]; then
+#	if [ $(lsb_release -i | cut -d : -f 2) = "Raspbian" ]; then
+#			echo $'\033[1;33m Did you install via .deb package?'
+#			echo $'\033[1;33m Type Yes or No and press enter'
+#			read -p '>>>' yes_no
+#			case $yes_no in
+#				(Yes | yes)
 					if [ $arch_x -eq 7 ]; then
 						version_deb=$(echo $rel_latest | cut -d "/" -f 9)
 						echo
@@ -166,12 +166,12 @@ if [ $OS = "RaspBian" ] && [ $jump -eq 0 ]; then
 #						inst_deb_armv6l && && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
 						$(exit 0)
 					fi
-					;;
-					*)
-					echo 'I can not help you'
-					exit 1
-					;;
-				esac
+#					;;
+#					*)
+#					echo 'I can not help you'
+#					exit 1
+#					;;
+#				esac
 #Check if HyperBian and ARM
 elif [ $OS = "HyperBian" ]; then
 		if [ $arch_x -eq 7 ]; then
@@ -191,7 +191,6 @@ elif [ $OS = "HyperBian" ]; then
 			$(exit 0)
 		fi
 	fi
-fi
 
 #Installation LibreELEC
 if [ $OS = "LibreELEC" ]; then
