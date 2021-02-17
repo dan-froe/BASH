@@ -128,6 +128,7 @@ if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 			echo 'Updating Hyperion by compiling'
 #			inst_compile
 			$(exit 0)
+			continue
 			;;
 
 		*)
