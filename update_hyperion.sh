@@ -14,12 +14,6 @@ hasCurl=$?
 rel_latest=$(curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv7l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \")
 rel_latest_armv6l=$(curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv6l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \")
 
-# Stop hyperion service if it is running
-systemctl -q stop hyperion.service >/dev/null 2>/dev/null
-systemctl -q stop hyperiond@pi.service >/dev/null 2>/dev/null
-sudo systemctl -q stop hyperion@.service 2>/dev/null
-sudo systemctl -q stop hyperiond@pi.service 2>/dev/null
-
 if [[ "${hasWget}" -ne 0 ]]; [[ "${hasCurl}" -ne 0 ]]; then
 	echo $'\033[0;31m ---> Critical Error: wget or curl required'
 	exit 1
@@ -65,6 +59,9 @@ fi
 if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
 	echo 'We are on Raspbina/HyperBian'
   OS=$(lsb_release -i | cut -d : -f 2)
+# Stop hyperion service if it is running
+	sudo systemctl -q stop hyperion@.service 2>/dev/null
+	sudo systemctl -q stop hyperiond@pi.service 2>/dev/null
 	echo
 	echo
 	echo
@@ -79,6 +76,10 @@ fi
 
 if [ $OS_LIBREELEC -eq 1 ]; then
 	echo 'We are on LibreELEC'
+	OS=$(lsb_release -i | cut -d : -f 2)
+# Stop hyperion service if it is running
+	systemctl -q stop hyperion.service >/dev/null 2>/dev/null
+	systemctl -q stop hyperiond@pi.service >/dev/null 2>/dev/null
 	actual_os=2
 fi
 
@@ -142,6 +143,9 @@ if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 	esac
 
 fi
+
+$(exit 1)
+
 #Check if RaspBian and installation method and ARM
 if [ $OS = "Raspbian" ] && [ $jump -eq 0 ]; then
 #	if [ $(lsb_release -i | cut -d : -f 2) = "Raspbian" ]; then
@@ -194,42 +198,40 @@ elif [ $OS = "HyperBian" ]; then
 
 #Installation LibreELEC
 if [ $OS = "LibreELEC" ]; then
-#	rm -R /storage/hyperion; wget -qO- https://git.io/JU4Zx | bash && $(exit 0)
-		if [ $? -eq 0 ]; then
-			echo $'\033[0;32m Your update process is complete!'; $(exit 0)
-		else
-			echo $'\033[0;31m Something went wrong installation incomplete'
-			exit 1
-		fi
+#	rm -R /storage/hyperion; wget -qO- https://git.io/JU4Zx | bash && echo $'\033[0;32m Your update process is complete!'; $(exit 0)
 fi
 
+if [ $? -eq 1 ]; then
+	echo $'\033[0;31m Something went wrong installation incomplete'
+	exit 1
+
 #Exit or File creation
-if [ $? -eq 0 ]; then
-	echo
-	echo
-	echo $'\033[0;31m ********** Please reboot when this skript has exited **********'
-	echo
-	echo
-	echo
-	var_pwd=pwd
-	echo $'\033[1;33m **I can create the files needed for a background process. I will only place them in' "$var_pwd"'**'
-	echo $'\033[1;33m **You have to copy them into the systemd folder yourself. I will tell you the destination, when writing the files'
-	echo $'\033[1;33m Type Yes if you want them created'
-	echo
-	read -p '>>>' yes_no
-	case $yes_no in
-		Yes | yes )
-			;;
-		*)
+elif [ $? -eq 0 ]; then
 		echo
 		echo
-		echo $'\033[0;32m No files created. Your are all set. Thank you for using my script!'
+		echo $'\033[0;31m ********** Please reboot when this skript has exited **********'
 		echo
 		echo
 		echo
+		var_pwd=pwd
+		echo $'\033[1;33m **I can create the files needed for a background process. I will only place them in' "$var_pwd"'**'
+		echo $'\033[1;33m **You have to copy them into the systemd folder yourself. I will tell you the destination, when writing the files'
+		echo $'\033[1;33m Type Yes if you want them created'
 		echo
-		exit 0
-	esac
+		read -p '>>>' yes_no
+		case $yes_no in
+			Yes | yes )
+				;;
+				*)
+				echo
+				echo
+				echo $'\033[0;32m No files created. Your are all set. Thank you for using my script!'
+				echo
+				echo
+				echo
+				echo
+				exit 0
+			esac
 fi
 
 echo
