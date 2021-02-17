@@ -261,6 +261,9 @@ WantedBy=multi-user.target"
 		echo 'You should activate autologin in raspi-config before copying the files'
 		echo
 		echo 'You are all set. Thank you for using this script.'
+		echo
+		echo
+		echo
 		exit 0
 
 elif [ $actual_os -eq 2 ]; then
