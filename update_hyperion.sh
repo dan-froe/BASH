@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-# Script for downloading a specific open Pull Request Artifact from Hyperion.NG on
-# Raspbian/HyperBian/RasPlex/OSMC/RetroPie/LibreELEC/Lakka
+# Script for updating Hyperion.NG on
+# Raspbian/HyperBian/LibreELEC
 
 clear
 
 # Fixed variables
-api_url="https://api.github.com/repos/hyperion-project/hyperion.ng"
+#api_url="https://api.github.com/repos/hyperion-project/hyperion.ng"
 type wget > /dev/null 2> /dev/null
 hasWget=$?
 type curl > /dev/null 2> /dev/null
@@ -15,16 +15,17 @@ rel_latest=$(curl https://api.github.com/repos/hyperion-project/hyperion.ng/rele
 rel_latest_armv6l=$(curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv6l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \")
 
 # Stop hyperion service if it is running
-sudo systemctl -q stop hyperion.service >/dev/null 2>/dev/null
-sudo systemctl -q stop hyperiond@pi.service >/dev/null 2>/dev/null
-sudo systemctl -q stop hyperion.service 2>/dev/null
+systemctl -q stop hyperion.service >/dev/null 2>/dev/null
+systemctl -q stop hyperiond@pi.service >/dev/null 2>/dev/null
+sudo systemctl -q stop hyperion@.service 2>/dev/null
 sudo systemctl -q stop hyperiond@pi.service 2>/dev/null
 
-if [[ "${hasWget}" -ne 0 ]] && [[ "${hasCurl}" -ne 0 ]]; then
-	echo '---> Critical Error: wget or curl required to download pull request artifacts'
+if [[ "${hasWget}" -ne 0 ]]; [[ "${hasCurl}" -ne 0 ]]; then
+	echo $'\033[0;31m ---> Critical Error: wget or curl required'
 	exit 1
 fi
 
+#Function Table
 function inst_compile() {
 	cd ~/hyperion/build/ && sudo make uninstall; sudo git pull https://github.com/hyperion-project/hyperion.ng.git master &&
 	sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
@@ -40,13 +41,6 @@ function inst_deb_armv6l() {
 		sudo apt-get install $rel_latest_armv6l
 }
 
-#function request_call() {
-#	if [ $hasWget -eq 0 ]; then
-#		echo $(wget --quiet --header="Authorization: token ${pr_token}" -O - $1)
-#	elif [ $hasCurl -eq 0 ]; then
-#		echo $(curl -skH "Authorization: token ${pr_token}" $1)
-#	fi
-#}
 
 # Set welcome message
 echo '***************************************************************************'
@@ -70,6 +64,7 @@ fi
 
 if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
 	echo 'We are on Raspbina/HyperBian'
+  OS=$(lsb_release -i | cut -d : -f 2)
 	echo
 	echo
 	echo
@@ -116,8 +111,8 @@ if [ $RPI_1_2_3_4 -eq 1 ]; then
 	arch_x=$(uname -m | tr -d 'armvl')
 #	arch_new="armv6l"
 #elif [ $Intel_AMD -eq 1 ]; then
-	arch_old="windows"
-	arch_new="x68_64"
+#	arch_old="windows"
+#	arch_new="x68_64"
 else
 	echo $'\033[0;31m ---> Critical Error: Target platform unknown -> abort'
 	exit 1
@@ -125,8 +120,8 @@ fi
 
 #Installation for Raspbian/HyperBian
 if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
-	echo $'\033[1;33m Did you compile Hyperion on Raspbian?'
-	echo $'\033[1;33m Type Yes or No and press enter'
+	echo $'\033[1;33m It looks like you compiled hyperion via CompileHowTo.md'
+	echo $'\033[1;33m Is that correct? Yes or No and press enter'
 	echo
 	read -p '>>>' yes_no
 	echo
@@ -148,7 +143,7 @@ if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 
 fi
 #Check if RaspBian and installation method and ARM
-if [ $actual_os -eq 1 ] && [ $jump -eq 0 ]; then
+if [ $OS = "RaspBian" ] && [ $jump -eq 0 ]; then
 	if [ $(lsb_release -i | cut -d : -f 2) = "Raspbian" ]; then
 			echo $'\033[1;33m Did you install via .deb package?'
 			echo $'\033[1;33m Type Yes or No and press enter'
@@ -178,11 +173,11 @@ if [ $actual_os -eq 1 ] && [ $jump -eq 0 ]; then
 					;;
 				esac
 #Check if HyperBian and ARM
-	elif [ $(lsb_release -i | cut -d : -f 2) = "HyperBian" ]; then
+elif [ $OS = "HyperBian" ]; then
 		if [ $arch_x -eq 7 ]; then
 			version_deb=$(echo $rel_latest | cut -d "/" -f 9)
 			echo
-			echo $'\033[1;33m Updating HyperBian with package $version_deb'
+			echo $'\033[1;33m Updating with package ' "$version_deb"
 			echo
 #						inst_deb && sudo apt -f install && echo && echo 'You are up to date!'
 			echo
@@ -190,7 +185,7 @@ if [ $actual_os -eq 1 ] && [ $jump -eq 0 ]; then
 		elif [ $arch_x -eq 6 ]; then
 			version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)
 			echo
-			echo $'\033[1;33m Updating HyperBian with package $version_deb'
+			echo $'\033[1;33m Updating with package ' "$version_deb"
 			echo
 #						inst_deb_armv6l && sudo apt -f install && echo && echo 'You are up to date!'
 			$(exit 0)
@@ -199,7 +194,7 @@ if [ $actual_os -eq 1 ] && [ $jump -eq 0 ]; then
 fi
 
 #Installation LibreELEC
-if [ $(lsb_release -i | cut -d : -f 2) = "LibreELEC" ]; then
+if [ $OS = "LibreELEC" ]; then
 #	rm -R /storage/hyperion; wget -qO- https://git.io/JU4Zx | bash && $(exit 0)
 		if [ $? -eq 0 ]; then
 			echo $'\033[0;32m Your update process is complete!'; $(exit 0)
@@ -213,11 +208,13 @@ fi
 if [ $? -eq 0 ]; then
 	echo
 	echo
-	echo $'\033[0;31m Please reboot when this skript has exited'
+	echo $'\033[0;31m ********** Please reboot when this skript has exited **********'
 	echo
 	echo
 	echo
-	echo $'\033[1;33m I can create the files needed for a backgound process for you'
+	var_pwd=pwd
+	echo $'\033[1;33m **I can create the files needed for a background process. I will only place them in' "$var_pwd"'**'
+	echo $'\033[1;33m **You have to copy them into the systemd folder yourself. I will tell you the destination, when writing the files'
 	echo $'\033[1;33m Type Yes if you want them created'
 	echo
 	read -p '>>>' yes_no
@@ -237,7 +234,7 @@ if [ $? -eq 0 ]; then
 fi
 
 echo
-echo $'\033[1;33m These files will be created in current directory. You have to copy files into:'
+echo $'\033[1;33m The files will be created in current directory. You have to copy files into:'
 echo
 if [ $actual_os -eq 1 ]; then
 #Service files for RaspBian/HyperBian
@@ -279,7 +276,7 @@ WantedBy=multi-user.target"
 		echo
 		echo $'\033[0;32m Files created.'
 		echo
-		echo $'\033[1;33m You should activate autologin in raspi-config before copying the files'
+		echo $'\033[1;33m *********You should activate autologin in raspi-config before copying the files*********'
 		echo
 		echo $'\033[0;32m You are all set. Thank you for using this script.'
 		echo
