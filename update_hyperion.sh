@@ -15,8 +15,10 @@ rel_latest=$(curl https://api.github.com/repos/hyperion-project/hyperion.ng/rele
 rel_latest_armv6l=$(curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv6l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \")
 
 # Stop hyperion service if it is running
-systemctl -q stop hyperion.service 2>/dev/null
-systemctl -q stop hyperiond@pi.service 2>/dev/null
+sudo systemctl -q stop hyperion.service >/dev/null 2>/dev/null
+sudo systemctl -q stop hyperiond@pi.service >/dev/null 2>/dev/null
+sudo systemctl -q stop hyperion.service 2>/dev/null
+sudo systemctl -q stop hyperiond@pi.service 2>/dev/null
 
 if [[ "${hasWget}" -ne 0 ]] && [[ "${hasCurl}" -ne 0 ]]; then
 	echo '---> Critical Error: wget or curl required to download pull request artifacts'
@@ -189,7 +191,7 @@ if [ $(lsb_release -i | cut -d : -f 2) = "LibreELEC"]; then
 #	rm -R /storage/hyperion; wget -qO- https://git.io/JU4Zx | bash && $(exit 0)
 		if [ $? -eq 0 ]; then
 			echo 'Your update process is complete!'; $(exit 0)
-		else;
+		else
 			echo 'Something went wrong installation incomplete'
 			exit 1
 		fi
@@ -276,6 +278,6 @@ elif [ $actual_os -eq 2 ]; then
 		echo 'You are all set. Thank you for using this script.'
 		exit 0
 
-else;
+else
 		echo 'Unsupported OS. No files created. Quitting!'; exit 1
 fi
