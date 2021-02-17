@@ -188,7 +188,7 @@ if [ $actual_os -eq 1 ] && [ $jump -ne 0 ]; then
 fi
 
 #Installation LibreELEC
-if [ $(lsb_release -i | cut -d : -f 2) = "LibreELEC"]; then
+if [ $(lsb_release -i | cut -d : -f 2) = "LibreELEC" ]; then
 #	rm -R /storage/hyperion; wget -qO- https://git.io/JU4Zx | bash && $(exit 0)
 		if [ $? -eq 0 ]; then
 			echo 'Your update process is complete!'; $(exit 0)
