@@ -140,7 +140,7 @@ if [ $actual_os -eq 1 ]; then
 					if [ $arch_x -eq 7 ]; then
 						version_deb=$(echo $rel_latest | cut -d "/" -f 9)
 						echo
-						echo Updating with the package $version_deb
+						echo Updating with package $version_deb
 						echo
 #						inst_deb && echo && echo 'You are up to date!'
 						echo
@@ -148,7 +148,7 @@ if [ $actual_os -eq 1 ]; then
 					elif [ $arch_x -eq 6 ]; then
 						version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)
 						echo
-						echo Updating with the package $version_deb
+						echo Updating with package $version_deb
 						echo
 #						inst_deb_armv6l && echo && echo 'You are up to date!'
 						exit 0
@@ -163,7 +163,7 @@ if [ $actual_os -eq 1 ]; then
 		if [ $arch_x -eq 7 ]; then
 			version_deb=$(echo $rel_latest | cut -d "/" -f 9)
 			echo
-			echo Updating with the package $version_deb
+			echo Updating HyperBian with package $version_deb
 			echo
 #						inst_deb && echo && echo 'You are up to date!'
 			echo
@@ -171,7 +171,7 @@ if [ $actual_os -eq 1 ]; then
 		elif [ $arch_x -eq 6 ]; then
 			version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)
 			echo
-			echo Updating with the package $version_deb
+			echo Updating HyperBian with package $version_deb
 			echo
 #						inst_deb_armv6l && echo && echo 'You are up to date!'
 			exit 0
