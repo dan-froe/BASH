@@ -282,8 +282,14 @@ WantedBy=default.target"
 		echo
 		echo 'File created'
 		echo 'You are all set. Thank you for using this script.'
+		echo
+		echo
+		echo
 		exit 0
 
 else
-		echo 'Unsupported OS. No files created. Quitting!'; exit 1
+		echo 'Unsupported OS. No files created. Quitting!'
+		echo
+		echo
+		exit 1
 fi
