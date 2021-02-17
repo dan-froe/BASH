@@ -131,31 +131,49 @@ if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 fi
 
 if [ $actual_os -eq 1 ]; then
-		echo 'Did you install via .deb package?'
-		echo 'Type Yes or No and press enter'
-		read yes_no
-		case $yes_no in
-			(Yes | yes)
-				if [ $arch_x -eq 7 ]; then
-					version_deb=$(echo $rel_latest | cut -d "/" -f 9)
-					echo
-					echo Updating with the package $version_deb
-					echo
-#					inst_deb && echo && echo 'You are up to date!'
-					echo
-					exit 0
-				elif [ $arch_x -eq 6 ]; then
-					version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)
-					echo
-					echo Updating with the package $version_deb
-					echo
-#					inst_deb_armv6l && echo && echo 'You are up to date!'
-					exit 0
-				fi
-				;;
-			*)
-				echo 'I can not help you'
-				exit 1
-				;;
-		esac
+	if [ $(lsb_release -i | cut -d : -f 2) -= "Raspbian" ]; then
+			echo 'Did you install via .deb package?'
+			echo 'Type Yes or No and press enter'
+			read yes_no
+			case $yes_no in
+				(Yes | yes)
+					if [ $arch_x -eq 7 ]; then
+						version_deb=$(echo $rel_latest | cut -d "/" -f 9)
+						echo
+						echo Updating with the package $version_deb
+						echo
+#						inst_deb && echo && echo 'You are up to date!'
+						echo
+						exit 0
+					elif [ $arch_x -eq 6 ]; then
+						version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)
+						echo
+						echo Updating with the package $version_deb
+						echo
+#						inst_deb_armv6l && echo && echo 'You are up to date!'
+						exit 0
+					fi
+					;;
+					*)
+					echo 'I can not help you'
+					exit 1
+					;;
+				esac
+	else
+		if [ $arch_x -eq 7 ]; then
+			version_deb=$(echo $rel_latest | cut -d "/" -f 9)
+			echo
+			echo Updating with the package $version_deb
+			echo
+#						inst_deb && echo && echo 'You are up to date!'
+			echo
+			exit 0
+		elif [ $arch_x -eq 6 ]; then
+			version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)
+			echo
+			echo Updating with the package $version_deb
+			echo
+#						inst_deb_armv6l && echo && echo 'You are up to date!'
+			exit 0
+		fi
 fi
