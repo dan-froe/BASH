@@ -136,7 +136,7 @@ if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 		(Yes | yes)
 			echo $'\033[0;32m Updating Hyperion by compiling'
 #			inst_compile
-			jump=0
+			$jump=0
 			$(exit 0)
 			;;
 
