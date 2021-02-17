@@ -276,6 +276,7 @@ RestartSec=2
 WantedBy=multi-user.target"
 		echo "$SERVICE_CONTENT" > hyperion@.service
 		echo
+		sleep 1
 		echo $'\033[0;32m Files created.'
 		echo
 		echo $'\033[1;33m *********You should activate autologin in raspi-config before copying the files*********'
