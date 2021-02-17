@@ -240,7 +240,7 @@ WantedBy=multi-user.target"
 		echo "$SERVICE_CONTENT_MULTI" > hyperion@pi.service
 
 		SERVICE_CONTENT="[Unit]
-		Description=Hyperion ambient light systemd service  for user %i
+Description=Hyperion ambient light systemd service  for user %i
 After=network.target
 
 [Service]
