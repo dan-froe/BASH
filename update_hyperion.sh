@@ -131,7 +131,7 @@ if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 	echo $'\033[1;33m Type Yes or No and press enter'
 	echo
 	echo
-	echo read -p '>>>' yes_no
+	read -p '>>>' yes_no
 	echo
 	echo
 	echo
