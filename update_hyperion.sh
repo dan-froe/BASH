@@ -176,5 +176,5 @@ if [ $actual_os -eq 1 ]; then
 #						inst_deb_armv6l && echo && echo 'You are up to date!'
 			exit 0
 		fi
+	fi
 fi
-exit 0
