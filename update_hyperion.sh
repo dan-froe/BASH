@@ -132,7 +132,7 @@ if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
 	echo
 	echo
 	echo
-	jumpb=1
+	jumpb=55
 	case $yes_no in
 		(Yes | yes)
 			echo $'\033[0;32m Updating Hyperion by compiling'
