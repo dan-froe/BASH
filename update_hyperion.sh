@@ -141,8 +141,10 @@ if [ $actual_os -eq 1 ] && [ $found_compile -eq 0 ]; then
 	echo
 	case $yes_no in
 		(Yes | yes)
-		echo
+			echo
 			echo $'\033[0;32m Compiling the newest Version.'
+			echo
+			echo
 			inst_compile
 			jump=66
 			$(exit 0)
