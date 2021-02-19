@@ -32,8 +32,8 @@ function inst_compile() {
 }
 
 function inst_deb() {
-		sudo sudo apt update; sudo apt remove hyperion -y; wget -i $rel_latest;
-		sudo apt-get install $rel_latest
+		sudo sudo apt update; sudo apt remove hyperion -y; cd ~; wget -i $rel_latest;
+		sudo apt-get install $rel_latest && cd -
 }
 
 function inst_deb_armv6l() {
