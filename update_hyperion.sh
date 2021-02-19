@@ -21,8 +21,13 @@ fi
 
 #Function Table
 function inst_compile() {
-	cd ~/hyperion/build/ && sudo make uninstall 2>/dev/null; sudo git pull https://github.com/hyperion-project/hyperion.ng.git master &&
-	sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
+	cd ~/hyperion/build/ && sudo make uninstall 2>/dev/null; sudo git pull https://github.com/hyperion-project/hyperion.ng.git master | grep "changed.*inseration.*deletion" && $(exit 0)
+	if [ $? -eq 0 ]; then
+			sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
+	else
+			echo $'\033[0;31m You are already up to date! No files changed!'
+	fi
+
 }
 
 function inst_deb() {
@@ -181,7 +186,7 @@ if [ $OS = "Raspbian" ] && [ $jump -eq 0 ]; then
 #					;;
 #				esac
 #Check if HyperBian and ARM
-elif [ $OS = "HyperBian" ]; then
+elif [ $OS = "HyperBian" ] && [ $jump -eq 0 ]; then
 		if [ $arch_x -eq 7 ]; then
 			version_deb=$(echo $rel_latest | cut -d "/" -f 9)
 			echo
