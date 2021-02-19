@@ -60,7 +60,9 @@ if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
 	echo 'We are on Raspbina/HyperBian'
   OS=$(lsb_release -i | cut -d : -f 2)
 	found_compile=1
-	sudo find / -path "*/.git/config" | cat "config" | grep "/hyperion-project/hyperion.ng.git" && found_compile=0
+	cd ~
+	sudo find */.git -name config -exec cat {} + | grep hyperion-project/hyperion.ng.git && found_compile=0
+	cd -
 # Stop hyperion service if it is running
 	sudo systemctl -q stop hyperion@.service 2>/dev/null
 	sudo systemctl -q stop hyperiond@pi.service 2>/dev/null
