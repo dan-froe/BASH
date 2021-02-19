@@ -77,6 +77,8 @@ fi
 if [ $OS_LIBREELEC -eq 1 ]; then
 	echo 'We are on LibreELEC'
 	OS=$(lsb_release -i | cut -d : -f 2)
+	found_compile=1
+	sudo find / -path "*/.git/config" | cat "config" | grep "/hyperion-project/hyperion.ng.git" && found_compile=0
 # Stop hyperion service if it is running
 	systemctl -q stop hyperion.service >/dev/null 2>/dev/null
 	systemctl -q stop hyperiond@pi.service >/dev/null 2>/dev/null
@@ -120,7 +122,7 @@ else
 fi
 
 #Installation for Raspbian/HyperBian
-if [ $actual_os -eq 1 ] && [ -d ~/hyperion/ ]; then
+if [ $actual_os -eq 1 ] && [ $found_compile -eq 0 ]; then
 	echo $'\033[1;33m It looks like you compiled hyperion via CompileHowTo.md'
 	echo $'\033[1;33m Is that correct? Yes or No and press enter'
 	echo
