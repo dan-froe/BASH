@@ -48,7 +48,7 @@ function inst_deb() {
 				;;
 			*)
 				echo
-				echo $'\033[0;31m You decided against installing the software. No files were written!'
+				echo $'\033[0;31mYou decided against installing the software. No files were written!'
 				echo
 				exit 0
 				;;
@@ -56,10 +56,28 @@ function inst_deb() {
 }
 
 function inst_deb_armv6l() {
-		sudo sudo apt update; sudo apt remove hyperion; curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv6l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \";
-		sudo apt-get install $rel_latest_armv6l
+		echo
+		echo Your version is:
+		test -e /usr/bin/hyperiond && echo $(/usr/bin/hyperiond --version | grep Version) || echo 'Version Number not available.'
+		echo
+		echo I want to install:
+		echo $rel_latest_armv6l | cut -d / -f9
+		echo
+		echo Do You want to proceed? Type Yes or no to abort!
+		read -p '>>> ' yes_no
+		case $yes_no in
+			(Yes | yes )
+				sudo apt-get update; sudo apt remove hyperion -y; cd ~; wget $rel_latest_armv6l;
+				sudo apt-get install ./$(echo $rel_latest_armv6l | cut -d / -f9) && cd - >/dev/null 2>/dev/null && $(exit 0)
+				;;
+			*)
+				echo
+				echo $'\033[0;31mYou decided against installing the software. No files were written!'
+				echo
+				exit 0
+				;;
+		esac
 }
-
 
 # Set welcome message
 echo '***************************************************************************'
@@ -180,13 +198,7 @@ $(exit 1)
 
 #Check if RaspBian and installation method and ARM
 if [ $OS = "Raspbian" ] && [ $jump -eq 0 ]; then
-#	if [ $(lsb_release -i | cut -d : -f 2) = "Raspbian" ]; then
-#			echo $'\033[1;33m Did you install via .deb package?'
-#			echo $'\033[1;33m Type Yes or No and press enter'
-#			read -p '>>>' yes_no
-#			case $yes_no in
-#				(Yes | yes)
-					if [ $arch_x -eq 7 ]; then
+					if [ $arch_x -eq 6 ]; then
 						version_deb=$(echo $rel_latest | cut -d "/" -f 9)
 						echo
 						echo $'\033[1;33m Updating with package ' "$version_deb"
@@ -194,7 +206,7 @@ if [ $OS = "Raspbian" ] && [ $jump -eq 0 ]; then
 						inst_deb && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
 						echo
 						$(exit 0)
-					elif [ $arch_x -eq 6 ]; then
+					elif [ $arch_x -eq 7 ]; then
 						version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)
 						echo
 						echo $'\033[1;33m Updating with package ' "$version_deb"
@@ -202,12 +214,7 @@ if [ $OS = "Raspbian" ] && [ $jump -eq 0 ]; then
 						inst_deb_armv6l && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
 						$(exit 0)
 					fi
-#					;;
-#					*)
-#					echo 'I can not help you'
-#					exit 1
-#					;;
-#				esac
+
 #Check if HyperBian and ARM
 elif [ $OS = "HyperBian" ]; then
 		if [ $arch_x -eq 7 ]; then
@@ -215,7 +222,7 @@ elif [ $OS = "HyperBian" ]; then
 			echo
 			echo $'\033[1;33m Updating with package ' "$version_deb"
 			echo
-						inst_deb && sudo apt -f install && echo && echo 'You are up to date!'
+			inst_deb && sudo apt -f install && echo && echo 'You are up to date!'
 			echo
 			$(exit 0)
 		elif [ $arch_x -eq 6 ]; then
@@ -223,7 +230,7 @@ elif [ $OS = "HyperBian" ]; then
 			echo
 			echo $'\033[1;33m Updating with package ' "$version_deb"
 			echo
-						inst_deb_armv6l && sudo apt -f install && echo && echo 'You are up to date!'
+			inst_deb_armv6l && sudo apt -f install && echo && echo 'You are up to date!'
 			$(exit 0)
 		fi
 	fi
