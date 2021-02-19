@@ -25,6 +25,7 @@ function inst_compile() {
 	if [ $? -eq 0 ]; then
 			echo 'Uninstalling, this may take a few seconds'; sudo make uninstall >/dev/null 2>/dev/null; sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
 	else
+		echo
 			echo $'\033[0;31m You are already up to date! No files changed!'
 	fi
 
@@ -140,7 +141,8 @@ if [ $actual_os -eq 1 ] && [ $found_compile -eq 0 ]; then
 	echo
 	case $yes_no in
 		(Yes | yes)
-			echo $'\033[0;32m Updating Hyperion by compiling'
+		echo
+			echo $'\033[0;32m Compiling the newest Version.'
 			inst_compile
 			jump=66
 			$(exit 0)
