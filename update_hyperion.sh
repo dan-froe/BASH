@@ -21,7 +21,7 @@ fi
 
 #Function Table
 function inst_compile() {
-	cd ~/hyperion/build/ && sudo make uninstall; sudo git pull https://github.com/hyperion-project/hyperion.ng.git master &&
+	cd ~/hyperion/build/ && sudo make uninstall 2>/dev/null; sudo git pull https://github.com/hyperion-project/hyperion.ng.git master &&
 	sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
 }
 
