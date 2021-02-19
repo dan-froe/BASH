@@ -215,8 +215,7 @@ else
 		echo
 		echo
 		var_pwd=$(pwd)
-		echo $'\033[1;33m **I can create the files needed for a background process. I will only place them in' "$var_pwd"'**'
-		echo $'\033[1;33m **You have to copy them into the systemd folder yourself. I will tell you the destination, when writing the files'
+		echo $'\033[1;33mI can create the files needed for a background process. I will only place them in' "$var_pwd"'. You have to copy them into the systemd folder yourself. I will tell you the destination, when writing the files'
 		echo $'\033[1;33m Type Yes if you want them created'
 		echo
 		read -p '>>>' yes_no
