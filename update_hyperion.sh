@@ -32,8 +32,8 @@ function inst_compile() {
 }
 
 function inst_deb() {
-		sudo sudo apt update; sudo apt remove hyperion -y; cd ~; wget -i $rel_latest;
-		sudo apt-get install $rel_latest && cd -
+		sudo sudo apt update; sudo apt remove hyperion -y; cd ~; wget $rel_latest;
+		sudo apt-get install < (echo ""$rel_latest" | cut -d / -f9) && cd - >/dev/null >2>/dev/null
 }
 
 function inst_deb_armv6l() {
@@ -190,7 +190,7 @@ if [ $OS = "Raspbian" ] && [ $jump -eq 0 ]; then
 #					;;
 #				esac
 #Check if HyperBian and ARM
-elif [ $OS = "HyperBian" ] && [ $jump -eq 0 ]; then
+elif [ $OS = "HyperBian" ]; then
 		if [ $arch_x -eq 7 ]; then
 			version_deb=$(echo $rel_latest | cut -d "/" -f 9)
 			echo
