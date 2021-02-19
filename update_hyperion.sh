@@ -122,6 +122,7 @@ else
 fi
 
 #Installation for Raspbian/HyperBian
+jump=0
 if [ $actual_os -eq 1 ] && [ $found_compile -eq 0 ]; then
 	echo $'\033[1;33m It looks like you compiled hyperion via CompileHowTo.md'
 	echo $'\033[1;33m Is that correct? Yes or No and press enter'
@@ -140,7 +141,6 @@ if [ $actual_os -eq 1 ] && [ $found_compile -eq 0 ]; then
 
 		*)
 			echo ''
-			jump=0
 			;;
 	esac
 
