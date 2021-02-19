@@ -26,14 +26,33 @@ function inst_compile() {
 			echo 'Uninstalling, this may take a few seconds'; sudo make uninstall >/dev/null 2>/dev/null; sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
 	else
 		echo
-			echo $'\033[0;31m You are already up to date! No files changed!'
+		echo $'\033[0;31m You are already up to date! No files changed!'
 	fi
 
 }
 
 function inst_deb() {
-		sudo sudo apt update; sudo apt remove hyperion -y; cd ~; wget $rel_latest;
-		sudo apt-get install < (echo ""$rel_latest" | cut -d / -f9) && cd - >/dev/null >2>/dev/null
+		echo
+		echo Your version is:
+		test -e /usr/bin/hyperiond && echo $(/usr/bin/hyperiond --version | grep Version) || echo 'Version Number not available.'
+		echo
+		echo I want to install:
+		echo $rel_latest | cut -d / -f9
+		echo
+		echo Do You want to proceed? Type Yes or no to abort!
+		read -p '>>> ' yes_no
+		case $yes_no in
+			(Yes | yes )
+				sudo apt-get update; sudo apt remove hyperion -y; cd ~; wget $rel_latest;
+				sudo apt-get install ./$(echo $rel_latest | cut -d / -f9) && cd - >/dev/null 2>/dev/null && $(exit 0)
+				;;
+			*)
+				echo
+				echo $'\033[0;31m You decided against installing the software. No files were written!'
+				echo
+				exit 0
+				;;
+		esac
 }
 
 function inst_deb_armv6l() {
