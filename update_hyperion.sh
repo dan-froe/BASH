@@ -78,7 +78,7 @@ if [ $OS_LIBREELEC -eq 1 ]; then
 	echo 'We are on LibreELEC'
 	OS=$(lsb_release -i | cut -d : -f 2)
 	found_compile=1
-	sudo find / -path "*/.git/config" | cat "config" | grep "/hyperion-project/hyperion.ng.git" && found_compile=0
+	sudo find / -path "*/.git/config" | cat "config" | grep "/hyperion-project/hhyperion.ng.git" && found_compile=0
 # Stop hyperion service if it is running
 	systemctl -q stop hyperion.service >/dev/null 2>/dev/null
 	systemctl -q stop hyperiond@pi.service >/dev/null 2>/dev/null
