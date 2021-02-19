@@ -32,7 +32,7 @@ function inst_compile() {
 }
 
 function inst_deb() {
-		sudo sudo apt update; sudo apt remove hyperion -y; curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv7l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \";
+		sudo sudo apt update; sudo apt remove hyperion -y; wget -i $rel_latest;
 		sudo apt-get install $rel_latest
 }
 
