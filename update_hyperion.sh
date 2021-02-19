@@ -21,9 +21,9 @@ fi
 
 #Function Table
 function inst_compile() {
-	cd ~/hyperion/build/ && sudo make uninstall 2>/dev/null; sudo git pull https://github.com/hyperion-project/hyperion.ng.git master | grep "changed.*inseration.*deletion" && $(exit 0)
+	cd ~/hyperion/build/ && sudo git pull https://github.com/hyperion-project/hyperion.ng.git master | grep "changed.*inseration.*deletion" && $(exit 0)
 	if [ $? -eq 0 ]; then
-			sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
+			echo 'Uninstalling, this may take a few seconds'; sudo make uninstall >/dev/null 2>/dev/null; sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
 	else
 			echo $'\033[0;31m You are already up to date! No files changed!'
 	fi
@@ -176,7 +176,7 @@ if [ $OS = "Raspbian" ] && [ $jump -eq 0 ]; then
 						echo
 						echo $'\033[1;33m Updating with package ' "$version_deb"
 						echo
-						inst_deb_armv6l && && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
+						inst_deb_armv6l && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
 						$(exit 0)
 					fi
 #					;;
