@@ -136,7 +136,7 @@ if [ $actual_os -eq 1 ] && [ $found_compile -eq 0 ]; then
 	case $yes_no in
 		(Yes | yes)
 			echo $'\033[0;32m Updating Hyperion by compiling'
-#			inst_compile
+			inst_compile
 			jump=66
 			$(exit 0)
 			;;
@@ -163,7 +163,7 @@ if [ $OS = "Raspbian" ] && [ $jump -eq 0 ]; then
 						echo
 						echo $'\033[1;33m Updating with package ' "$version_deb"
 						echo
-#						inst_deb && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
+						inst_deb && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
 						echo
 						$(exit 0)
 					elif [ $arch_x -eq 6 ]; then
@@ -171,7 +171,7 @@ if [ $OS = "Raspbian" ] && [ $jump -eq 0 ]; then
 						echo
 						echo $'\033[1;33m Updating with package ' "$version_deb"
 						echo
-#						inst_deb_armv6l && && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
+						inst_deb_armv6l && && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
 						$(exit 0)
 					fi
 #					;;
@@ -187,7 +187,7 @@ elif [ $OS = "HyperBian" ]; then
 			echo
 			echo $'\033[1;33m Updating with package ' "$version_deb"
 			echo
-#						inst_deb && sudo apt -f install && echo && echo 'You are up to date!'
+						inst_deb && sudo apt -f install && echo && echo 'You are up to date!'
 			echo
 			$(exit 0)
 		elif [ $arch_x -eq 6 ]; then
@@ -195,7 +195,7 @@ elif [ $OS = "HyperBian" ]; then
 			echo
 			echo $'\033[1;33m Updating with package ' "$version_deb"
 			echo
-#						inst_deb_armv6l && sudo apt -f install && echo && echo 'You are up to date!'
+						inst_deb_armv6l && sudo apt -f install && echo && echo 'You are up to date!'
 			$(exit 0)
 		fi
 	fi
