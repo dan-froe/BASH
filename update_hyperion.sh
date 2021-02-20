@@ -80,10 +80,10 @@ function inst_deb_armv6l() {
 }
 
 # Set welcome message
-echo '***************************************************************************'
+printf %"$COLUMNS"s |tr " " "*"
 echo 'This script will update Hyperion.ng for Raspbian/HyperBian/LibreELEC'
 echo 'Created by Daniel Froebe.'
-echo '***************************************************************************'
+printf %"$COLUMNS"s |tr " " "*"
 
 # Find out which system we are on
 OS_RASPBIAN=`grep -m1 -c 'Raspbian\|RetroPie' /etc/issue` # /home/pi
