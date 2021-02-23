@@ -4,8 +4,8 @@
 rm ./instanzen.sh >/dev/null 2>&1
 rm ./instanzen2.sh >/dev/null 2>&1
 #download scripts
-wget -qL - https://raw.githubusercontent.com/dan-froe/BASH/overhaul/hyperion_auto/instanzen.sh
-wget -qL - https://raw.githubusercontent.com/dan-froe/BASH/overhaul/hyperion_auto/instanzen2.sh
+wget -qL - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/instanzen.sh
+wget -qL - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/instanzen2.sh
 #make executable
 sudo chmod +x ./instanzen.sh
 sudo chmod +x ./instanzen2.sh
