@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-#delete dublicates
-rm file
 
 #variables
 i=0
@@ -49,7 +47,7 @@ echo
 while [[ "$i" < "$number" ]]
 do
 	i=$(($i+1))
-	echo 'Instance' "$i" 'configuration?'
+	echo 'Instance' "$i" 'configuration? First write on or off and hit space. For LED USB Platform write 0 for off 1 for on, seperated by space'
 	read -a instance_"$i"_conf_
 done
 
@@ -57,16 +55,20 @@ echo "#!/usr/bin/env bash
 
 " >>"$instance_shortcut"
 
-echo ${instance_1_conf_[@]}
-echo ${instance_2_conf_[@]}
-echo ${instance_3_conf_[@]}
+#echo ${instance_1_conf_[@]}
+#echo ${instance_2_conf_[@]}
+#echo ${instance_3_conf_[@]}
 
+{
 i=0
 while [[ "$i" < "$number" ]]
 do
 	i=$(($i+1))
 	var="$(eval echo \${instance_"$i"_conf_[0]})"
-	[[ "$var"  = "on" ]] && echo curl -i -X POST 'http://localhost:8090/json-rpc' --data "{"command" : "instance","subcommand" : "startInstance","instance" : $i}" >>"$instance_boot" >>"$instance_shortcut"
+
+	[[ "$var"  = "on" ]] && echo curl -i -X POST 'http://localhost:8090/json-rpc' --data "{"command" : "instance","subcommand" : "startInstance","instance" : $i}" | tee -a "$instance_boot" "$instance_shortcut"
+
+[[ "$var"  = "off" ]] && echo curl -i -X POST 'http://localhost:8090/json-rpc' --data "{"command" : "instance","subcommand" : "stopInstance","instance" : $i}" | tee -a "$instance_boot" "$instance_shortcut"
 
 done
 
@@ -75,33 +77,44 @@ i=0
 while [[ "$i" < "$number" ]]
 do
 	i=$(($i+1))
-	var="$(eval echo \${instance_"$i"_conf_[5]})"
+	var="$(eval echo \${instance_"$i"_conf_[1]})"
 
-	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : "$i"}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":true}}'" >>"$instance_boot" >>"$instance_shortcut"
+	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : "$i"}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":true}}'" | tee -a "$instance_boot" "$instance_shortcut"
 
-	[[ "$var"  = "0" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : "$i"}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":false}}'" >>"$instance_boot" >>"$instance_shortcut"
+	[[ "$var"  = "0" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : "$i"}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":false}}'" | tee -a "$instance_boot" "$instance_shortcut"
 
 done
 
 i=0
 while [[ "$i" < "$number" ]]
-do                                                                                   i=$(($i+1))                                                                  var="$(eval echo \${instance_"$i"_conf_[5]})"
+do                                                                                   i=$(($i+1))
+	var="$(eval echo \${instance_"$i"_conf_[2]})"
 
-	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : "$i"}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"V4L","state":true}}'" >>file      
-	[[ "$var"  = "0" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : "$i"}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"V4L","state":false}}'" >>"$instance_boot" >>"$instance_shortcut"
+	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : "$i"}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"V4L","state":true}}'" | tee -a "$instance_boot" "$instance_shortcut"
+
+	[[ "$var"  = "0" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : "$i"}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"V4L","state":false}}'" | tee -a "$instance_boot" "$instance_shortcut"
 
 done
 
 
 i=0
 while [[ "$i" < "$number" ]]
-do                                                                                   i=$(($i+1))                                                                  var="$(eval echo \${instance_"$i"_conf_[5]})"
+do
+	i=$(($i+1))
+	var="$(eval echo \${instance_"$i"_conf_[3]})"
 
-	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : "$i"}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"GRABBER","state":true}}'" >>"$instance_boot" >>"$instance_shortcut"
+	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : "$i"}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"GRABBER","state":true}}'" | tee -a "$instance_boot" "$instance_shortcut"
 
-	[[ "$var"  = "0" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : "$i"}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"GRABBER","state":false}}'" >>"$instance_boot" >>"$instance_shortcut"
+	[[ "$var"  = "0" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : "$i"}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"GRABBER","state":false}}'" | tee -a "$instance_boot" "$instance_shortcut"
 	
 done
+} >/dev/null
+echo
+echo
+echo
+echo "the name of your script $instance_shortcut"
+echo
+echo
 
 #write out current crontab
 #crontab -l > mycron
