@@ -7,7 +7,7 @@ number=0
 instance_boot="instance.sh"
 instance_shortcut=instance_"$RANDOM".sh
 
-#adjust the script
+#boot script
 echo
 echo "Do you nedd a boot script?"
 echo
@@ -29,7 +29,10 @@ do
 	var=\$(systemctl status hyperiond* | grep 'active (running)' \| sed -e 's/Active://' -e 's/since.*ago//' | tr -d \" \")
 	sleep 5
 done
-#########################################################################" >>"$instance_boot"
+#########################################################################
+
+
+" >>"$instance_boot"
 else
 	echo "#!/usr/bin/env bash
 
@@ -38,12 +41,14 @@ else
 	echo
 fi
 
+#instances count
 echo
 echo 'How many instances do you want to control?'
 read number
 echo
 echo
 
+#array configuration
 while [[ "$i" < "$number" ]]
 do
 	i=$(($i+1))
@@ -52,32 +57,40 @@ do
 done
 
 {
+#instances on/off
 i=0
 while [[ "$i" < "$number" ]]
 do
 	i=$(($i+1))
 	var="$(eval echo \${instance_"$i"_conf_[0]})"
 
-	[[ "$var"  = "on" ]] && echo curl -i -X POST \'http://localhost:8090/json-rpc\' --data \'{\"command\" : \"instance\",\"subcommand\" : \"startInstance\",\"instance\" : $i}\' | tee -a "$instance_boot" "$instance_shortcut"
+	[[ "$var"  = "on" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"startInstance\",\"instance\" : $i}'
+	
+	" | tee -a "$instance_boot" "$instance_shortcut"
 
-	[[ "$var"  = "off" ]] && echo curl -i -X POST \'http://localhost:8090/json-rpc\' --data \'{\"command\" : \"instance\",\"subcommand\" : \"stopInstance\",\"instance\" : $i}\' | tee -a "$instance_boot" "$instance_shortcut"
+	[[ "$var"  = "off" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"stopInstance\",\"instance\" : $i}'
+       
+	" | tee -a "$instance_boot" "$instance_shortcut"
 
 done
 
-
+#instance LEDDEVICE
 i=0
 while [[ "$i" < "$number" ]]
 do
 	i=$(($i+1))
 	var="$(eval echo \${instance_"$i"_conf_[1]})"
 
-	[[ "$var"  = "1" ]] && echo curl -i -X POST \'http://localhost:8090/json-rpc\' --data \'{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}\' --next \'http://localhost:8090/json-rpc\' --data \'\{\"command\":\"componentstate\",\"componentstate\":\{\"component\":\"LEDDEVICE\",\"state\":true\}\}\' | tee -a "$instance_boot" "$instance_shortcut"
+	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"LEDDEVICE\",\"state\":true}}' 
+	
+	" | tee -a "$instance_boot" "$instance_shortcut"
 
 
 	[[ "$var"  = "0" ]] && echo curl -i -X POST \'http://localhost:8090/json-rpc\' --data \'{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}\' --next \'http://localhost:8090/json-rpc\' --data \'\{\"command\":\"componentstate\",\"componentstate\":\{\"component\":\"LEDDEVICE\",\"state\":false\}\}\' | tee -a "$instance_boot" "$instance_shortcut"
 
 done
 
+#instance USB
 i=0
 while [[ "$i" < "$number" ]]
 do                                                                                   i=$(($i+1))
@@ -91,7 +104,7 @@ do                                                                              
 
 done
 
-
+#instance PLATFORM
 i=0
 while [[ "$i" < "$number" ]]
 do
