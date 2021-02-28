@@ -4,7 +4,9 @@
 
 ###3. Ausführbar machen sudo chmod +x usb_an.sh
 
-###4. Der Eintrag in crontab: crontab -e
+###4. Der Eintrag in crontab: crontab -e. 
+###Ich gehe davon aus du hast die Datei im Login Verzeichnis erstellt. 
+###Ansonsten das Verzeichnis für ~ eintragen. 
 ### @reboot sudo bash ~/usb_an.sh
 
 
