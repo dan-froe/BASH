@@ -1,9 +1,15 @@
+###1. Datei erstellen "nano usb_an.sh
+
+###2. Inhalt reinkopieren. 
+
+###3. Ausführbar machen sudo chmod +x usb_an.sh
+
+###4. Der Eintrag in crontab: crontab -e
+### @reboot sudo bash ~/usb_an.sh
+
+
+###ANFANG###
 #!/usr/bin/env bash
-
-
-#silent boot
-#exec >ok
-#exec 2>error
 
 #variables
 var=0
@@ -23,6 +29,9 @@ done
 #sleep 20
 
 curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 0}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"V4L","state":true}}'
+
+
+###ENDE###
 
 
 #Diese Zeile kann auch verwendet werden, dann einfach in den crontab kopieren.
