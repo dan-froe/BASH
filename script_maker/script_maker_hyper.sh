@@ -141,7 +141,7 @@ done
 echo
 echo
 echo
-echo "the name of your script $instance_shortcut"
+echo "The name of your script is $instance_shortcut. "
 echo
 echo
 
@@ -158,5 +158,5 @@ if [[ $set_boot_init -eq 1 ]]; then
 #install new cron file
     crontab mycron
 #rm mycron
-    echo; echo; echo; echo; echo $'\033[0;32mI updated crontab. Everything is ready!'; echo; echo; echo
+    echo; echo; echo; echo; echo $'\033[0;32mThe file "instance.sh is added to crontab and will be executed during boot. Everything is ready!'; echo; echo; echo
 fi
