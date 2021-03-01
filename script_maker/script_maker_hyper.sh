@@ -2,14 +2,15 @@
 
 
 #variables
-i=0
-number=0
+i="0"
+number="0"
+set_boot_init="0"
 instance_boot="instance.sh"
 instance_shortcut=instance_"$RANDOM".sh
 
 #boot script
 echo
-echo "Do you nedd a boot script?"
+echo "Do you nedd a boot script? Type yes or no. "
 echo
 read yes_no
 echo
@@ -26,13 +27,14 @@ i=0
 while [[ \$var != \"active\(r\unning\)\" ]] && [[ \$i < \"4\" ]]
 do
 	i=\$((\$i+1))
-	var=\$(systemctl status hyperiond* | grep 'active (running)' \| sed -e 's/Active://' -e 's/since.*ago//' | tr -d \" \")
+	var=\$(systemctl status hyperion* | grep 'active (running)' \| sed -e 's/Active://' -e 's/since.*ago//' | tr -d \" \")
 	sleep 5
 done
 #########################################################################
 
 
 " >>"$instance_boot"
+        set_boot_init="1"
 else
 	echo "#!/usr/bin/env bash
 
@@ -52,7 +54,7 @@ echo
 while [[ "$i" < "$number" ]]
 do
 	i=$(($i+1))
-	echo 'Instance' "$i" 'configuration? First write on or off and hit space. For LED USB Platform write 0 for off 1 for on, seperated by space'
+	echo 'Instance' "$i" 'configuration. First write on or off and hit space. For LED, USB, Platform write 0 for off and 1 for on, seperated by space. e.g. "on 1 0 1"'
 	read -a instance_"$i"_conf_
 done
 
@@ -86,21 +88,28 @@ do
 	" | tee -a "$instance_boot" "$instance_shortcut"
 
 
-	[[ "$var"  = "0" ]] && echo curl -i -X POST \'http://localhost:8090/json-rpc\' --data \'{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}\' --next \'http://localhost:8090/json-rpc\' --data \'\{\"command\":\"componentstate\",\"componentstate\":\{\"component\":\"LEDDEVICE\",\"state\":false\}\}\' | tee -a "$instance_boot" "$instance_shortcut"
+	[[ "$var"  = "0" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"LEDDEVICE\",\"state\":false}}' 
+
+        "| tee -a "$instance_boot" "$instance_shortcut"
 
 done
 
 #instance USB
 i=0
 while [[ "$i" < "$number" ]]
-do                                                                                   i=$(($i+1))
+do
+        i=$(($i+1))
 	var="$(eval echo \${instance_"$i"_conf_[2]})"
 
-	[[ "$var"  = "1" ]] && echo curl -i -X POST \'http://localhost:8090/json-rpc\' --data \'{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}\' --next \'http://localhost:8090/json-rpc\' --data \'\{\"command\":\"componentstate\",\"componentstate\":\{\"component\":\"V4L\",\"state\":true\}\}\' | tee -a "$instance_boot" "$instance_shortcut"
+	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"V4L\",\"state\":true}}'
+
+        " | tee -a "$instance_boot" "$instance_shortcut"
 
 
 
-	[[ "$var"  = "0" ]] && echo curl -i -X POST \'http://localhost:8090/json-rpc\' --data \'{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}\' --next \'http://localhost:8090/json-rpc\' --data \'\{\"command\":\"componentstate\",\"componentstate\":\{\"component\":\"V4L\",\"state\":false\}\}\' | tee -a "$instance_boot" "$instance_shortcut"
+	[[ "$var"  = "0" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"V4L\",\"state\":false}}'
+
+        " | tee -a "$instance_boot" "$instance_shortcut"
 
 done
 
@@ -111,11 +120,15 @@ do
 	i=$(($i+1))
 	var="$(eval echo \${instance_"$i"_conf_[3]})"
 
-	[[ "$var"  = "1" ]] && echo curl -i -X POST \'http://localhost:8090/json-rpc\' --data \'{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}\' --next \'http://localhost:8090/json-rpc\' --data \'\{\"command\":\"componentstate\",\"componentstate\":\{\"component\":\"GRABBER\",\"state\":true\}\}\' | tee -a "$instance_boot" "$instance_shortcut"
+	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"GRABBER\",\"state\":true}}'
+
+        " | tee -a "$instance_boot" "$instance_shortcut"
 
 
 
-	[[ "$var"  = "0" ]] && echo curl -i -X POST \'http://localhost:8090/json-rpc\' --data \'{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}\' --next \'http://localhost:8090/json-rpc\' --data \'\{\"command\":\"componentstate\",\"componentstate\":\{\"component\":\"GRABBER\",\"state\":false\}\}\' | tee -a "$instance_boot" "$instance_shortcut"
+	[[ "$var"  = "0" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '\{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"GRABBER\",\"state\":false}}'
+
+        " | tee -a "$instance_boot" "$instance_shortcut"
 
 done
 } >/dev/null
@@ -127,14 +140,17 @@ echo "the name of your script $instance_shortcut"
 echo
 echo
 
-#write out current crontab
-#crontab -l > mycron
+if [[ $set_boot_init -eq 1 ]]; then
+
+#read current crontab into file 
+    crontab -l > mycron
 #test for duplication
-#[[ $(cat mycron | grep instanzen.sh | cut -d " " -f 4,4 | cut -d "/" -f 4,4) = "instanzen.sh" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
+    [[ $(cat mycron | grep instance.sh | cut -d " " -f 4,4 | cut -d "/" -f 4,4) = "instance.sh" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
 #echo new cron into cron file
-#dir=$(pwd)/instanzen.sh
-#echo "@reboot sudo bash $dir >ok >error" >> mycron
+    dir=$(pwd)/instance.sh
+    echo "@reboot sudo bash $dir >ok >error" >> mycron
 #install new cron file
-#crontab mycron
+    crontab mycron
 #rm mycron
-#echo; echo; echo; echo; echo $'\033[0;32mI updated crontab. Everything is ready!'; echo; echo; echo
+    echo; echo; echo; echo; echo $'\033[0;32mI updated crontab. Everything is ready!'; echo; echo; echo
+fi
