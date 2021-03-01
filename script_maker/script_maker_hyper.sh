@@ -126,7 +126,7 @@ do
 
 
 
-	[[ "$var"  = "0" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '\{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"GRABBER\",\"state\":false}}'
+	[[ "$var"  = "0" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"GRABBER\",\"state\":false}}'
 
         " | tee -a "$instance_boot" "$instance_shortcut"
 
@@ -140,6 +140,7 @@ echo "the name of your script $instance_shortcut"
 echo
 echo
 
+##crontab installation and check
 if [[ $set_boot_init -eq 1 ]]; then
 
 #read current crontab into file 
