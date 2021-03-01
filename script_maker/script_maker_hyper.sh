@@ -55,7 +55,8 @@ while [[ "$i" < "$number" ]]
 do
 	i=$(($i+1))
         echo
-	echo 'Instance' "$i" 'configuration. First write on or off and hit space. For LED, USB, Platform write 0 for off and 1 for on, seperated by space. e.g. "on 1 0 1"'
+	echo 'Instance' "$i" 'configuration. First write on or off and hit space. 
+For LED, USB, Platform write 0 for off and 1 for on, seperated by space. e.g. "on 1 0 1"'
 	echo
         read -a instance_"$i"_conf_
         echo
