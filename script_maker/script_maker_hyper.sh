@@ -12,6 +12,7 @@ instance_shortcut=instance_"$RANDOM".sh
 echo
 echo "Do you nedd a boot script? Type yes or no. "
 echo
+echo -n ">"
 read yes_no
 echo
 if [ "$yes_no" = "yes" ]; then
@@ -46,6 +47,8 @@ fi
 #instances count
 echo
 echo 'How many instances do you want to control?'
+echo
+echo -n ">"
 read number
 echo
 echo
@@ -55,9 +58,10 @@ while [[ "$i" < "$number" ]]
 do
 	i=$(($i+1))
         echo
-	echo 'Instance' "$i" 'configuration. First write on or off and hit space. 
-For LED, USB, Platform write 0 for off and 1 for on, seperated by space. e.g. "on 1 0 1"'
+	echo -e 'Instance'" \e[32m$i\e[0m "'configuration. 
+First write on or off and hit space. For LED, USB, Platform write 0 for off  and 1 for on, seperated by space. e.g. "on 1 0 1". Hit enter if you want skip an instance.'
 	echo
+	echo -n ">"
         read -a instance_"$i"_conf_
         echo
         echo
@@ -138,13 +142,6 @@ do
 done
 } >/dev/null
 
-echo
-echo
-echo
-echo "The name of your script is $instance_shortcut. "
-echo
-echo
-
 ##crontab installation and check
 if [[ $set_boot_init -eq 1 ]]; then
 
@@ -158,5 +155,12 @@ if [[ $set_boot_init -eq 1 ]]; then
 #install new cron file
     crontab mycron
 #rm mycron
+    rm mycron
     echo; echo; echo; echo; echo $'\033[0;32mThe file "instance.sh is added to crontab and will be executed during boot. Everything is ready!'; echo; echo; echo
 fi
+
+echo
+echo
+echo -e "The name of your script is \e[1m\e[32m$instance_shortcut."
+echo
+echo
