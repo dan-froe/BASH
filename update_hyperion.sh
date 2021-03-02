@@ -6,13 +6,17 @@
 clear
 
 # Fixed variables
-#api_url="https://api.github.com/repos/hyperion-project/hyperion.ng"
+api_url="https://api.github.com/repos/hyperion-project/hyperion.ng"
 type wget > /dev/null 2> /dev/null
 hasWget=$?
 type curl > /dev/null 2> /dev/null
 hasCurl=$?
-rel_latest=$(curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv7l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \")
-rel_latest_armv6l=$(curl https://api.github.com/repos/hyperion-project/hyperion.ng/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv6l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \")
+rel_latest=$(curl $api_url/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv7l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \")
+rel_latest_armv6l=$(curl $api_url/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv6l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \")
+directory_compile="0"
+directory_compile_test=0
+directory_last=$(pwd)
+
 
 if [[ "${hasWget}" -ne 0 ]]; [[ "${hasCurl}" -ne 0 ]]; then
 	echo $'\033[0;31m ---> Critical Error: wget or curl required'
@@ -21,12 +25,14 @@ fi
 
 #Function Table
 function inst_compile() {
-	cd ~/hyperion/build/ && sudo git pull https://github.com/hyperion-project/hyperion.ng.git master | grep "changed.*inseration.*deletion" && $(exit 0)
+	cd $directory_compile && sudo git pull https://github.com/hyperion-project/hyperion.ng.git master | grep "changed.*inseration.*deletion" && $(exit 0)
 	if [ $? -eq 0 ]; then
 			echo 'Uninstalling, this may take a few seconds'; sudo make uninstall >/dev/null 2>/dev/null; sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
+			cd $directory_last >/dev/null 2>/dev/null
 	else
 		echo
 		echo $'\033[0;31m You are already up to date! No files changed!'
+		cd $directory_last >/dev/null 2>/dev/null
 	fi
 
 }
@@ -44,7 +50,7 @@ function inst_deb() {
 		case $yes_no in
 			(Yes | yes )
 				sudo apt-get update; sudo apt remove hyperion -y; cd ~; wget $rel_latest;
-				sudo apt-get install ./$(echo $rel_latest | cut -d / -f9) && cd - >/dev/null 2>/dev/null && $(exit 0)
+				sudo apt-get install ./$(echo $rel_latest | cut -d / -f9) && cd $directory_last >/dev/null 2>/dev/null && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!' && $(exit 0)
 				;;
 			*)
 				echo
@@ -68,7 +74,7 @@ function inst_deb_armv6l() {
 		case $yes_no in
 			(Yes | yes )
 				sudo apt-get update; sudo apt remove hyperion -y; cd ~; wget $rel_latest_armv6l;
-				sudo apt-get install ./$(echo $rel_latest_armv6l | cut -d / -f9) && cd - >/dev/null 2>/dev/null && $(exit 0)
+				sudo apt-get install ./$(echo $rel_latest_armv6l | cut -d / -f9) && cd $directory_last >/dev/null 2>/dev/null && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!' && $(echo 0)
 				;;
 			*)
 				echo
@@ -101,11 +107,12 @@ fi
 
 if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
 	echo 'We are on Raspbina/HyperBian'
+	echo $'\033[1;33mChecking installation... this may take a few seconds ...'
   OS=$(lsb_release -i | cut -d : -f 2)
 	found_compile=1
-	cd ~ >/dev/null 2>/dev/null
-	sudo find */.git -name config -exec cat {} + | grep hyperion-project/hyperion.ng.git >/dev/null && found_compile=0
-	cd - >/dev/null 2>/dev/null
+	cd $HOME >/dev/null 2>/dev/null
+	test $(find $HOME -name HyperionConfig.h.in) && directory_compile=$(find $HOME -name "hyperiond" | grep /build/bin/hyperiond | sed 's/build\/bin\/hyperiond//') && [[ -d $directory_compile ]] && cd $directory_compile &&  [ $(basename `git rev-parse --show-toplevel`) = "hyperion" ] &&  echo || directory_compile=0
+	cd $directory_last >/dev/null 2>/dev/null
 # Stop hyperion service if it is running
 	sudo systemctl -q stop hyperion@.service 2>/dev/null
 	sudo systemctl -q stop hyperiond@pi.service 2>/dev/null
@@ -113,7 +120,7 @@ if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
 	echo
 	echo
 	echo
-	actual_os=1
+#	actual_os=1
 fi
 
 #if [ $OS_RASPLEX -eq 1 ]; then
@@ -127,7 +134,7 @@ if [ $OS_LIBREELEC -eq 1 ]; then
 # Stop hyperion service if it is running
 	systemctl -q stop hyperion.service >/dev/null 2>/dev/null
 	systemctl -q stop hyperiond@pi.service >/dev/null 2>/dev/null
-	actual_os=2
+#	actual_os=2
 fi
 
 #if [ $OS_OSMC -eq 1 ]; then
@@ -168,7 +175,7 @@ fi
 
 #Installation for Raspbian/HyperBian
 jump=0
-if [ $actual_os -eq 1 ] && [ $found_compile -eq 0 ]; then
+if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $found_compile -eq 1 ]; then
 	echo $'\033[1;33m It looks like you compiled hyperion via CompileHowTo.md'
 	echo $'\033[1;33m Is that correct? Yes or No and press enter'
 	echo
@@ -178,8 +185,30 @@ if [ $actual_os -eq 1 ] && [ $found_compile -eq 0 ]; then
 	echo
 	case $yes_no in
 		(Yes | yes)
+			directory_compile_test=2
+			while [ $directory_compile_test -ge 1 ]
+			do
+				echo
+				echo
+				echo $'\033[1;33mIs this the correct directory?' $directory_compile
+				echo 'Type yes if it correct. Otherwise type in the correct path or type abort to abort. '
+				read -p '>>>  ' yes_no
+				[[ ${yes_no,,} == "yes" ]] && break
+				[[ ${yes_no,,} == "abort" ]] && echo 'you aborted' && exit 0
+				directory_compile=$yes_no
+				[ -e $directory_compile ]
+				directory_compile_test=$?
+				[[ $directory_compile_test -ge 1 ]] && echo ; echo; echo; echo $'\033[0;31mdirectory none existent'
+			done
 			echo
-			echo $'\033[0;32m Compiling the newest Version.'
+			echo
+			echo
+			echo '\033[0;32mInput accepted! '$directory_compile
+			[[ $directory_compile != *"/" ]] && directory_compile="${directory_compile}/"
+			echo
+			echo
+			echo
+			echo $'\033[0;32mCompiling the newest Version.'
 			echo
 			echo
 			inst_compile
@@ -197,13 +226,13 @@ fi
 $(exit 1)
 
 #Check if RaspBian and installation method and ARM
-if [ $OS = "Raspbian" ] && [ $jump -eq 0 ]; then
+if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $jump -eq 0 ]; then
 					if [ $arch_x -eq 7 ]; then
 						version_deb=$(echo $rel_latest | cut -d "/" -f 9)
 						echo
 						echo $'\033[1;33m Updating with package ' "$version_deb"
 						echo
-						inst_deb && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
+						inst_deb
 						echo
 						$(exit 0)
 					elif [ $arch_x -eq 6 ]; then
@@ -211,38 +240,18 @@ if [ $OS = "Raspbian" ] && [ $jump -eq 0 ]; then
 						echo
 						echo $'\033[1;33m Updating with package ' "$version_deb"
 						echo
-						inst_deb_armv6l && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!'
+						inst_deb_armv6l
 						$(exit 0)
 					fi
 
-#Check if HyperBian and ARM
-elif [ $OS = "HyperBian" ]; then
-		if [ $arch_x -eq 7 ]; then
-			version_deb=$(echo $rel_latest | cut -d "/" -f 9)
-			echo
-			echo $'\033[1;33m Updating with package ' "$version_deb"
-			echo
-			inst_deb && sudo apt -f install && echo && echo 'You are up to date!'
-			echo
-			$(exit 0)
-		elif [ $arch_x -eq 6 ]; then
-			version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)
-			echo
-			echo $'\033[1;33m Updating with package ' "$version_deb"
-			echo
-			inst_deb_armv6l && sudo apt -f install && echo && echo 'You are up to date!'
-			$(exit 0)
-		fi
-	fi
-
 #Installation LibreELEC
-if [ $OS = "LibreELEC" ]; then
+elif [ $OS = "LibreELEC" ]; then
 		echo
 #		rm -R /storage/hyperion; wget -qO- https://git.io/JU4Zx | bash && echo $'\033[0;32m Your update process is complete!'; $(exit 0)
 fi
 
 if [ $? -eq 1 ]; then
-	echo $'\033[0;31m Something went wrong installation incomplete'
+	echo $'\033[0;31mSomething went wrong installation incomplete'
 	exit 1
 
 #Exit or File creation
@@ -253,8 +262,7 @@ else
 		echo
 		echo
 		echo
-		var_pwd=$(pwd)
-		echo $'\033[1;33mI can create the files needed for a background process. I will only place them in' "$var_pwd"'. You have to copy them into the systemd folder yourself. I will tell you the destination, when writing the files'
+		echo $'\033[1;33mI can create the files needed for a background process. I will only place them in' "$HOME"'. You have to copy them into the systemd folder yourself. I will tell you the destination, when writing the files'
 		echo $'\033[1;33m Type Yes if you want them created'
 		echo
 		read -p '>>>' yes_no
