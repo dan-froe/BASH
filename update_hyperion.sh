@@ -40,13 +40,16 @@ function inst_compile() {
 function inst_deb() {
 		echo
 		echo Your version is:
-		test -e /usr/bin/hyperiond && echo $(/usr/bin/hyperiond --version | grep Version) || echo 'Version Number not available.'
+		[[ -e "/usr/bin/hyperiond" ]] && echo $(/usr/bin/hyperiond --version | grep Version | sed -e 's/(.*)//') || echo 'Version number not available.'
 		echo
 		echo I want to install:
 		echo $rel_latest | cut -d / -f9
 		echo
-		echo Do You want to proceed? Type Yes or no to abort!
+		echo Do You want to proceed? Type yes or no to abort!
+		echo
 		read -p '>>> ' yes_no
+		echo
+		echo
 		case $yes_no in
 			(Yes | yes )
 				sudo apt-get update; sudo apt remove hyperion -y; cd ~; wget $rel_latest;
@@ -111,7 +114,7 @@ if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
   OS=$(lsb_release -i | cut -d : -f 2)
 	found_compile=1
 	cd $HOME >/dev/null 2>/dev/null
-	test $(find $HOME -name HyperionConfig.h.in) && directory_compile=$(find $HOME -name "hyperiond" | grep /build/bin/hyperiond | sed 's/build\/bin\/hyperiond//') && [[ -d $directory_compile ]] && cd $directory_compile &&  [ $(basename `git rev-parse --show-toplevel`) = "hyperion" ] &&  echo || directory_compile=0
+	[[ -e $(find $HOME -name HyperionConfig.h.in | grep -m1 hyperion) ]] && directory_compile=$(find $HOME -name "hyperiond" | grep /build/bin/hyperiond | sed 's/build\/bin\/hyperiond//') && [[ -d $directory_compile ]] && cd $directory_compile &&  [ $(basename `git rev-parse --show-toplevel`) = "hyperion" ] &&  echo || directory_compile=0
 	cd $directory_last >/dev/null 2>/dev/null
 # Stop hyperion service if it is running
 	sudo systemctl -q stop hyperion@.service 2>/dev/null
@@ -203,7 +206,7 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $found_compile -eq 1 ]; th
 			echo
 			echo
 			echo
-			echo '\033[0;32mInput accepted! '$directory_compile
+			echo $'\033[0;32mInput accepted! '$directory_compile
 			[[ $directory_compile != *"/" ]] && directory_compile="${directory_compile}/"
 			echo
 			echo
@@ -230,7 +233,7 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $jump -eq 0 ]; then
 					if [ $arch_x -eq 7 ]; then
 						version_deb=$(echo $rel_latest | cut -d "/" -f 9)
 						echo
-						echo $'\033[1;33m Updating with package ' "$version_deb"
+						echo $'\033[1;33mUpdating with package ' "$version_deb"
 						echo
 						inst_deb
 						echo
@@ -238,7 +241,7 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $jump -eq 0 ]; then
 					elif [ $arch_x -eq 6 ]; then
 						version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)
 						echo
-						echo $'\033[1;33m Updating with package ' "$version_deb"
+						echo $'\033[1;33mUpdating with package ' "$version_deb"
 						echo
 						inst_deb_armv6l
 						$(exit 0)
@@ -247,7 +250,7 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $jump -eq 0 ]; then
 #Installation LibreELEC
 elif [ $OS = "LibreELEC" ]; then
 		echo
-#		rm -R /storage/hyperion; wget -qO- https://git.io/JU4Zx | bash && echo $'\033[0;32m Your update process is complete!'; $(exit 0)
+		rm -R /storage/hyperion; wget -qO- https://git.io/JU4Zx | bash && echo $'\033[0;32mYour update process is complete!'; $(exit 0)
 fi
 
 if [ $? -eq 1 ]; then
@@ -262,7 +265,7 @@ else
 		echo
 		echo
 		echo
-		echo $'\033[1;33mI can create the files needed for a background process. I will only place them in' "$HOME"'. You have to copy them into the systemd folder yourself. I will tell you the destination, when writing the files'
+		echo $'\033[1;33mI can create the files needed for a background process. I will place them in' "$HOME"'. You have to copy them into the systemd folder yourself. I will tell you the destination, when writing the files'
 		echo $'\033[1;33m Type Yes if you want them created'
 		echo
 		read -p '>>>' yes_no
@@ -272,7 +275,7 @@ else
 				*)
 				echo
 				echo
-				echo $'\033[0;32m No files created. Your are all set. Thank you for using my script!'
+				echo $'\033[0;32mNo files created. Your are all set. Thank you for using my script!'
 				echo
 				echo
 				echo
@@ -282,7 +285,7 @@ else
 fi
 
 echo
-echo $'\033[1;33m The files will be created in current directory. You have to copy files into:'
+echo $'\033[1;33mThe files will be created in current directory. You have to copy files into:'
 echo
 if [ $actual_os -eq 1 ]; then
 #Service files for RaspBian/HyperBian
