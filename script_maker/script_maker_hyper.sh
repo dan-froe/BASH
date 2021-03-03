@@ -71,10 +71,7 @@ First write on or off and hit space. For LED, USB, Platform write 0 for off  and
 	echo -n ">"
         read -a instance_"$i"_conf_
 	i=$(($i+1))
-	[[ "${instance_0_conf_[0]}" =~ ^[0-9]+$ ]] && instance_0_conf_=("xxx" "${instance_0_conf_[@]}")
-#	var="$(eval echo \${instance_"$i"_conf_[@]})"
-#	var_0="$(eval echo \${instance_"$i"_conf_[0]})"
-#	[[ "${var_0}" =~ ^[0-9]+$ ]] && instance_"$i"_conf_=("on" "${instance_$i_conf_[@]}")
+#	[[ "${instance_0_conf_[0]}" =~ ^[0-9]+$ ]] && instance_0_conf_=("xxx" "${instance_0_conf_[@]}")
 	echo
         echo
 done
@@ -161,7 +158,7 @@ if [[ $set_boot_init -eq 1 ]]; then
 	crontab -l > mycron
 
 #test for duplication
-	[[ $(cat mycron | grep -m1 instance.sh | cut -d " " -f 4,4 | sed -e 's\/.*/\\') ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!\e[0m' && echo && echo && echo && rm mycron && exit 0
+	[[ $(cat mycron | grep -m1 instance.sh | cut -d " " -f 4,4 | sed -e 's\/.*/\\') ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!\e[0m' && echo && echo && echo && rm mycron && echo -e "The name of your script is \e[1m\e[32m$instance_shortcut." && echo && echo&& echo && exit 0
 
 #echo new cron into cron file
 	dir=$(pwd)/instance.sh
