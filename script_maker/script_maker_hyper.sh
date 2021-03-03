@@ -36,6 +36,11 @@ done
 
 " >>"$instance_boot"
         set_boot_init="1"
+	echo "#!/usr/bin/env bash
+
+	" >>"$instance_shortcut"
+	echo
+
 else
 	echo "#!/usr/bin/env bash
 
@@ -50,20 +55,27 @@ echo 'How many instances do you want to control?'
 echo
 echo -n ">"
 read number
+#number=$(($number-1))
 echo
 echo
 
 #array configuration
 while [[ "$i" < "$number" ]]
 do
-	i=$(($i+1))
+#	i=$(($i+1))
         echo
-	echo -e 'Instance'" \e[32m$i\e[0m "'configuration. 
-First write on or off and hit space. For LED, USB, Platform write 0 for off  and 1 for on, seperated by space. e.g. "on 1 0 1". Hit enter if you want skip an instance.'
+	[[ "$i" == "0" ]] && echo -e 'Instance'" \e[32m$(($i+1)) - Main Instance\e[0m "'configuration. 
+You can' "\e[4m\e[31mnot\e[0m" 'switch off or on this instance. For LED, USB, Platform write 0 for off  and 1 for on, seperated by space.' "\e[32me.g."' "1 0 1"'"\e[0m"'. Hit enter if you want skip an instance.' || echo -e 'Instance'" \e[32m$(($i+1))\e[0m "'configuration. 
+First write on or off and hit space. For LED, USB, Platform write 0 for off  and 1 for on, seperated by space.' "\e[32me.g. "on 1 0 1"\e[0m"'. Hit enter if you want skip an instance.'
 	echo
 	echo -n ">"
         read -a instance_"$i"_conf_
-        echo
+	i=$(($i+1))
+	[[ "${instance_0_conf_[0]}" =~ ^[0-9]+$ ]] && instance_0_conf_=("xxx" "${instance_0_conf_[@]}")
+#	var="$(eval echo \${instance_"$i"_conf_[@]})"
+#	var_0="$(eval echo \${instance_"$i"_conf_[0]})"
+#	[[ "${var_0}" =~ ^[0-9]+$ ]] && instance_"$i"_conf_=("on" "${instance_$i_conf_[@]}")
+	echo
         echo
 done
 
@@ -89,7 +101,6 @@ done
 i=0
 while [[ "$i" < "$number" ]]
 do
-	i=$(($i+1))
 	var="$(eval echo \${instance_"$i"_conf_[1]})"
 
 	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"LEDDEVICE\",\"state\":true}}' 
@@ -101,13 +112,13 @@ do
 
         "| tee -a "$instance_boot" "$instance_shortcut"
 
+	i=$(($i+1))
 done
 
 #instance USB
 i=0
 while [[ "$i" < "$number" ]]
 do
-        i=$(($i+1))
 	var="$(eval echo \${instance_"$i"_conf_[2]})"
 
 	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"V4L\",\"state\":true}}'
@@ -120,13 +131,13 @@ do
 
         " | tee -a "$instance_boot" "$instance_shortcut"
 
+	i=$(($i+1))
 done
 
 #instance PLATFORM
 i=0
 while [[ "$i" < "$number" ]]
 do
-	i=$(($i+1))
 	var="$(eval echo \${instance_"$i"_conf_[3]})"
 
 	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"GRABBER\",\"state\":true}}'
@@ -139,6 +150,7 @@ do
 
         " | tee -a "$instance_boot" "$instance_shortcut"
 
+	i=$(($i+1))
 done
 } >/dev/null
 
@@ -146,17 +158,21 @@ done
 if [[ $set_boot_init -eq 1 ]]; then
 
 #read current crontab into file 
-    crontab -l > mycron
+	crontab -l > mycron
+
 #test for duplication
-    [[ $(cat mycron | grep instance.sh | cut -d " " -f 4,4 | cut -d "/" -f 4,4) = "instance.sh" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
+	[[ $(cat mycron | grep -m1 instance.sh | cut -d " " -f 4,4 | sed -e 's\/.*/\\') ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!\e[0m' && echo && echo && echo && rm mycron && exit 0
+
 #echo new cron into cron file
-    dir=$(pwd)/instance.sh
-    echo "@reboot sudo bash $dir >ok >error" >> mycron
+	dir=$(pwd)/instance.sh
+	echo "@reboot sudo bash $dir >ok >error" >> mycron
+
 #install new cron file
-    crontab mycron
+	crontab mycron
+
 #rm mycron
-    rm mycron
-    echo; echo; echo; echo; echo $'\033[0;32mThe file "instance.sh is added to crontab and will be executed during boot. Everything is ready!'; echo; echo; echo
+	rm mycron
+	echo; echo; echo; echo; echo $'\033[0;32mThe file "instance.sh" is added to crontab and will be executed during boot. Everything is ready!\e[0m'; echo; echo; echo
 fi
 
 echo
