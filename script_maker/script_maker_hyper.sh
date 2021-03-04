@@ -61,25 +61,27 @@ echo
 echo
 
 #ip address 
-echo "What ip Adress to you want to control?"
+echo "What is the IP of Hyperion.ng?"
 echo "Hit enter if the script runs locally."
 echo
+
 while [[ $n -eq "1" ]] 
 do
 
-echo -n ">"
-read ip
-if [[ $ip =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        echo -n ">"
+        read ip
+        if [[ $ip =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
 
-        echo "Valid ip." && n="0"
+                echo "Valid ip." && n="0"
 
-elseif
-        [[ $ip =~ ^[0-9] ]] && echo "Not a valid ip." && echo "please enter a valid IP-address" && n="1"
-else 
-        ip="localhost" && echo "IP is localhost" && n="0"
-        echo
-        echo
-fi
+        elseif
+                [[ $ip =~ ^[0-9] ]] && echo "Not a valid ip." && echo "please enter a valid IP-address" && n="1"
+        else 
+                ip="localhost" && echo "IP is localhost" && n="0"
+                echo
+                echo
+        fi
+done
 
 #array configuration
 while [[ "$i" < "$number" ]]
