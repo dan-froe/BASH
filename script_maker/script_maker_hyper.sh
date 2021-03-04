@@ -11,6 +11,14 @@ ip="localhost"
 n="1"
 
 
+# Set welcome message
+printf %"$COLUMNS"s |tr " " "*"
+echo 'This script makes scripts for x instances /// Hyperion.ng'
+echo 'Created by Daniel Froebe.'
+printf %"$COLUMNS"s |tr " " "*"
+
+
+
 #ip address
 echo
 echo
@@ -49,7 +57,7 @@ done
 
 #boot script
 echo
-echo "Do you nedd a boot script? Type yes or no. "
+echo "Do you nedd a boot script? Type yes or press enter to proceed without a boot script. "
 echo
 echo -n ">"
 read yes_no
@@ -98,7 +106,7 @@ do
         echo -n ">"
         read number
         echo
-        [[ $number -eq "0" ]] || [[ -z $number ]] && echo -e "\e[4m\e[31mYou have to enter at least 1\e[0m" && number="0"
+        [[ $number -eq "0" ]] || [[ -z $number ]] || [[ $number =~^[a-z]+$ ]] && echo -e "\e[31mYou have to enter at least 1\e[0m" && number="0"
 done
 
 
@@ -153,7 +161,6 @@ do
 		var="$(eval echo \${instance_"$i"_conf_[0]})"
 	fi
 
-#	var="$(eval echo \${instance_"$i"_conf_[1]})"
 
 	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://$ip:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"LEDDEVICE\",\"state\":true}}' 
 	
@@ -182,7 +189,6 @@ do
 		var="$(eval echo \${instance_"$i"_conf_[1]})"
 	fi
 
-#	var="$(eval echo \${instance_"$i"_conf_[2]})"
 
 	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://$ip:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"V4L\",\"state\":true}}'
 
@@ -212,7 +218,6 @@ do
 		var="$(eval echo \${instance_"$i"_conf_[2]})"
 	fi
 
-#	var="$(eval echo \${instance_"$i"_conf_[3]})"
 
 	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://$ip:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"GRABBER\",\"state\":true}}'
 
