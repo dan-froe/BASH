@@ -15,7 +15,7 @@ n="1"
 echo -e "\e[0m"
 clear
 printf %"$COLUMNS"s |tr " " "*"
-echo
+echo '  ' 
 echo 'Script-Maker for Hyperion.ng instances.' 
 echo 'Control LED-Hardware, USB Grabber, Platform Grabber 
 for as many instances as you want.'
