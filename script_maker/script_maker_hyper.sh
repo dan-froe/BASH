@@ -13,9 +13,8 @@ n="1"
 
 # Set welcome message
 echo -e "\e[0m"
-printf hello
 echo 
-printf %"$COLUMNS"s |tr " " "*"
+printf %"$COLUMNS"s |tr " " "+"
 echo
 echo 'Script-Maker for Hyperion.ng instances.' 
 echo 'Control LED-Hardware, USB Grabber, Platform Grabber 
