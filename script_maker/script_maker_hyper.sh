@@ -13,7 +13,7 @@ n="1"
 
 # Set welcome message
 echo
-echo -n . 
+echo test
 printf %"$COLUMNS"s |tr " " "*"
 echo
 echo 'Script-Maker for Hyperion.ng instances.' 
