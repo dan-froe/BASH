@@ -8,6 +8,7 @@ set_boot_init="0"
 instance_boot="instance.sh"
 instance_shortcut=instance_"$RANDOM".sh
 ip="localhost"
+n="1"
 
 #boot script
 echo
@@ -56,21 +57,29 @@ echo 'How many instances do you want to control?'
 echo
 echo -n ">"
 read number
-#ip address
 echo
 echo
-echo "What ip Adress to you want to control?
-echo "Hit enter if the script runs locally. 
+
+#ip address 
+echo "What ip Adress to you want to control?"
+echo "Hit enter if the script runs locally."
 echo
+while [[ $n - eq "1" ]] 
+do
+
 echo -n ">"
 read ip
-if [[ ip =~ ^[1-9]+$ ]]; then
+if [[ $ip =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+
+        echo "Valid ip." && n="0"
+
+elseif
+        [[ $ip =~ ^[0-9] ]] && echo "Not a valid ip." && echo "please enter a valid IP-address" && n="1"
+else 
+        ip="localhost" && echo "IP is localhost" && n="0"
         echo
-else
-        ip="localhost" 
+        echo
 fi
-echo
-echo
 
 #array configuration
 while [[ "$i" < "$number" ]]
