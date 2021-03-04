@@ -23,6 +23,7 @@ echo '+ make a boot script automatically installed in crontab.'
 echo 'Created by Daniel Froebe.'
 echo
 printf %"$COLUMNS"s |tr " " "*"
+printf %"$COLUMNS"s |tr " " "+"
 
 
 
