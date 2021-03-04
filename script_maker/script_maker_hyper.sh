@@ -84,7 +84,7 @@ do
 	i=$(($i+1))
 	var="$(eval echo \${instance_"$i"_conf_[0]})"
 
-	[[ "$var"  = "on" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"startInstance\",\"instance\" : $i}'
+	[[ "$var"  = "on" ]] || [[ "$var" = ^[0-9]+$]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"startInstance\",\"instance\" : $i}'
 	
 	" | tee -a "$instance_boot" "$instance_shortcut"
 
@@ -98,7 +98,16 @@ done
 i=0
 while [[ "$i" < "$number" ]]
 do
-	var="$(eval echo \${instance_"$i"_conf_[1]})"
+      eval echo \${instance_"$i"_conf_[@]} | grep -q "on"
+	hash_var="$?"
+
+	if [[ "$hash_var" -eq "0" ]]; then
+		var="$(eval echo \${instance_"$i"_conf_[1]})"
+	else
+		var="$(eval echo \${instance_"$i"_conf_[0]})"
+	fi
+
+#	var="$(eval echo \${instance_"$i"_conf_[1]})"
 
 	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"LEDDEVICE\",\"state\":true}}' 
 	
@@ -116,7 +125,17 @@ done
 i=0
 while [[ "$i" < "$number" ]]
 do
-	var="$(eval echo \${instance_"$i"_conf_[2]})"
+        
+      eval echo \${instance_"$i"_conf_[@]} | grep -q "on"
+	hash_var="$?"
+
+	if [[ "$hash_var" -eq "0" ]]; then
+		var="$(eval echo \${instance_"$i"_conf_[2]})"
+	else
+		var="$(eval echo \${instance_"$i"_conf_[1]})"
+	fi
+
+#	var="$(eval echo \${instance_"$i"_conf_[2]})"
 
 	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"V4L\",\"state\":true}}'
 
@@ -135,7 +154,17 @@ done
 i=0
 while [[ "$i" < "$number" ]]
 do
-	var="$(eval echo \${instance_"$i"_conf_[3]})"
+
+      eval echo \${instance_"$i"_conf_[@]} | grep -q "on"
+	hash_var="$?"
+
+	if [[ "$hash_var" -eq "0" ]]; then
+		var="$(eval echo \${instance_"$i"_conf_[3]})"
+	else
+		var="$(eval echo \${instance_"$i"_conf_[2]})"
+	fi
+
+#	var="$(eval echo \${instance_"$i"_conf_[3]})"
 
 	[[ "$var"  = "1" ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"switchTo\",\"instance\" : $i}' --next 'http://localhost:8090/json-rpc' --data '{\"command\":\"componentstate\",\"componentstate\":{\"component\":\"GRABBER\",\"state\":true}}'
 
@@ -148,6 +177,7 @@ do
         " | tee -a "$instance_boot" "$instance_shortcut"
 
 	i=$(($i+1))
+
 done
 } >/dev/null
 
