@@ -11,7 +11,10 @@ ip="localhost"
 n="1"
 
 
-#ip address 
+#ip address
+echo
+echo
+echo
 echo "What is the IP of Hyperion.ng?"
 echo "Hit enter if the script runs locally."
 
@@ -87,19 +90,23 @@ fi
 
 
 #instances count
-echo
-echo 'How many instances do you want to control?'
-echo
-echo -n ">"
-read number
-echo
-echo
+while [[ $number -eq "0" ]]
+do
+        echo
+        echo 'How many instances do you want to control?'
+        echo
+        echo -n ">"
+        read number
+        echo
+        [[ $number < "1" ]] || [[ -n $number ]] && echo "You have to enter at least 1" && number="0"
+        echo
+        echo
+done
 
 
 #array configuration
 while [[ "$i" < "$number" ]]
 do
-#	i=$(($i+1))
         echo
 	[[ "$i" == "0" ]] && echo -e 'Instance'" \e[32m$(($i+1)) - Main Instance\e[0m "'configuration. 
 You can' "\e[4m\e[31mnot\e[0m" 'switch off or on this instance. For LED, USB, Platform write 0 for off  and 1 for on, seperated by space.' "\e[32me.g."' "1 0 1"'"\e[0m"'. Hit enter if you want skip an instance.' || echo -e 'Instance'" \e[32m$(($i+1))\e[0m "'configuration. 
