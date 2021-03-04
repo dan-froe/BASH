@@ -12,8 +12,12 @@ n="1"
 
 
 # Set welcome message
+echo
+echo
 printf %"$COLUMNS"s |tr " " "*"
-echo 'This script makes scripts for x instances /// Hyperion.ng'
+echo 'Script-Maker for Hyperion.ng instances.' 
+echo 'Control LED-Hardware, USB Grabber, Platform Grabber for as many instances as you want.'
+echo '+ make a boot script automatically installed in crontab.'
 echo 'Created by Daniel Froebe.'
 printf %"$COLUMNS"s |tr " " "*"
 
@@ -106,7 +110,7 @@ do
         echo -n ">"
         read number
         echo
-        [[ $number -eq "0" ]] || [[ -z $number ]] || [[ $number =~^[a-z]+$ ]] && echo -e "\e[31mYou have to enter at least 1\e[0m" && number="0"
+        [[ $number -eq "0" ]] || [[ -z $number ]] || [[ $number =~ ^[a-z]+$ ]] && echo -e "\e[31mYou have to enter at least 1\e[0m" && number="0"
 done
 
 
