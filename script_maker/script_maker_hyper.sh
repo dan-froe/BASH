@@ -7,6 +7,7 @@ number="0"
 set_boot_init="0"
 instance_boot="instance.sh"
 instance_shortcut=instance_"$RANDOM".sh
+ip="localhost"
 
 #boot script
 echo
@@ -55,7 +56,19 @@ echo 'How many instances do you want to control?'
 echo
 echo -n ">"
 read number
-#number=$(($number-1))
+#ip address
+echo
+echo
+echo "What ip Adress to you want to control?
+echo "Hit enter if the script runs locally. 
+echo
+echo -n ">"
+read ip
+if [[ ip =~ ^[1-9]+$ ]]; then
+        echo
+else
+        ip="localhost" 
+fi
 echo
 echo
 
