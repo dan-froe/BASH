@@ -13,6 +13,7 @@ n="1"
 
 # Set welcome message
 echo -e "\e[0m"
+printf hello
 echo 
 printf %"$COLUMNS"s |tr " " "*"
 echo
