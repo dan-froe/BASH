@@ -119,6 +119,8 @@ First write on or off and hit space. For LED, USB, Platform write 0 for off  and
 done
 
 
+
+##configuration loops##
 {
 #instances on/off
 i=0
@@ -232,20 +234,20 @@ done
 ##crontab installation and check
 if [[ $set_boot_init -eq 1 ]]; then
 
-#read current crontab into file 
+     #read current crontab into file 
 	crontab -l > mycron
 
-#test for duplication
+     #test for duplication
 	[[ $(cat mycron | grep -m1 instance.sh | cut -d " " -f 4,4 | sed -e 's\/.*/\\') ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!\e[0m' && echo && echo && echo && rm mycron && echo -e "The name of your script is \e[1m\e[32m$instance_shortcut." && echo && echo&& echo && exit 0
 
-#echo new cron into cron file
+     #write new cron into file
 	dir=$(pwd)/instance.sh
 	echo "@reboot sudo bash $dir >ok >error" >> mycron
 
-#install new cron file
+     #install new cron file
 	crontab mycron
 
-#rm mycron
+     #remove mycron
 	rm mycron
 	echo; echo; echo; echo; echo $'\033[0;32mThe file "instance.sh" is added to crontab and will be executed during boot. Everything is ready!\e[0m'; echo; echo; echo
 fi
