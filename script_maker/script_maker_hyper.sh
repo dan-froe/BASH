@@ -98,7 +98,7 @@ do
         echo -n ">"
         read number
         echo
-        [[ $number < "1" ]] || [[ -n $number ]] && echo -e "\e[4m\e[31mYou have to enter at least 1\e[0m" && number="0"
+        [[ $number -eq "0" ]] || [[ -n $number ]] && echo -e "\e[4m\e[31mYou have to enter at least 1\e[0m" && number="0"
 done
 
 
