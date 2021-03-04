@@ -15,8 +15,10 @@ n="1"
 echo
 echo
 printf %"$COLUMNS"s |tr " " "*"
+echo
 echo 'Script-Maker for Hyperion.ng instances.' 
-echo 'Control LED-Hardware, USB Grabber, Platform Grabber for as many instances as you want.'
+echo 'Control LED-Hardware, USB Grabber, Platform Grabber 
+for as many instances as you want.'
 echo '+ make a boot script automatically installed in crontab.'
 echo 'Created by Daniel Froebe.'
 printf %"$COLUMNS"s |tr " " "*"
