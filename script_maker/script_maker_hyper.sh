@@ -64,7 +64,7 @@ echo
 echo "What ip Adress to you want to control?"
 echo "Hit enter if the script runs locally."
 echo
-while [[ $n - eq "1" ]] 
+while [[ $n -eq "1" ]] 
 do
 
 echo -n ">"
