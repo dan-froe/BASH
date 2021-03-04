@@ -74,7 +74,7 @@ do
 
                 echo "Valid ip." && n="0"
 
-        elseif
+        elif
                 [[ $ip =~ ^[0-9]+$ ]] && echo "Not a valid ip." && echo "please enter a valid IP-address" && n="1"
         else 
                 ip="localhost" && echo "IP is localhost" && n="0"
