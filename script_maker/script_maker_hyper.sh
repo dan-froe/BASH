@@ -78,7 +78,7 @@ do
 
         elif [[ $ip =~ ^[0-9]+$ ]] || [[ $ip =~ ^[0-9]+\..*+$ ]]; then
    
-                echo "You entered $ip."
+                echo "You entered $ip!"
                 echo
                 echo "Please enter a valid IP-address"
                 n="1"
