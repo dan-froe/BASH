@@ -84,7 +84,7 @@ do
 	i=$(($i+1))
 	var="$(eval echo \${instance_"$i"_conf_[0]})"
 
-	[[ "$var"  = "on" ]] || [[ "$var" = ^[0-9]+$]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"startInstance\",\"instance\" : $i}'
+	[[ "$var"  = "on" ]] || [[ "$var" = ^[0-9]+$ ]] && echo "curl -i -X POST 'http://localhost:8090/json-rpc' --data '{\"command\" : \"instance\",\"subcommand\" : \"startInstance\",\"instance\" : $i}'
 	
 	" | tee -a "$instance_boot" "$instance_shortcut"
 
