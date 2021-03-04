@@ -98,15 +98,14 @@ do
         echo -n ">"
         read number
         echo
-        [[ $number < "1" ]] || [[ -n $number ]] && echo "You have to enter at least 1" && number="0"
-        echo
-        echo
+        [[ $number < "1" ]] || [[ -n $number ]] && echo -e "\e[4m\e[31mYou have to enter at least 1\e[0m" && number="0"
 done
 
 
 #array configuration
 while [[ "$i" < "$number" ]]
 do
+        echo
         echo
 	[[ "$i" == "0" ]] && echo -e 'Instance'" \e[32m$(($i+1)) - Main Instance\e[0m "'configuration. 
 You can' "\e[4m\e[31mnot\e[0m" 'switch off or on this instance. For LED, USB, Platform write 0 for off  and 1 for on, seperated by space.' "\e[32me.g."' "1 0 1"'"\e[0m"'. Hit enter if you want skip an instance.' || echo -e 'Instance'" \e[32m$(($i+1))\e[0m "'configuration. 
