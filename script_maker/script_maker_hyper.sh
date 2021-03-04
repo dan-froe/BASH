@@ -76,7 +76,7 @@ do
                 echo
                 n="0"
 
-        elif [[ $ip =~ ^[0-9]+$ ]]; then
+        elif [[ $ip =~ ^[0-9]+$ ]] || [[ $ip =~ ^[0-9]+\..*+$ ]]; then
    
                 echo "You entered $ip."
                 echo
