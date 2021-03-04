@@ -12,8 +12,8 @@ n="1"
 
 
 # Set welcome message
-echo
-echo test
+echo -e "\e[0m"
+echo 
 printf %"$COLUMNS"s |tr " " "*"
 echo
 echo 'Script-Maker for Hyperion.ng instances.' 
@@ -21,6 +21,7 @@ echo 'Control LED-Hardware, USB Grabber, Platform Grabber
 for as many instances as you want.'
 echo '+ make a boot script automatically installed in crontab.'
 echo 'Created by Daniel Froebe.'
+echo
 printf %"$COLUMNS"s |tr " " "*"
 
 
