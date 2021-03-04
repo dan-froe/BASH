@@ -10,6 +10,40 @@ instance_shortcut=instance_"$RANDOM".sh
 ip="localhost"
 n="1"
 
+
+#ip address 
+echo "What is the IP of Hyperion.ng?"
+echo "Hit enter if the script runs locally."
+
+while [[ $n -eq "1" ]] 
+do
+        echo
+        echo -n ">"
+        read ip
+        echo
+        if [[ $ip =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+
+                echo "Valid ip."
+                echo
+                n="0"
+
+        elif [[ $ip =~ ^[0-9]+$ ]] || [[ $ip =~ ^[0-9]+\..*+$ ]]; then
+   
+                echo "You entered $ip!"
+                echo
+                echo "Please enter a valid IP-address"
+                n="1"
+       
+        else 
+                ip="localhost"
+                echo "IP is $ip"
+                n="0"
+                echo
+                echo
+        fi
+done
+
+
 #boot script
 echo
 echo "Do you nedd a boot script? Type yes or no. "
@@ -51,6 +85,7 @@ else
 	echo
 fi
 
+
 #instances count
 echo
 echo 'How many instances do you want to control?'
@@ -60,37 +95,6 @@ read number
 echo
 echo
 
-#ip address 
-echo "What is the IP of Hyperion.ng?"
-echo "Hit enter if the script runs locally."
-
-while [[ $n -eq "1" ]] 
-do
-        echo
-        echo -n ">"
-        read ip
-        echo
-        if [[ $ip =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-
-                echo "Valid ip."
-                echo
-                n="0"
-
-        elif [[ $ip =~ ^[0-9]+$ ]] || [[ $ip =~ ^[0-9]+\..*+$ ]]; then
-   
-                echo "You entered $ip!"
-                echo
-                echo "Please enter a valid IP-address"
-                n="1"
-       
-        else 
-                ip="localhost"
-                echo "IP is $ip"
-                n="0"
-                echo
-                echo
-        fi
-done
 
 #array configuration
 while [[ "$i" < "$number" ]]
@@ -107,6 +111,7 @@ First write on or off and hit space. For LED, USB, Platform write 0 for off  and
 	echo
         echo
 done
+
 
 {
 #instances on/off
@@ -125,6 +130,7 @@ do
 	" | tee -a "$instance_boot" "$instance_shortcut"
 
 done
+
 
 #instance LEDDEVICE
 i=0
@@ -152,6 +158,7 @@ do
 
 	i=$(($i+1))
 done
+
 
 #instance USB
 i=0
@@ -181,6 +188,7 @@ do
 
 	i=$(($i+1))
 done
+
 
 #instance PLATFORM
 i=0
@@ -212,6 +220,8 @@ do
 
 done
 } >/dev/null
+
+
 
 ##crontab installation and check
 if [[ $set_boot_init -eq 1 ]]; then
