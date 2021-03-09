@@ -1,4 +1,4 @@
-# Ping script Installation
+# Ping Skript Installation
 
 ### 1. Download
 Per SSH einloggen und im Start Verzeichnis folgendes ausführen:
