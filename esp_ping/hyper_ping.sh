@@ -17,7 +17,7 @@ do
 
    #first success after error
    if [[ "$var" = "0" ]] && [[ "$i" = "0" ]]; then
-       while [[ "$is_on" -ne "true" ]]
+       while [[ "$is_on" != "true" ]]
        do
           sleep 1
           curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "startInstance","instance" : 1}' >/dev/null 2>&1
