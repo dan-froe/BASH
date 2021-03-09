@@ -6,7 +6,6 @@ var="0"
 IP="$1"
 time_sec="$2"
 time_ext="30"
-sleep_exit="0"
 
 #endless loop
 while :
@@ -31,9 +30,8 @@ do
        echo 'no answer' >>bar 2>&1
        i=0
    fi
-   sleep_exit="0"
+
    [[ "$time_sec" > "0" ]] && sleep "$2" || sleep 4
-   [[ "$i" = "1" ]] && sleep $(($ext_time-$time_sec)); sleep_exit="$?"
-   [[ "$sleep_exit" = "1" ]] && sleep 30
+   [[ "$i" = "1" ]] && [[ "$time_ext" > "$time_sec" ]] && sleep $(($ext_time-$time_sec))
 
 done
