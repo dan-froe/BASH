@@ -1,6 +1,6 @@
 # Ping Skript Installation
 
-Wenn etwas geändert werden soll Bescheid sagen. Das Skript muss nicht endlos laufen. Man kann auch die Aktionszeiten usw anpassen. 
+Wenn etwas geändert werden soll Bescheid geben. Das Skript muss nicht endlos laufen. Man kann auch die Aktionszeiten usw anpassen. 
 
 ### 1. Download
 Per SSH einloggen und im Start Verzeichnis folgendes ausführen:
