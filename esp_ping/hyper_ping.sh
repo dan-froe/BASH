@@ -19,6 +19,7 @@ do
        curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "startInstance","instance" : 1}' >/dev/null 2>&1
        curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 1}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":true}}' >/dev/null 2>&1
        i=1
+       sleep 25
        echo 'ping successful' >>bar 2>&1
    
    #second to n successful answers
@@ -32,6 +33,5 @@ do
    fi
 
    [[ "$time_sec" > "0" ]] && sleep "$2" || sleep 4
-   [[ "$i" = "1" ]] && [[ "$time_ext" > "$time_sec" ]] && sleep $(($ext_time-$time_sec))
 
 done
