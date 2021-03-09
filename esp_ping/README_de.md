@@ -7,7 +7,7 @@ Per SSH einloggen und im Start Verzeichnis folgendes ausführen:
 
 ### 2. Crontab einrichten
 Folgendes ausführen: <pre><code>crontab -e</code></pre>
-Ggfs Editor auswählen.
+ggfs Editor auswählen.
 Dann unterhalb des Textes folgendes einfügen :
 
 <pre><code>@reboot bash $HOME/hyper_ping.sh IP TIME</code></pre>
