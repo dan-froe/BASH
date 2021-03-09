@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 #script for pinging an network device
-#after succesful pong checking for running instance 1
-#instance 1 on / LED on
+#after succesful pong instance 0 LED on
+#check if LED on is success
 #by Daniel Froebe
 
 #variables 
@@ -34,21 +34,21 @@ do
 
 #	  is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 1' | grep -v '"instance"' | sed 's/"running": //' | tr -d ' ')
 
-#      echo 'no instance' >>bar 2>&1
+       echo 'no instance' >>bar 2>&1
 
        done
        i=1
-#      echo 'ping successful' >>bar 2>&1
+       echo 'ping successful' >>bar 2>&1
        sleep $sleep_long
 
    #second to n successful answers
    elif [[ "$var" = "0" ]] && [[ "$i" = "1" ]]; then
-#      echo 'ping still successful' >>bar 2>&1
+       echo 'ping still successful' >>bar 2>&1
        sleep $sleep_long
 
    #no one home
    else
-#      echo 'no answer' >>bar 2>&1
+       echo 'no answer' >>bar 2>&1
        i=0
    fi
 
