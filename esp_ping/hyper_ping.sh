@@ -8,7 +8,7 @@ time_sec="$2"
 
 while :
 do
-   ping -c "$IP" >/dev/null 2>&1
+   ping -c 1 "$IP" >/dev/null 2>&1
    var="$?"
    if [[ "$var" = "0" ]] && [[ "$i" = "0" ]]; then
        curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "startInstance","instance" : 1}' >/dev/null 2>&1
