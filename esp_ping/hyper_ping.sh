@@ -38,6 +38,7 @@ do
 
        done
        i=1
+       is_on="false"
        echo 'ping successful' >>bar 2>&1
        sleep $sleep_long
 
