@@ -5,7 +5,10 @@ Wenn etwas geändert werden soll Bescheid geben. Das Skript muss nicht endlos la
 ### 1. Download
 Per SSH einloggen und im Start Verzeichnis folgendes ausführen:
 
-nur wenn Skript schon lokal vorhanden <pre><code>rm hyper_ping.sh</code></pre>
+nur wenn Skript schon lokal vorhanden zuerst <pre><code>rm hyper_ping.sh</code></pre>
+
+ansonsten nur/danach
+
 
 <pre><code>wget https://raw.githubusercontent.com/dan-froe/BASH/master/esp_ping/hyper_ping.sh</code></pre>
 
