@@ -16,7 +16,8 @@ is_on="false"
 while :
 do
    #ping ESP device
-   ping -c 1 "$IP" >/dev/null 2>&1
+   while true; do ping -c1 "$IP" >/dev/null 2>&1 && break; done
+#  ping -c 1 "$IP" >/dev/null 2>&1
    var="$?"
 
    #first success after error
