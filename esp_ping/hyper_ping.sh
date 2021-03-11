@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+#
+
 #script for pinging a network device
 #after succesful pong instance 0 LED on
 #check if LED on is success
