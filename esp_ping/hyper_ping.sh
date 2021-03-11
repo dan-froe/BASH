@@ -34,6 +34,7 @@ do
 #      echo 'no instance' >>bar 2>&1
 
        done
+       curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command":"effect","effect":{"name":"Rainbow swirl"},"duration":5000,"priority":50,"origin":"My Fancy App"}' >/dev/null 2>&1
        i=1
        is_on="false"
 
