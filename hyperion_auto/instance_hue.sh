@@ -49,7 +49,7 @@ done
 #checking instance 0, switching 1
 while :
 do
-   sleep=3
+   sleep 3
    is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -B1 "LEDDEVICE" | grep -v name | sed -e 's/ .*"enabled": //' -e 's/,//') 
 
    if [[ "$is_on" = "true" ]] && [[ "$foo" = "0" ]]; then
@@ -59,6 +59,7 @@ do
    elif [[ "$is_on" = "true" ]] && [[ "$foo" = "1" ]]; then
      echo true 1
      [[ "$is_on" != "true" ]] && foo=0
+     sleep 7
 
    else
      is_on_1=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 1,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
