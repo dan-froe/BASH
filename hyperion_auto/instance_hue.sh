@@ -51,7 +51,8 @@ done
 while :
 do
    sleep=1
-   is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 0,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
+   is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -B1 "LEDDEVICE" | grep -v name | sed -e 's/ .*"enabled": //' -e 's/,//') 
+#  is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 0,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
  
    if [[ "$is_on" = "true" ]] && [[ "$foo" = "0" ]]; then
      instance switch && foo=1
