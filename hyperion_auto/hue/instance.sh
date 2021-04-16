@@ -6,11 +6,12 @@
 #exec 2>error
 
 #variables
-var=0
-i=0
-is_on=0
-is_on_1=0
-foo=0
+var="0"
+i="0"
+is_on="0"
+is_on_1="0"
+foo="0"
+delay_s="$1"
 
 #function
 function instance_switch () {
@@ -59,7 +60,7 @@ do
    elif [[ "$is_on" = "true" ]] && [[ "$foo" = "1" ]]; then
      echo true 1
      [[ "$is_on" != "true" ]] && foo=0
-     sleep 7
+     [[ "$delay_s" > "0" ]] && sleep $delay_s || sleep 7
 
    else
      is_on_1=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 1,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
