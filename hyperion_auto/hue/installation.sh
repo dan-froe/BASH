@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+
+#variables
+foo="0"
+
+
 #delete dublicates
 rm ./instance.sh >/dev/null 2>&1
 rm ./instance2.sh >/dev/null 2>&1
@@ -16,9 +21,12 @@ sudo chmod +x ./instance.sh
 crontab -l > mycron
 
 #test for duplication
-cat mycron | grep "#@reboot sudo bash $(pwd)/instance.sh"
-foo="$?"
-[[ "$foo" = "0" ]] && cat mycron | sed -i s/#.*instance.sh.*// mycron
+while [[ "$foo" = "0" ]] 
+do
+  cat mycron | grep "#@reboot sudo bash $(pwd)/instance.sh"
+  foo="$?"
+  [[ "$foo" = "0" ]] && cat mycron | sed -i s/#.*instance.sh.*// mycron
+done
 
 cat mycron | grep $(pwd)/instance.sh
 foo="$?" 
