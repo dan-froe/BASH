@@ -45,7 +45,7 @@ done
 #sleep 20
 
 #calling function
-instance_switch
+#instance_switch
 
 #checking instance 0, switching 1
 while :
