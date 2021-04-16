@@ -16,10 +16,10 @@ sudo chmod +x ./instance.sh
 crontab -l > mycron
 
 #test for duplication
-[[ cat mycron | grep "#@reboot sudo bash /home/pi/instance.sh" ]] 
+cat mycron | grep "#@reboot sudo bash /home/pi/instance.sh"
 [[ "!?" = "0" ]] && cat mycron | sed -i s/.instance.sh.// mycron
 
-[[ cat mycron | grep instance.sh ]] 
+cat mycron | grep instance.sh
 [[ "!?" = "0" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
 
 #[[ $(cat mycron | grep instance.sh | cut -d " " -f 4,4 | cut -d "/" -f 4,4) = "instance.sh" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
