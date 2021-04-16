@@ -20,7 +20,7 @@ cat mycron | grep "#@reboot sudo bash $(pwd)/instance.sh"
 foo="$?"
 [[ "$foo" = "0" ]] && cat mycron | sed -i s/#.*instance.sh.*// mycron
 
-cat mycron | grep instance.sh
+cat mycron | grep $(pwd)/instance.sh
 foo="$?" 
 [[ "$foo" = "0" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
 
