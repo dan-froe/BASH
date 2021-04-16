@@ -4,8 +4,8 @@
 rm ./instance.sh >/dev/null 2>&1
 rm ./instance2.sh >/dev/null 2>&1
 #download scripts
-wget -qL - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/instance.sh
-#wget -qL - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/instance2.sh
+wget -qL - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/hue/instance.sh
+#wget -qL - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/hue/instance2.sh
 #make executable
 sudo chmod +x ./instance.sh
 #sudo chmod +x ./instance2.sh
