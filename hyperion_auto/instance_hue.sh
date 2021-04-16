@@ -55,7 +55,7 @@ do
 #  is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 0,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
  
    if [[ "$is_on" = "true" ]] && [[ "$foo" = "0" ]]; then
-     instance switch && foo=1
+     instance_switch && foo=1
      echo true 0
 #    is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 0,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
    
