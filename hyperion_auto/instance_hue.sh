@@ -14,6 +14,7 @@ foo=0
 #function
 function instance_switch () {
 #instance 1/2 on,LED on, V4l on
+         {
          curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "startInstance","instance" : 1}'
 
          curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "startInstance","instance" : 2}'
@@ -29,6 +30,7 @@ function instance_switch () {
          curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 1}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"GRABBER","state":false}}'
 
          curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 2}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"GRABBER","state":false}}'
+         } >/dev/null 2>&1
 } 
 
 #########################################################################
@@ -50,7 +52,7 @@ done
 #checking instance 0, switching 1
 while :
 do
-   sleep=1
+   sleep=3
    is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -B1 "LEDDEVICE" | grep -v name | sed -e 's/ .*"enabled": //' -e 's/,//') 
 #  is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 0,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
  
