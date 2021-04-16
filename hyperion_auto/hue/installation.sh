@@ -28,7 +28,7 @@ foo="$?"
 
 #new cron into cron file
 dir=$(pwd)/instance.sh
-echo "@reboot sudo bash $dir >ok >error" >> mycron
+echo "@reboot sudo bash $dir >/dev/null 2>&1" >> mycron
 
 #install new cron file
 crontab mycron
