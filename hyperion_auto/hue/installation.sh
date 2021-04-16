@@ -3,6 +3,7 @@
 
 #variables
 foo="0"
+dir="0"
 
 
 #delete dublicates
@@ -23,12 +24,12 @@ crontab -l > mycron
 #test for duplication
 while [[ "$foo" = "0" ]] 
 do
-  cat mycron | grep "#@reboot sudo bash $(pwd)/instance.sh"
+  cat mycron | grep "#@reboot sudo bash $(pwd)/instance.sh" >/dev/null 2>&1
   foo="$?"
   [[ "$foo" = "0" ]] && cat mycron | sed -i s/#.*instance.sh.*// mycron
 done
 
-cat mycron | grep $(pwd)/instance.sh
+cat mycron | grep $(pwd)/instance.sh >/dev/null 2>&1
 foo="$?" 
 [[ "$foo" = "0" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
 
