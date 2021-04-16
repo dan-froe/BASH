@@ -18,7 +18,7 @@ crontab -l > mycron
 #test for duplication
 cat mycron | grep "#@reboot sudo bash /home/pi/instance.sh"
 foo="$?"
-[[ "$foo" = "0" ]] && cat mycron | sed -i s/.instance.sh.// mycron
+[[ "$foo" = "0" ]] && cat mycron | sed -i s/#.*instance.sh.*// mycron
 
 cat mycron | grep instance.sh
 foo="$?" 
