@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
 
+#script for controlling instance 1
+#in relation to instance 0
+#instance 1 follows 0
+#by Daniel Froebe
+
+
 #variables
 var="0"
 i="0"
