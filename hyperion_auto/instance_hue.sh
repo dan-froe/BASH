@@ -9,7 +9,7 @@
 var=0
 i=0
 is_on=0
-foo=1
+foo=0
 
 #function
 function instance_switch () {
