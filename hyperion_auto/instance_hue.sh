@@ -9,6 +9,7 @@
 var=0
 i=0
 is_on=0
+is_on_1=0
 foo=0
 
 #function
@@ -63,8 +64,8 @@ do
      [[ "$is_on" != "true" ]] && foo=0
 
    else
-#    is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 0,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
-     curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command" : "instance","subcommand" : "stopInstance","instance" : 1}'
+#    is_on_1=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 1,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
+     [[ "$is_on_1" = "true" ]] && curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command" : "instance","subcommand" : "stopInstance","instance" : 1}'
      [[ "$is_on" != "true" ]] && foo=0
      echo false
 
