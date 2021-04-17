@@ -35,8 +35,12 @@ do
   bar=$(cat mycron | grep -c "@reboot sudo bash $(pwd)/instance.sh")
   cat mycron | grep "@reboot sudo bash $(pwd)/instance.sh" >/dev/null 2>&1
   foo="$?" 
-  [[ "$foo" = "0" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
-done
+  [[ "$foo" = "0" ]] && cat mycron | sed -i s/@.*instance.sh.*// mycron
+done 
+
+cat mycron | grep "@reboot sudo bash $(pwd)/instance.sh" >/dev/null 2>&1
+foo="$?"
+[[ "$foo" = "1" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
 
 #[[ $(cat mycron | grep instance.sh | cut -d " " -f 4,4 | cut -d "/" -f 4,4) = "instance.sh" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
 
