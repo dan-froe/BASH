@@ -45,6 +45,7 @@ do
 	var=$(systemctl status "hyperion*" | grep 'active (running)' | sed -e 's/Active://' -e 's/since.*ago//' | tr -d " ")
 	sleep 5
 done
+instance_switch
 #########################################################################
 
 
