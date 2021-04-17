@@ -15,7 +15,7 @@ IP="$1"
 IP2="$2"
 delay_s="$3"
 is_on="false"
-is_on_LED="False"
+is_on_LED="false"
 
 #function
 function instance_switch () {
@@ -81,7 +81,7 @@ do
 #         is_on_LED=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -B1 "LEDDEVICE" | grep -v name | sed -e 's/ .*"enabled": //' -e 's/,//') 
 #         [[ "$is_on_LED" = "true" ]] && is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 1,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
           num=$(($(curl -s "http://$IP/json/info" | grep -c "Hyperion")+$(curl -s "http://$IP2/json/info" | grep -c "Hyperion")))
-          [[ "$ip_count" = "$num" ]] && is_on="true" 
+          [[ "$ip_count" = "$num" ]] && is_on="true" || is_on="false"
           instance_switch
           sleep 1
           echo 'no instance' >>info 2>&1
