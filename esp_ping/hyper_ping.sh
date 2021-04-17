@@ -19,6 +19,8 @@ is_on_LED="False"
 function instance_switch () {
 #instance 1/2 on,LED on, V4l on
          {
+         curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "startInstance","instance" : 0}'
+
          curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "startInstance","instance" : 1}'
 
          curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "startInstance","instance" : 2}'
