@@ -4,7 +4,7 @@
 #variables
 foo="0"
 dir="0"
-bar=$(cat mycron | grep -c "@reboot sudo bash $(pwd)/instance.sh")
+bar="2"
 
 
 #delete dublicates
