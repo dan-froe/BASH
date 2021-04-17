@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 
-#script for controlling instance 1
+#script for controlling instance 1/2
 #in relation to instance 0
-#instance 1 follows 0
+#instance 1/2 follows 0
 #by Daniel Froebe
 
 
