@@ -65,7 +65,7 @@ done
 
 #boot script
 echo
-echo "Do you nedd a boot script? Type yes or press enter to proceed without a boot script. "
+echo "Do you need a boot script? Type yes or press enter to proceed without a boot script. "
 echo
 echo -n ">"
 read yes_no
@@ -83,7 +83,7 @@ i=0
 while [[ \$var != \"active\(r\unning\)\" ]] && [[ \$i < \"4\" ]]
 do
 	i=\$((\$i+1))
-	var=\$(systemctl status hyperion* | grep 'active (running)' \| sed -e 's/Active://' -e 's/since.*ago//' | tr -d \" \")
+	var=\$(systemctl status "hyperion*" | grep 'active (running)' \| sed -e 's/Active://' -e 's/since.*ago//' | tr -d \" \")
 	sleep 5
 done
 #########################################################################
