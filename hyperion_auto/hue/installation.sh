@@ -27,13 +27,13 @@ while [[ "$foo" = "0" ]]
 do
   cat mycron | grep "#@reboot sudo bash $(pwd)/instance.sh" >/dev/null 2>&1
   foo="$?"
-  [[ "$foo" = "0" ]] && cat mycron | sed -i "s|^@reboot.*$(pwd)/instance.sh.*||" mycron
+  [[ "$foo" = "0" ]] && cat mycron | sed -i "s|^#@reboot.*$(pwd)/instance.sh.*||" mycron
 done
 
 bar=$(cat mycron | grep -c "@reboot sudo bash $(pwd)/instance.sh")
 while [[ "$bar" > "1" ]]
 do
-  cat mycron | sed -i "s|^#@reboot.*$(pwd)/instance.sh.*||" mycron
+  cat mycron | sed -i "s|^@reboot.*$(pwd)/instance.sh.*||" mycron
   bar=$(cat mycron | grep -c "@reboot sudo bash $(pwd)/instance.sh")
 done 
 
