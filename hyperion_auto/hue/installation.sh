@@ -4,6 +4,7 @@
 #variables
 foo="0"
 dir="0"
+bar=$(cat mycron | grep -c "@reboot sudo bash $(pwd)/instance.sh")
 
 
 #delete dublicates
@@ -29,9 +30,13 @@ do
   [[ "$foo" = "0" ]] && cat mycron | sed -i s/#.*instance.sh.*// mycron
 done
 
-cat mycron | grep $(pwd)/instance.sh >/dev/null 2>&1
-foo="$?" 
-[[ "$foo" = "0" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
+while [[ "$bar" > "0" ]]
+do
+  bar=$(cat mycron | grep -c "@reboot sudo bash $(pwd)/instance.sh")
+  cat mycron | grep $(pwd)/instance.sh >/dev/null 2>&1
+  foo="$?" 
+  [[ "$foo" = "0" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
+done
 
 #[[ $(cat mycron | grep instance.sh | cut -d " " -f 4,4 | cut -d "/" -f 4,4) = "instance.sh" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
 
