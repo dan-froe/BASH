@@ -6,10 +6,12 @@
 #by Daniel Froebe
 
 #variables 
+foo="0"
+bar="0"
 i="0"
 var="0"
 IP="$1"
-time_sec="$2"
+delay_s="$2"
 is_on="false"
 
 #function
@@ -36,9 +38,9 @@ function instance_switch () {
 
 #########################################################################
 #check if hyperiond is running
-while [[ $var != "active(running)" ]] && [[ $i < "4" ]]
+while [[ $foo != "active(running)" ]] && [[ $bar < "4" ]]
 do	
-	i=$(($i+1))
+	bar=$(($bar+1))
 	var=$(systemctl status "hyperion*" | grep 'active (running)' | sed -e 's/Active://' -e 's/since.*ago//' | tr -d " ")
 	sleep 5
 done
@@ -57,18 +59,16 @@ do
    if [[ "$var" = "0" ]] && [[ "$i" = "0" ]]; then
        while [[ "$is_on" != "true" ]]
        do
-          
+          is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 1,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
 #	  curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 0}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":true}}' >/dev/null 2>&1
           instance_switch
-
           sleep 1
-
 #         is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -B1 "LEDDEVICE" | grep -v name | sed -e 's/ .*"enabled": //' -e 's/,//')
 
-#      echo 'no instance' >>bar 2>&1
+#         echo 'no instance' >>bar 2>&1
 
        done
-       curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command":"effect","effect":{"name":"Rainbow swirl"},"duration":2000,"priority":50,"origin":"My Fancy App"}' >/dev/null 2>&1
+#      curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command":"effect","effect":{"name":"Rainbow swirl"},"duration":2000,"priority":50,"origin":"My Fancy App"}' >/dev/null 2>&1
        i=1
        is_on="false"
 
@@ -78,16 +78,17 @@ do
    elif [[ "$var" = "0" ]] && [[ "$i" = "1" ]]; then
 
 #      echo 'ping still successful' >>bar 2>&1
-
-       [[ "$time_sec" > "0" ]] && sleep "$2"
+       [[ "$delay_s" > "0" ]] && sleep $delay_s || sleep 4
+#      [[ "$time_sec" > "0" ]] && sleep "$2"
 
    #no one home
    else
 
 #      echo 'no answer' >>bar 2>&1
        i=0
+       sleep 1
    fi
 
-sleep 4
+#sleep 4
 
 done
