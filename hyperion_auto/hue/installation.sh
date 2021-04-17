@@ -4,8 +4,6 @@
 #variables
 foo="0"
 dir="0"
-bar="2"
-
 
 #delete dublicates
 rm ./instance.sh >/dev/null 2>&1
@@ -24,6 +22,7 @@ crontab -l > mycron
 cat mycron | sed -i "s|^#@reboot.*$(pwd)/instance.sh.*||" mycron
 cat mycron | sed -i "s|^@reboot.*$(pwd)/instance.sh.*||" mycron
 
+#cron double check 
 cat mycron | grep "@reboot sudo bash $(pwd)/instance.sh" >/dev/null 2>&1
 foo="$?"
 [[ "$foo" = "0" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
