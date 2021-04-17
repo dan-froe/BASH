@@ -44,3 +44,5 @@ Bei jedem Boot wird das Skript gestartet. Das Skript läuft dann in einer Endlos
 Als erstes pingt es den/die ESP an. Erhält es keine Antwort wiederholt es den ping jede Sekunde.
 Erreicht es den/die ESP schaltet das Skript die Instanzen 0-2 an, sowie Grabber und LED. Danach prüft es, ob es die Info von WLED bekommt, dass die ESP einen Stream von Hyperion erhalten. Solange es kein "true" (an) bekommt wiederholt es jede Sekunde das Anschalten, sowie die Prüfung.
 Erhält es "true" wird diese Schleife beendet und es wird 5 Sekunden lang der Rainbow Swirl gezeigt. Danach pingt es wieder alle 4 Sekunden den/die ESP an. Diese Zeit ist mit TIME verlängerbar. Wenn er keinen Pong mehr erhält startet alles wieder von vorne. 
+
+**Es ist möglich das Streamen von Hyperion an die ESPs über die WLED GUI zu unterbrechen/auszusetzen. Das Skript fängt erst wieder von vorne an, wenn es keinen Pong mehr von den ESPs erhält.**
