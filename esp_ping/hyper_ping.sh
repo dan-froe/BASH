@@ -61,7 +61,7 @@ instance_switch
 while :
 do
    #ping ESP device
-   ping -c 1 -w 1 "$IP" >/dev/null 2>&1
+   ping -c 1 -w 1 "$IP" >/dev/null 2>&1 && ping -c 1 -w 1 "$IP2" >/dev/null 2>&1
    var="$?"
 
    #first success after error
