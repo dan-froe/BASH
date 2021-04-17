@@ -66,6 +66,7 @@ do
 
    else
      [[ "$is_on_1" = "0" ]] && curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command" : "instance","subcommand" : "stopInstance","instance" : 1}' >/dev/null 2>&1
+     [[ "$is_on_1" = "0" ]] && curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command" : "instance","subcommand" : "stopInstance","instance" : 2}' >/dev/null 2>&1
      [[ "$is_on" != "true" ]] && foo=0
      is_on_1="1"
 #    echo false
