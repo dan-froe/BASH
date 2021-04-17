@@ -11,7 +11,8 @@ bar="0"
 i="0"
 var="0"
 IP="$1"
-delay_s="$2"
+IP2="$2"
+delay_s="$3"
 is_on="false"
 is_on_LED="False"
 
@@ -61,8 +62,13 @@ instance_switch
 while :
 do
    #ping ESP device
-   ping -c 1 -w 1 "$IP" >/dev/null 2>&1 && ping -c 1 -w 1 "$IP2" >/dev/null 2>&1
+   if [[ $IP2 =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+       ping -c 1 -w 1 "$IP" >/dev/null 2>&1 && ping -c 1 -w 1 "$IP2" >/dev/null 2>&1
+       var="$?"
+   fi
+   ping -c 1 -w 1 "$IP" >/dev/null 2>&1
    var="$?"
+   delay_s="$2"
 
    #first success after error
    if [[ "$var" = "0" ]] && [[ "$i" = "0" ]]; then
