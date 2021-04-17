@@ -23,7 +23,9 @@ Die Abkürzung **IP** mit der IP des ESP ersetzen.
 Die Abkürzung **IP2** mit der IP des 2. ESP ersetzen.
 
 Optional kann unter **TIME** eine Zeit in Sekunden eingetragen werden. Dies verlängert die Zeit zwischen den Anfragen nach einem erfolgreichen Ping. Standard sind 4 Sekunden. 
+
 **Sollte nur 1 ESP vorhanden sein, tritt an die Stelle von IP2 die TIME Variable.**
+
 Beispiele:
 
 <pre><code>@reboot bash $HOME/hyper_ping.sh 192.168.178.39</code></pre>
