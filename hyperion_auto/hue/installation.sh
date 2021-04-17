@@ -33,9 +33,7 @@ done
 while [[ "$bar" > "0" ]]
 do
   bar=$(cat mycron | grep -c "@reboot sudo bash $(pwd)/instance.sh")
-  cat mycron | grep "@reboot sudo bash $(pwd)/instance.sh" >/dev/null 2>&1
-  foo="$?" 
-  [[ "$foo" = "0" ]] && cat mycron | sed -i s/@.*instance.sh.*// mycron
+  [[ "$bar" > "1" ]] && cat mycron | sed -i s/@.*instance.sh.*// mycron
 done 
 
 cat mycron | grep "@reboot sudo bash $(pwd)/instance.sh" >/dev/null 2>&1
