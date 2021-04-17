@@ -65,10 +65,11 @@ do
    if [[ $IP2 =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
        ping -c 1 -w 1 "$IP" >/dev/null 2>&1 && ping -c 1 -w 1 "$IP2" >/dev/null 2>&1
        var="$?"
+   else
+       ping -c 1 -w 1 "$IP" >/dev/null 2>&1
+       var="$?"
+       delay_s="$2"
    fi
-   ping -c 1 -w 1 "$IP" >/dev/null 2>&1
-   var="$?"
-   delay_s="$2"
 
    #first success after error
    if [[ "$var" = "0" ]] && [[ "$i" = "0" ]]; then
