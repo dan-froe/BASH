@@ -31,7 +31,7 @@ done
 bar=$(cat mycron | grep -c "@reboot sudo bash $(pwd)/instance.sh")
 while [[ "$bar" > "1" ]]
 do
-  cat mycron | sed -i "s|^@reboot.*$(pwd)/instance.sh.*||" mycron
+  cat mycron | sed -i "0|^@reboot.*$(pwd)/instance.sh.*||" mycron
   bar=$(cat mycron | grep -c "@reboot sudo bash $(pwd)/instance.sh")
 done 
 
