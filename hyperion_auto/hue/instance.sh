@@ -56,10 +56,10 @@ do
 
    if [[ "$is_on" = "true" ]] && [[ "$foo" = "0" ]]; then
      instance_switch && foo=1
-     echo true 0
+#    echo true 0
 
    elif [[ "$is_on" = "true" ]] && [[ "$foo" = "1" ]]; then
-     echo true 1
+#    echo true 1
      [[ "$is_on" != "true" ]] && foo=0
      [[ "$delay_s" > "0" ]] && sleep $delay_s || sleep 3
 
@@ -67,7 +67,7 @@ do
      is_on_1=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 1,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
      [[ "$is_on_1" = "true" ]] && curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command" : "instance","subcommand" : "stopInstance","instance" : 1}' >/dev/null 2>&1
      [[ "$is_on" != "true" ]] && foo=0
-     echo false
+#    echo false
      sleep 1
 
    fi
