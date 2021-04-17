@@ -37,7 +37,7 @@ done
 
 cat mycron | grep "@reboot sudo bash $(pwd)/instance.sh" >/dev/null 2>&1
 foo="$?"
-[[ "$foo" = "0" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && mycron && exit 0
+[[ "$foo" = "0" ]] && echo && echo && echo && echo $'\033[0;32mCommand found in crontab. No update needed!' && echo && echo && echo && rm mycron && exit 0
 
 #new cron into cron file
 dir=$(pwd)/instance.sh
