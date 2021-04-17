@@ -17,11 +17,13 @@ Folgendes ausführen: <pre><code>crontab -e</code></pre>
 ggfs Editor auswählen.
 Dann unterhalb des Textes folgendes einfügen :
 
-<pre><code>@reboot bash $HOME/hyper_ping.sh IP TIME</code></pre>
+<pre><code>@reboot bash $HOME/hyper_ping.sh IP IP2 TIME</code></pre>
 
 Die Abkürzung **IP** mit der IP des ESP ersetzen.
-Optional kann unter **TIME** eine Zeit in Sekunden eingetragen werden. Dies verlängert die Zeit zwischen den Anfragen nach einem erfolgreichen Ping. Standard sind 4 Sekunden. 
+Die Abkürzung **IP2** mit der IP des 2. ESP ersetzen.
 
+Optional kann unter **TIME** eine Zeit in Sekunden eingetragen werden. Dies verlängert die Zeit zwischen den Anfragen nach einem erfolgreichen Ping. Standard sind 4 Sekunden. 
+**Sollte nur 1 ESP vorhanden sein, tritt an die Stelle von IP2 die TIME Variable.**
 Beispiele:
 
 <pre><code>@reboot bash $HOME/hyper_ping.sh 192.168.178.39</code></pre>
@@ -29,6 +31,10 @@ Beispiele:
 oder
 
 <pre><code>@reboot bash $HOME/hyper_ping.sh 192.168.178.39 10</code></pre>
+
+oder
+
+<pre><code>@reboot bash $HOME/hyper_ping.sh 192.168.178.39 192.168.178.110 60</code></pre>
 
 ### 3. Erklärung
 Bei jedem Boot wird das Skript gestartet. Das Skript läuft dann in einer Endlosschleife. 
