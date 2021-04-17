@@ -62,35 +62,29 @@ do
        do
           is_on_LED=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -B1 "LEDDEVICE" | grep -v name | sed -e 's/ .*"enabled": //' -e 's/,//') 
           [[ "$is_on_LED" = "true" ]] && is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 1,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
-#	  curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 0}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":true}}' >/dev/null 2>&1
           instance_switch
           sleep 1
-#         is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -B1 "LEDDEVICE" | grep -v name | sed -e 's/ .*"enabled": //' -e 's/,//')
-
-#         echo 'no instance' >>bar 2>&1
+          echo 'no instance' >>bar 2>&1
 
        done
 #      curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command":"effect","effect":{"name":"Rainbow swirl"},"duration":2000,"priority":50,"origin":"My Fancy App"}' >/dev/null 2>&1
        i=1
        is_on="false"
 
-#      echo 'ping successful' >>bar 2>&1
+       echo 'ping successful' >>bar 2>&1
 
    #second to n successful answers
    elif [[ "$var" = "0" ]] && [[ "$i" = "1" ]]; then
 
-#      echo 'ping still successful' >>bar 2>&1
+       echo 'ping still successful' >>bar 2>&1
        [[ "$delay_s" > "0" ]] && sleep $delay_s || sleep 4
-#      [[ "$time_sec" > "0" ]] && sleep "$2"
 
    #no one home
    else
 
-#      echo 'no answer' >>bar 2>&1
+       echo 'no answer' >>bar 2>&1
        i=0
        sleep 1
    fi
-
-#sleep 4
 
 done
