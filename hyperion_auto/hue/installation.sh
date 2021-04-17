@@ -21,19 +21,8 @@ sudo chmod +x ./instance.sh
 crontab -l > mycron
 
 #test for duplication
-#while [[ "$foo" = "0" ]] 
-#do
-  cat mycron | grep "#@reboot sudo bash $(pwd)/instance.sh" >/dev/null 2>&1
-  foo="$?"
-  cat mycron | sed -i "s|^#@reboot.*$(pwd)/instance.sh.*||" mycron
-#done
-
-bar=$(cat mycron | grep -c "@reboot sudo bash $(pwd)/instance.sh")
-while [[ "$bar" > "1" ]]
-do
-  cat mycron | sed -i "s|^@reboot.*$(pwd)/instance.sh.*||" mycron
-  bar=$(cat mycron | grep -c "@reboot sudo bash $(pwd)/instance.sh")
-done 
+cat mycron | sed -i "s|^#@reboot.*$(pwd)/instance.sh.*||" mycron
+cat mycron | sed -i "s|^@reboot.*$(pwd)/instance.sh.*||" mycron
 
 cat mycron | grep "@reboot sudo bash $(pwd)/instance.sh" >/dev/null 2>&1
 foo="$?"
@@ -41,7 +30,7 @@ foo="$?"
 
 #new cron into cron file
 dir=$(pwd)/instance.sh
-echo "@reboot sudo bash $dir >/dev/null 2>&1" >> mycron
+echo "@reboot sudo bash $dir" >> mycron
 
 #install new cron file
 crontab mycron
