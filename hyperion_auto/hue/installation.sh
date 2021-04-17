@@ -20,7 +20,7 @@ sudo chmod +x ./instance.sh
 #write out current crontab
 crontab -l > mycron
 
-#test for duplication
+#delete duplicate 
 cat mycron | sed -i "s|^#@reboot.*$(pwd)/instance.sh.*||" mycron
 cat mycron | sed -i "s|^@reboot.*$(pwd)/instance.sh.*||" mycron
 
