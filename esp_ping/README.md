@@ -1,43 +1,43 @@
-# Ping Skript Installation
+# Ping Script Installation
 
-> Das Skript unterstützt derzeit nur WLED als Instanz 1 und/oder 2.
+> WLED has to be instance 1 and/or 2.
 
 ### 1. Download
-Per SSH einloggen und im Start Verzeichnis folgendes ausführen:
+Login via SSH and execute the following command:
 
 <pre><code>rm hyper_ping.sh ; wget https://raw.githubusercontent.com/dan-froe/BASH/master/esp_ping/hyper_ping.sh</code></pre>
 
-### 2. Crontab einrichten
-Folgendes ausführen: <pre><code>crontab -e</code></pre>
-ggfs Editor auswählen.
-Dann unterhalb des Textes folgendes einfügen :
+### 2. Set up crontab
+execute: <pre><code>crontab -e</code></pre>
+choose editor when prompted.
+Add at the bottom of the file :
 
 <pre><code>@reboot bash $HOME/hyper_ping.sh IP IP2 TIME</code></pre>
 
-Die Abkürzung **IP** mit der IP des ESP ersetzen.
-Die Abkürzung **IP2** mit der IP des 2. ESP ersetzen.
+Replace **IP** with the IP of your ESP.
+If you have a second ESP replace **IP2** with the IP of your second ESP.
 
-Optional kann unter **TIME** eine Zeit in Sekunden eingetragen werden. Dies verlängert die Zeit zwischen den Anfragen nach einem erfolgreichen Ping. Standard sind 4 Sekunden. 
+Optional: Replace **TIME** with a duration in seconds. This extents the time between two successful ping. Standard is 4 seconds. 
 
-**Sollte nur 1 ESP vorhanden sein, tritt an die Stelle von IP2 die TIME Variable.
-Es muss mindestens eine IP angegeben werden. IP2 und TIME sind nicht zwingend.**
+**When there is only 1 ESP, variable TIME takes the place of IP2.
+You have to provide at least one IP. IP2 and TIME are not required.**
 
-Beispiele:
+Examples:
 
 <pre><code>@reboot bash $HOME/hyper_ping.sh 192.168.178.39</code></pre>
 
-oder
+or
 
 <pre><code>@reboot bash $HOME/hyper_ping.sh 192.168.178.39 10</code></pre>
 
-oder
+or
 
 <pre><code>@reboot bash $HOME/hyper_ping.sh 192.168.178.39 192.168.178.110 60</code></pre>
 
-### 3. Erklärung
-Bei jedem Boot wird das Skript gestartet. Das Skript läuft dann in einer Endlosschleife. 
-Als erstes pingt es den/die ESP an. Erhält es keine Antwort wiederholt es den ping jede Sekunde.
-Erreicht es den/die ESP schaltet das Skript die Instanzen 0-2 an, sowie Grabber und LED. Danach prüft es, ob es die Info von WLED bekommt, dass die ESP einen Stream von Hyperion erhalten. Solange es kein "true" (an) bekommt wiederholt es jede Sekunde das Anschalten, sowie die Prüfung.
-Erhält es "true" wird diese Schleife beendet und es wird 5 Sekunden lang der Rainbow Swirl gezeigt. Danach pingt es wieder alle 4 Sekunden den/die ESP an. Diese Zeit ist mit TIME verlängerbar. Wenn er keinen Pong mehr erhält startet alles wieder von vorne. 
+### 3. Description 
+The scripts starts with every boot. The script runs in an endless loop. 
+First it pings the ESP(s). If it doesn't receive an answers it starts a new ping after 1 second. 
+Does it receive a pong from the ESP(s) it will switch on instance 0-2. Furthermore it switches on LEDs and Grabber. It than proceeds to check if the WLED start streaming from hyperion. It repeats to switch on the instances and checking for streaming every second if it doesn't receive true (on) from all WLEDs. 
+If it receives true the loop will stop. It than proceeds to ping the ESP(s) every 4 seconds. This duration can be extended by the TIME variable. When one device doesn't return a pong the whole script starts from the beginning. 
 
-**Es ist möglich das Streamen von Hyperion an die ESPs über die WLED GUI zu unterbrechen/auszusetzen. Das Skript fängt erst wieder von vorne an, wenn es keinen Pong mehr von den ESPs erhält.**
+**It is possible to stop the streaming from hyperion via WLED GUI. The script only starts from beginning when it receives no pong.**
