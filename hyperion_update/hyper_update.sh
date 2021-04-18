@@ -159,7 +159,7 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $found_compile -eq 1 ]; th
 			do
 				echo
 				echo
-				echo $yellow'Is this the correct directory?' $directory_compile
+				echo $yellow'Is this the correct directory?' ${directory_compile:-"No directory found. Type in manually."}
 				echo 'Type yes if it is correct. Otherwise type in the correct path or type abort to abort. '
 				read -p '>>> ' yes_no
 				[[ ${yes_no,,} == "yes" ]] && break
