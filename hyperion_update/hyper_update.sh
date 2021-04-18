@@ -18,6 +18,9 @@ rel_latest_armv6l=$(curl $api_url/releases 2>&1 | grep "browser_download_url.*Hy
 directory_compile="0"
 directory_compile_test=0
 directory_last=$(pwd)
+OS=$(lsb_release -i | cut -d : -f 2)
+found_compile=0
+arch_x=$(uname -m | tr -d 'armvl')
 
 
 if [[ "${hasWget}" -ne 0 ]]; [[ "${hasCurl}" -ne 0 ]]; then
@@ -90,31 +93,23 @@ function inst_deb_armv6l() {
 		esac
 }
 
+
 # Set welcome message
 printf %"$COLUMNS"s |tr " " "*"
 echo 'This script will update Hyperion.ng for Raspbian/HyperBian/LibreELEC'
 echo 'Created by Daniel Froebe.'
 printf %"$COLUMNS"s |tr " " "*"
 
-# Find out which system we are on
-OS_RASPBIAN=`grep -m1 -c 'Raspbian\|RetroPie' /etc/issue` # /home/pi
-OS_HYPERBIAN=`grep ID /etc/os-release | grep -m1 -c HyperBian` # /home/pi
-OS_RASPLEX=`grep -m1 -c RasPlex /etc/issue` # /storage/
-OS_OSMC=`grep -m1 -c OSMC /etc/issue` # /home/osmc
-OS_LIBREELEC=`grep -m1 -c LibreELEC /etc/issue` # /storage/
-OS_LAKKA=`grep -m1 -c Lakka /etc/issue` # /storage
 
 # Check that
-if [ $OS_RASPBIAN -ne 1 ] && [ $OS_HYPERBIAN -ne 1 ] && [ $OS_RASPLEX -ne 1 ] && [ $OS_LIBREELEC -ne 1 ] && [ $OS_OSMC -ne 1 ] && [ $OS_LAKKA -ne 1 ]; then
+if [ $OS != "Raspbian" ] && [ $OS != "HyperBian" ]; then
 	echo $'\033[0;31m ---> Critical Error: We are not on Raspbian/HyperBian/RasPlex/OSMC/RetroPie/LibreELEC/Lakka -> abort'
 	exit 1
 fi
 
-if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
+if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ]; then
 	echo 'We are on Raspbina/HyperBian'
-	echo $'\033[1;33mChecking installation... this may take a few seconds ...'
-        OS=$(lsb_release -i | cut -d : -f 2)
-	found_compile=0
+	echo $'\033[1;33mChecking installation... this may take a few seconds ...'      
 	cd $HOME >/dev/null 2>/dev/null
 	[[ -e $(find $HOME -name HyperionConfig.h.in | grep -m1 hyperion) ]] && directory_compile=$(find $HOME -name "hyperiond" | grep /build/bin/hyperiond | sed 's/build\/bin\/hyperiond//') && [[ -d $directory_compile ]] && cd $directory_compile &&  [ $(basename `git rev-parse --show-toplevel`) = "hyperion" ] &&  echo || found_compile=1
 	cd $directory_last >/dev/null 2>/dev/null
@@ -125,58 +120,25 @@ if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
 	echo
 	echo
 	echo
-#	actual_os=1
 fi
 
-#if [ $OS_RASPLEX -eq 1 ]; then
-#	echo 'We are on RASPLEX'
-#	exit 0
-#fi
 
-if [ $OS_LIBREELEC -eq 1 ]; then
+if [ $OS = "LibreELEC" ]; then
 	echo 'We are on LibreELEC'
-	OS=$(lsb_release -i | cut -d : -f 2)
 # Stop hyperion service if it is running
 	systemctl -q stop hyperion.service >/dev/null 2>/dev/null
 	systemctl -q stop hyperiond@pi.service >/dev/null 2>/dev/null
-#	actual_os=2
 fi
 
-#if [ $OS_OSMC -eq 1 ]; then
-#	echo 'We are on OSMC'
-#	exit 0
-#fi
-
-#if [ $OS_LAKKA -eq 1 ]; then
-#	echo 'We are on LAKKA'
-#	exit 0
-#fi
 
 # Find out if we are on an Raspberry Pi or x86_64
 CPU_RPI=`grep -m1 -c 'BCM2708\|BCM2709\|BCM2710\|BCM2835\|BCM2836\|BCM2837\|BCM2711' /proc/cpuinfo`
-CPU_x86_64=`grep -m1 -c 'Intel\|AMD' /proc/cpuinfo`
 # Check that
-#if [ $CPU_RPI -ne 1 ] && [ $CPU_x86_64 -ne 1 ]; then
 if [ $CPU_RPI -ne 1 ]; then
 	echo $'\033[0;31m ---> Critical Error: We are not on an Raspberry Pi -> abort'
 	exit 1
 fi
 
-# Check if RPi or x86_64
-RPI_1_2_3_4=`grep -m1 -c 'BCM2708\|BCM2709\|BCM2710\|BCM2835\|BCM2836\|BCM2837\|BCM2711' /proc/cpuinfo`
-#Intel_AMD=`grep -m1 -c 'Intel\|AMD' /proc/cpuinfo`
-
-# Select the architecture
-if [ $RPI_1_2_3_4 -eq 1 ]; then
-	arch_x=$(uname -m | tr -d 'armvl')
-#	arch_new="armv6l"
-#elif [ $Intel_AMD -eq 1 ]; then
-#	arch_old="windows"
-#	arch_new="x68_64"
-else
-	echo $'\033[0;31m ---> Critical Error: Target platform unknown -> abort'
-	exit 1
-fi
 
 #Installation for Raspbian/HyperBian
 jump=0
