@@ -113,10 +113,10 @@ fi
 if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
 	echo 'We are on Raspbina/HyperBian'
 	echo $'\033[1;33mChecking installation... this may take a few seconds ...'
-  OS=$(lsb_release -i | cut -d : -f 2)
-	found_compile=1
+        OS=$(lsb_release -i | cut -d : -f 2)
+	found_compile=0
 	cd $HOME >/dev/null 2>/dev/null
-	[[ -e $(find $HOME -name HyperionConfig.h.in | grep -m1 hyperion) ]] && directory_compile=$(find $HOME -name "hyperiond" | grep /build/bin/hyperiond | sed 's/build\/bin\/hyperiond//') && [[ -d $directory_compile ]] && cd $directory_compile &&  [ $(basename `git rev-parse --show-toplevel`) = "hyperion" ] &&  echo || directory_compile=0
+	[[ -e $(find $HOME -name HyperionConfig.h.in | grep -m1 hyperion) ]] && directory_compile=$(find $HOME -name "hyperiond" | grep /build/bin/hyperiond | sed 's/build\/bin\/hyperiond//') && [[ -d $directory_compile ]] && cd $directory_compile &&  [ $(basename `git rev-parse --show-toplevel`) = "hyperion" ] &&  echo || found_compile=1
 	cd $directory_last >/dev/null 2>/dev/null
 # Stop hyperion service if it is running
 	sudo systemctl -q stop hyperion@.service 2>/dev/null
