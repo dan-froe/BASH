@@ -39,7 +39,7 @@ function inst_compile() {
 			cd $directory_last >/dev/null 2>/dev/null
 	else
 		echo
-		echo $'\033[0;31m You are already up to date! No files changed!'
+		echo $green'You are already up to date! No files changed!'
 		cd $directory_last >/dev/null 2>/dev/null
 	fi
 
