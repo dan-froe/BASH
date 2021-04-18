@@ -165,6 +165,7 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $found_compile -eq 1 ]; th
 				[[ ${yes_no,,} == "yes" ]] && break
 				[[ ${yes_no,,} == "abort" ]] && echo 'you aborted' && exit 0
 				directory_compile=$yes_no
+                                [[ $directory_compile != "/"* ]] && directory_compile=/"${directory_compile}"
 				[ -e $directory_compile ]
 				directory_compile_test=$?
 				[[ $directory_compile_test -ge 1 ]] && echo ; echo; echo; echo $red'directory not existent'
@@ -173,7 +174,6 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $found_compile -eq 1 ]; th
 			echo
 			echo
 			echo $green'Input accepted! '$directory_compile
-			[[ $directory_compile != *"/" ]] && directory_compile="${directory_compile}/"
 			echo
 			echo
 			echo
