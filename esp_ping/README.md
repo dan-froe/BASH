@@ -35,7 +35,7 @@ or
 <pre><code>@reboot bash $HOME/hyper_ping.sh 192.168.178.39 192.168.178.110 60</code></pre>
 
 ### 3. Description 
-The scripts starts with every boot. The script runs in an endless loop. 
+The script starts with every boot. The script runs in an endless loop. 
 First it pings the ESP(s). If it doesn't receive an answers it starts a new ping after 1 second. 
 Does it receive a pong from the ESP(s) it will switch on instance 0-2. Furthermore it switches on LEDs and Grabber. 
 It then proceeds to check if WLED starts streaming from hyperion. It repeats to switch on the instances and checking for streaming every second if it doesn't receive true (on) from all WLEDs. 
