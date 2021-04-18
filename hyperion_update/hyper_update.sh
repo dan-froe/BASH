@@ -21,7 +21,9 @@ directory_last=$(pwd)
 OS=$(lsb_release -i | cut -d : -f 2)
 found_compile=0
 arch_x=$(uname -m | tr -d 'armvl')
-
+green=$'\033[0;32m' 
+red=$'\033[0;31m'
+yellow=$'\033[1;33m'
 
 if [[ "${hasWget}" -ne 0 ]]; [[ "${hasCurl}" -ne 0 ]]; then
 	echo $'\033[0;31m ---> Critical Error: wget or curl required'
@@ -109,7 +111,7 @@ fi
 
 if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ]; then
 	echo 'We are on Raspbina/HyperBian'
-	echo $'\033[1;33mChecking installation... this may take a few seconds ...'      
+	echo $yellow'Checking installation... this may take a few seconds ...'      
 	cd $HOME >/dev/null 2>/dev/null
 	[[ -e $(find $HOME -name HyperionConfig.h.in | grep -m1 hyperion) ]] && directory_compile=$(find $HOME -name "hyperiond" | grep /build/bin/hyperiond | sed 's/build\/bin\/hyperiond//') && [[ -d $directory_compile ]] && cd $directory_compile &&  [ $(basename `git rev-parse --show-toplevel`) = "hyperion" ] &&  echo || found_compile=1
 	cd $directory_last >/dev/null 2>/dev/null
@@ -124,7 +126,7 @@ fi
 
 
 if [ $OS = "LibreELEC" ]; then
-	echo 'We are on LibreELEC'
+	echo $yellow'We are on LibreELEC'
 # Stop hyperion service if it is running
 	systemctl -q stop hyperion.service >/dev/null 2>/dev/null
 	systemctl -q stop hyperiond@pi.service >/dev/null 2>/dev/null
@@ -143,7 +145,7 @@ fi
 #Installation for Raspbian/HyperBian
 jump=0
 if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $found_compile -eq 1 ]; then
-	echo $'\033[1;33m It looks like you compiled hyperion via CompileHowTo.md'
+	echo $yellow 'It looks like you compiled hyperion via CompileHowTo.md'
 	echo $'\033[1;33m Is that correct? Yes or No and press enter'
 	echo
 	read -p '>>>' yes_no
