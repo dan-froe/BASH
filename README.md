@@ -9,7 +9,7 @@ This script is work in progress. It works for Raspbian/HyperBian. Libreelec is a
 The script tries to determine how hyperion is installed into the system (packet installation/compiling), but asks before proceeding.
 
 ```console
-bash <(wget -qO - https://raw.githubusercontent.com/dan-froe/BASH/master/hyper_update.sh)
+bash <(wget -qO - https://raw.githubusercontent.com/dan-froe/BASH/master/update_hyper.sh)
 ```
 [CODE](https://raw.githubusercontent.com/dan-froe/BASH/master/update_hyperion.sh) 
 
