@@ -5,14 +5,22 @@
 ### 1. Download
 Login via SSH and execute the following command:
 
-<pre><code>rm hyper_ping.sh ; wget https://raw.githubusercontent.com/dan-froe/BASH/master/esp_ping/hyper_ping.sh</code></pre>
+```console
+rm hyper_ping.sh ; wget https://raw.githubusercontent.com/dan-froe/BASH/master/esp_ping/hyper_ping.sh
+```
 
 ### 2. Set up crontab
-execute: <pre><code>crontab -e</code></pre>
+execute: 
+```console
+crontab -e
+```
+
 choose editor when prompted.
 Add at the bottom of the file :
 
-<pre><code>@reboot bash $HOME/hyper_ping.sh IP IP2 TIME</code></pre>
+```console
+@reboot bash $HOME/hyper_ping.sh IP IP2 TIME
+```
 
 Replace **IP** with the IP of your ESP.
 If you have a second ESP replace **IP2** with the IP of your second ESP.
@@ -24,15 +32,21 @@ You have to provide at least one IP. IP2 and TIME are not required.**
 
 Examples:
 
-<pre><code>@reboot bash $HOME/hyper_ping.sh 192.168.178.39</code></pre>
+```console
+@reboot bash $HOME/hyper_ping.sh 192.168.178.39
+```
 
 or
 
-<pre><code>@reboot bash $HOME/hyper_ping.sh 192.168.178.39 10</code></pre>
+```console
+@reboot bash $HOME/hyper_ping.sh 192.168.178.39 10
+```
 
 or
 
-<pre><code>@reboot bash $HOME/hyper_ping.sh 192.168.178.39 192.168.178.110 60</code></pre>
+```console
+@reboot bash $HOME/hyper_ping.sh 192.168.178.39 192.168.178.110 60
+```
 
 ### 3. Description 
 The script starts with every boot. The script runs in an endless loop. 
