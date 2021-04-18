@@ -168,7 +168,7 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $found_compile -eq 1 ]; th
                                 [[ $directory_compile != "/"* ]] && directory_compile=/"${directory_compile}"
 				[ -e $directory_compile ]
 				directory_compile_test=$?
-				[[ $directory_compile_test -ge 1 ]] && echo ; echo; echo; echo $red'directory not existent'
+				[[ $directory_compile_test -ge "1" ]] && echo && echo && echo && echo $red'directory not existent'
 			done
 			echo
 			echo
@@ -256,8 +256,8 @@ echo
 
 if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ]; then
 #Service files for RaspBian/HyperBian
-		echo $'\033[1;33m hyperiond@pi.service ---> /etc/systemd/system/multi-user.target.wants/'
-		echo $'\033[1;33m hyperiond@.service -----> /etc/systemd/system/'
+		echo $green'hyperiond@pi.service ---> /etc/systemd/system/multi-user.target.wants/'
+		echo $green'hyperiond@.service -----> /etc/systemd/system/'
 		SERVICE_CONTENT_MULTI="[Unit]
 Description=Hyperion ambient light systemd service  for user %i
 After=network.target
@@ -293,11 +293,11 @@ WantedBy=multi-user.target"
 		echo "$SERVICE_CONTENT" > hyperion@.service
 		echo
 		sleep 1
-		echo $'\033[0;32m Files created.'
+		echo $green'Files created.'
 		echo
-		echo $'\033[1;33m *********You should activate autologin in raspi-config before copying the files*********'
+		echo $green'*********You should activate autologin in raspi-config before copying the files*********'
 		echo
-		echo $'\033[0;32m You are all set. Thank you for using this script.'
+		echo $green'You are all set. Thank you for using this script.'
 		echo
 		echo
 		echo
