@@ -113,7 +113,7 @@ fi
 if [ $OS_RASPBIAN -eq 1 ] || [ $OS_HYPERBIAN -eq 1 ]; then
 	echo 'We are on Raspbina/HyperBian'
 	echo $'\033[1;33mChecking installation... this may take a few seconds ...'
-  OS=$(lsb_release -i | cut -d : -f 2)
+        OS=$(lsb_release -i | cut -d : -f 2)
 	found_compile=1
 	cd $HOME >/dev/null 2>/dev/null
 	[[ -e $(find $HOME -name HyperionConfig.h.in | grep -m1 hyperion) ]] && directory_compile=$(find $HOME -name "hyperiond" | grep /build/bin/hyperiond | sed 's/build\/bin\/hyperiond//') && [[ -d $directory_compile ]] && cd $directory_compile &&  [ $(basename `git rev-parse --show-toplevel`) = "hyperion" ] &&  echo || directory_compile=0
@@ -196,7 +196,7 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $found_compile -eq 1 ]; th
 				echo
 				echo
 				echo $'\033[1;33mIs this the correct directory?' $directory_compile
-				echo 'Type yes if it correct. Otherwise type in the correct path or type abort to abort. '
+				echo 'Type yes if it is correct. Otherwise type in the correct path or type abort to abort. '
 				read -p '>>>  ' yes_no
 				[[ ${yes_no,,} == "yes" ]] && break
 				[[ ${yes_no,,} == "abort" ]] && echo 'you aborted' && exit 0
