@@ -16,7 +16,7 @@ hasCurl=$?
 rel_latest=$(curl $api_url/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv7l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \")
 rel_latest_armv6l=$(curl $api_url/releases 2>&1 | grep "browser_download_url.*Hyperion-.*armv6l.deb" | head -n1 | cut -d ":" -f 2,3 | tr -d \")
 directory_compile="0"
-directory_compile_test=0
+directory_compile_test="2"
 directory_last=$(pwd)
 OS=$(lsb_release -i | cut -d : -f 2)
 found_compile=0
@@ -26,7 +26,7 @@ red=$'\033[0;31m'
 yellow=$'\033[1;33m'
 
 if [[ "${hasWget}" -ne 0 ]]; [[ "${hasCurl}" -ne 0 ]]; then
-	echo $'\033[0;31m ---> Critical Error: wget or curl required'
+	echo $red ' ---> Critical Error: wget or curl required'
 	exit 1
 fi
 
@@ -105,7 +105,7 @@ printf %"$COLUMNS"s |tr " " "*"
 
 # Check that
 if [ $OS != "Raspbian" ] && [ $OS != "HyperBian" ]; then
-	echo $'\033[0;31m ---> Critical Error: We are not on Raspbian/HyperBian/RasPlex/OSMC/RetroPie/LibreELEC/Lakka -> abort'
+	echo $red' ---> Critical Error: We are not on Raspbian/HyperBian/RasPlex/OSMC/RetroPie/LibreELEC/Lakka -> abort'
 	exit 1
 fi
 
@@ -137,7 +137,7 @@ fi
 CPU_RPI=`grep -m1 -c 'BCM2708\|BCM2709\|BCM2710\|BCM2835\|BCM2836\|BCM2837\|BCM2711' /proc/cpuinfo`
 # Check that
 if [ $CPU_RPI -ne 1 ]; then
-	echo $'\033[0;31m ---> Critical Error: We are not on an Raspberry Pi -> abort'
+	echo $red' ---> Critical Error: We are not on an Raspberry Pi -> abort'
 	exit 1
 fi
 
@@ -146,22 +146,21 @@ fi
 jump=0
 if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $found_compile -eq 1 ]; then
 	echo $yellow 'It looks like you compiled hyperion via CompileHowTo.md'
-	echo $'\033[1;33m Is that correct? Yes or No and press enter'
+	echo $yellow 'Is that correct? Yes or No and press enter'
 	echo
-	read -p '>>>' yes_no
+	read -p '>>> ' yes_no
 	echo
 	echo
 	echo
 	case $yes_no in
 		(Yes | yes)
-			directory_compile_test=2
 			while [ $directory_compile_test -ge 1 ]
 			do
 				echo
 				echo
-				echo $'\033[1;33mIs this the correct directory?' $directory_compile
+				echo $yellow'Is this the correct directory?' $directory_compile
 				echo 'Type yes if it is correct. Otherwise type in the correct path or type abort to abort. '
-				read -p '>>>  ' yes_no
+				read -p '>>> ' yes_no
 				[[ ${yes_no,,} == "yes" ]] && break
 				[[ ${yes_no,,} == "abort" ]] && echo 'you aborted' && exit 0
 				directory_compile=$yes_no
@@ -172,12 +171,12 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $found_compile -eq 1 ]; th
 			echo
 			echo
 			echo
-			echo $'\033[0;32mInput accepted! '$directory_compile
+			echo $green'Input accepted! '$directory_compile
 			[[ $directory_compile != *"/" ]] && directory_compile="${directory_compile}/"
 			echo
 			echo
 			echo
-			echo $'\033[0;32mCompiling the newest Version.'
+			echo $green'Compiling the newest Version.'
 			echo
 			echo
 			inst_compile
@@ -199,7 +198,7 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $jump -eq 0 ]; then
 					if [ $arch_x -eq 7 ]; then
 						version_deb=$(echo $rel_latest | cut -d "/" -f 9)
 						echo
-						echo $'\033[1;33mUpdating with package ' "$version_deb"
+						echo $yellow'Updating with package ' "$version_deb"
 						echo
 						inst_deb
 						echo
@@ -207,7 +206,7 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $jump -eq 0 ]; then
 					elif [ $arch_x -eq 6 ]; then
 						version_deb=$(echo $rel_latest_armv6l | cut -d "/" -f 9)
 						echo
-						echo $'\033[1;33mUpdating with package ' "$version_deb"
+						echo $yellow'Updating with package ' "$version_deb"
 						echo
 						inst_deb_armv6l
 						$(exit 0)
@@ -220,19 +219,19 @@ elif [ $OS = "LibreELEC" ]; then
 fi
 
 if [ $? -eq 1 ]; then
-	echo $'\033[0;31mSomething went wrong installation incomplete'
+	echo $red'Something went wrong installation incomplete'
 	exit 1
 
 #Exit or File creation
 else
 		echo
 		echo
-		echo $'\033[0;31m ********** Please reboot when this skript has exited **********'
+		echo $green'********** Please reboot when this skript has exited **********'
 		echo
 		echo
 		echo
-		echo $'\033[1;33mI can create the files needed for a background process. I will place them in' "$HOME"'. You have to copy them into the systemd folder yourself. I will tell you the destination, when writing the files'
-		echo $'\033[1;33m Type Yes if you want them created'
+		echo $yellow'I can create the files needed for a background process. I will place them in' "$HOME"'. You have to copy them into the systemd folder yourself. I will tell you the destination, when writing the files'
+		echo $yellow'Type Yes if you want them created'
 		echo
 		read -p '>>>' yes_no
 		case $yes_no in
@@ -241,7 +240,7 @@ else
 				*)
 				echo
 				echo
-				echo $'\033[0;32mNo files created. Your are all set. Thank you for using my script!'
+				echo $green'No files created. Your are all set. Thank you for using my script!'
 				echo
 				echo
 				echo
@@ -251,7 +250,7 @@ else
 fi
 
 echo
-echo $'\033[1;33mThe files will be created in current directory. You have to copy files into:'
+echo $yellow'The files will be created in current directory. You have to copy files into:'
 echo
 if [ $actual_os -eq 1 ]; then
 #Service files for RaspBian/HyperBian
@@ -303,7 +302,7 @@ WantedBy=multi-user.target"
 		exit 0
 
 elif [ $actual_os -eq 2 ]; then
-		echo $'\033[1;33m hyperion.service ----- >/storage/.config/system.d/'
+		echo $green'hyperion.service ----- >/storage/.config/system.d/'
 # Service file for LibreELEC
 		SERVICE_CONTENT="[Unit]
 Description=Hyperion ambient light systemd service
@@ -319,16 +318,16 @@ RestartSec=10
 WantedBy=default.target"
 		echo "$SERVICE_CONTENT" > hyperion.service
 		echo
-		echo $'\033[0;32m File created'
+		echo $green'File created'
 		echo
-		echo $'\033[0;32m You are all set. Thank you for using this script.'
+		echo $green'You are all set. Thank you for using this script.'
 		echo
 		echo
 		echo
 		exit 0
 
 else
-		echo $'\033[0;31m Unsupported OS. No files created. Quitting!'
+		echo $red'Unsupported OS. No files created. Quitting!'
 		echo
 		echo
 		exit 1
