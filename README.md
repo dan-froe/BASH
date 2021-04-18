@@ -4,7 +4,7 @@ Bash scripts to control Hyperion.ng instances in various cases.
 
 #### Update script
 
-This script is work in progress. It works Raspbian/HyperBian. Libreelec isn't currently tested.
+This script is work in progress. It works Raspbian/HyperBian. Libreelec is available but isn't tested.
 
 The script tries to determine how hyperion is installed in the system, but asks before proceeding.
 
