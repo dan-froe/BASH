@@ -252,7 +252,8 @@ fi
 echo
 echo $yellow'The files will be created in current directory. You have to copy files into:'
 echo
-if [ $actual_os -eq 1 ]; then
+
+if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ]; then
 #Service files for RaspBian/HyperBian
 		echo $'\033[1;33m hyperiond@pi.service ---> /etc/systemd/system/multi-user.target.wants/'
 		echo $'\033[1;33m hyperiond@.service -----> /etc/systemd/system/'
@@ -301,7 +302,7 @@ WantedBy=multi-user.target"
 		echo
 		exit 0
 
-elif [ $actual_os -eq 2 ]; then
+elif [ $OS = "LibreELEC" ]; then
 		echo $green'hyperion.service ----- >/storage/.config/system.d/'
 # Service file for LibreELEC
 		SERVICE_CONTENT="[Unit]
