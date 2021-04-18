@@ -23,7 +23,7 @@ Furthermore it allows to make 2 separated scripts, one for boot and another one 
 ```bash
 bash <(wget -qO - https://raw.githubusercontent.com/dan-froe/BASH/master/script_maker/script_maker_hyper.sh)
 ```
-[CODE](https://github.com/dan-froe/BASH/blob/master/script_maker/hyper_script_maker.sh) 
+[CODE](https://raw.githubusercontent.com/dan-froe/BASH/master/script_maker/hyper_script_maker.sh) 
 
 
 #### Instance 1/2 follow instance 0 - script
