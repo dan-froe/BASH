@@ -13,7 +13,7 @@ bash <(wget -qO - https://raw.githubusercontent.com/dan-froe/BASH/master/hyper_u
 ```
 [CODE](https://raw.githubusercontent.com/dan-froe/BASH/master/update_hyperion.sh) 
 
-#### script maker
+#### Script maker
 
 This script is a simple interactive script maker to control as many instances as you like. 
 It does not have the options to ping a microcontroller, see ESP ping script instead.
