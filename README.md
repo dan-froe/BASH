@@ -24,3 +24,19 @@ Furthermore it allows to make 2 separated scripts, one for boot and another one 
 bash <(wget -qO - https://raw.githubusercontent.com/dan-froe/BASH/master/script_maker/script_maker_hyper.sh)
 ```
 [CODE](https://github.com/dan-froe/BASH/blob/master/script_maker/hyper_script_maker.sh) 
+
+
+#### Instance 1/2 follow instance 0 - script
+
+This script let instance 1 and 2 follow the on/off Signal from instance 0.
+You can e.g. control Philips Hue device in instance 1 and 2 to turn on/off with the status of instance 0.
+It is not required to have a 3rd instance.
+
+This script has an installation script, which downloads the actual script to the current directory and deletes existing files. It adds the script to crontab if necessary. 
+
+```bash
+wget -O - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/hue/installation.sh | bash
+```
+[CODE](https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/hue/instance.sh)
+
+[CODE INSTALLATION](https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/hue/installation.sh) 
