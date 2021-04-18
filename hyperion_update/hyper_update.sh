@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Version:0.5.2
+# Version:0.5.5
 # Script for updating Hyperion.NG on
 # Raspbian/HyperBian/LibreELEC
 # by Daniel Froebe
@@ -20,6 +20,7 @@ directory_compile_test="2"
 directory_last=$(pwd)
 OS=$(lsb_release -i | cut -d : -f 2)
 found_compile=0
+jump="0"
 arch_x=$(uname -m | tr -d 'armvl')
 green=$'\033[0;32m' 
 red=$'\033[0;31m'
@@ -143,7 +144,6 @@ fi
 
 
 #Installation for Raspbian/HyperBian
-jump=0
 if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $found_compile -eq 1 ]; then
 	echo $yellow 'It looks like you compiled hyperion via CompileHowTo.md'
 	echo $yellow 'Is that correct? Yes or No and press enter'
@@ -166,7 +166,7 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $found_compile -eq 1 ]; th
 				directory_compile=$yes_no
 				[ -e $directory_compile ]
 				directory_compile_test=$?
-				[[ $directory_compile_test -ge 1 ]] && echo ; echo; echo; echo $'\033[0;31mdirectory none existent'
+				[[ $directory_compile_test -ge 1 ]] && echo ; echo; echo; echo $red'directory not existent'
 			done
 			echo
 			echo
@@ -215,7 +215,7 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $jump -eq 0 ]; then
 #Installation LibreELEC
 elif [ $OS = "LibreELEC" ]; then
 		echo
-		rm -R /storage/hyperion; wget -qO- https://git.io/JU4Zx | bash && echo $'\033[0;32mYour update process is complete!'; $(exit 0)
+		rm -R /storage/hyperion; wget -qO- https://git.io/JU4Zx | bash && echo $green'Your update process is complete!'; $(exit 0)
 fi
 
 if [ $? -eq 1 ]; then
