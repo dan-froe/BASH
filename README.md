@@ -40,3 +40,12 @@ wget -O - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/h
 [CODE](https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/hue/instance.sh)
 
 [CODE INSTALLATION](https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/hue/installation.sh) 
+
+
+#### ESP ping script 
+
+This script starts LED and Grabber after boot for ESP devices, or other network devices after boot or if the WLAN connection is interrupted. This script is limited to ESPs in instance 1 or 2.
+
+There is a full explanation in [ENGLISH](https://github.com/dan-froe/BASH/tree/master/esp_ping) or [DEUTSCH](https://github.com/dan-froe/BASH/blob/master/esp_ping/README_de.md) 
+
+
