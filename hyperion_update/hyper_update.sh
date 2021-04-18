@@ -35,7 +35,8 @@ fi
 function inst_compile() {
 	cd $directory_compile && sudo git pull https://github.com/hyperion-project/hyperion.ng.git master | grep "changed.*inseration.*deletion" && $(exit 0)
 	if [ $? -eq 0 ]; then
-			echo 'Uninstalling, this may take a few seconds'; sudo make uninstall >/dev/null 2>/dev/null; sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
+			echo 'Uninstalling, this may take a few seconds'; sudo make uninstall >/dev/null 2>/dev/null
+                        echo 'Installation starts...'; sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
 			cd $directory_last >/dev/null 2>/dev/null
 	else
 		echo
@@ -61,11 +62,11 @@ function inst_deb() {
 		case $yes_no in
 			(Yes | yes )
 				sudo apt-get update; sudo apt remove hyperion -y; cd ~; wget $rel_latest;
-				sudo apt-get install ./$(echo $rel_latest | cut -d / -f9) && cd $directory_last >/dev/null 2>/dev/null && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!' && $(exit 0)
+				sudo apt-get install ./$(echo $rel_latest | cut -d / -f9) && cd $directory_last >/dev/null 2>/dev/null && sudo apt -f install && echo && echo $green'You are up to date!' && $(exit 0)
 				;;
 			*)
 				echo
-				echo $'\033[0;31mYou decided against installing the software. No files were written!'
+				echo $red'You decided against installing the software. No files were written!'
 				echo
 				exit 0
 				;;
@@ -85,11 +86,11 @@ function inst_deb_armv6l() {
 		case $yes_no in
 			(Yes | yes )
 				sudo apt-get update; sudo apt remove hyperion -y; cd ~; wget $rel_latest_armv6l;
-				sudo apt-get install ./$(echo $rel_latest_armv6l | cut -d / -f9) && cd $directory_last >/dev/null 2>/dev/null && sudo apt -f install && echo && echo $'\033[0;32m You are up to date!' && $(echo 0)
+				sudo apt-get install ./$(echo $rel_latest_armv6l | cut -d / -f9) && cd $directory_last >/dev/null 2>/dev/null && sudo apt -f install && echo && echo $green'You are up to date!' && $(echo 0)
 				;;
 			*)
 				echo
-				echo $'\033[0;31mYou decided against installing the software. No files were written!'
+				echo $red'You decided against installing the software. No files were written!'
 				echo
 				exit 0
 				;;
