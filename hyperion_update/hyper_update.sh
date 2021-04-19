@@ -36,7 +36,7 @@ fi
 function inst_compile() {
 	cd $directory_compile && sudo git pull https://github.com/hyperion-project/hyperion.ng.git master | grep "changed.*inseration.*deletion" && var="$?"
 	cd $directory_compile && sudo git pull https://github.com/hyperion-project/hyperion.ng.git master
-        var=$(("$var" + "$?") 
+        var=$(("$var" + "$?"))
 	if [ $var -eq "0" ]; then
 		echo 'Uninstalling, this may take a few seconds'; sudo make uninstall >/dev/null 2>/dev/null
                 echo 'Installation starts...'; sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
