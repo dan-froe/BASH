@@ -236,6 +236,9 @@ fi
 if [ $? -eq 1 ]; then
 	echo $red'Something went wrong installation incomplete'
 	exit 1
+fi
+
+
 echo
 echo 
 echo $green'********** Please reboot when this skript has exited **********'
