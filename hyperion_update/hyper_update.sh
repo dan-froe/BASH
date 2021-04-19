@@ -34,13 +34,13 @@ fi
 
 #Function Table
 function inst_compile() {
-	cd $directory_compile && sudo git pull https://github.com/hyperion-project/hyperion.ng.git master >/dev/null 2>&1 | grep "changed.*inseration.*deletion"
+	cd $directory_compile && git pull https://github.com/hyperion-project/hyperion.ng.git master >/dev/null 2>&1 | grep "changed.*inseration.*deletion"
         var="$?"
-        sudo git pull https://github.com/hyperion-project/hyperion.ng.git master
+        git pull https://github.com/hyperion-project/hyperion.ng.git master
         var=$(("$var" + "$?"))
 	if [ $var -eq "0" ]; then
-		echo 'Uninstalling, this may take a few seconds'; sudo make uninstall >/dev/null 2>/dev/null
-                echo 'Installation starts...'; sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
+		echo 'Uninstalling, this may take a few seconds'; make uninstall >/dev/null 2>/dev/null
+                echo 'Installation starts...'; cmake -DCMAKE_BUILD_TYPE=Release .. && make -j $(nproc) && make install/strip
 	        cd $directory_last >/dev/null 2>/dev/null
         elif [ $var -eq "1" ]; then
 		echo
