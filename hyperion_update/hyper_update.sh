@@ -238,113 +238,113 @@ if [ $? -eq 1 ]; then
 	exit 1
 
 #Exit or File creation
-else
-		echo
-		echo
-		echo $green'********** Please reboot when this skript has exited **********'
-		echo
-		echo
-		echo
-		echo $yellow'I can create the files needed for a background process. I will place them in' "$HOME"'. You have to copy them into the systemd folder yourself. I will tell you the destination, when writing the files'
-		echo $yellow'Type Yes if you want them created'
-		echo
-		read -p '>>>' yes_no
-		case $yes_no in
-			Yes | yes )
-				;;
-				*)
-				echo
-				echo
-				echo $green'No files created. Your are all set. Thank you for using my script!'
-				echo
-				echo
-				echo
-				echo
-				exit 0
-			esac
-fi
-
-echo
-echo $yellow'The files will be created in current directory. You have to copy files into:'
-echo
-
-if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ]; then
-#Service files for RaspBian/HyperBian
-		echo $green'hyperiond@pi.service ---> /etc/systemd/system/multi-user.target.wants/'
-		echo $green'hyperiond@.service -----> /etc/systemd/system/'
-		SERVICE_CONTENT_MULTI="[Unit]
-Description=Hyperion ambient light systemd service  for user %i
-After=network.target
-
-[Service]
-ExecStart=/usr/bin/hyperiond
-WorkingDirectory=/usr/share/hyperion/bin
-User=%i
-TimeoutStopSec=5
-KillMode=mixed
-Restart=on-failure
-RestartSec=2
-
-[Install]
-WantedBy=multi-user.target"
-		echo "$SERVICE_CONTENT_MULTI" > hyperion@pi.service
-
-		SERVICE_CONTENT="[Unit]
-Description=Hyperion ambient light systemd service  for user %i
-After=network.target
-
-[Service]
-ExecStart=/usr/bin/hyperiond
-WorkingDirectory=/usr/share/hyperion/bin
-User=pi
-TimeoutStopSec=5
-KillMode=mixed
-Restart=on-failure
-RestartSec=2
-
-[Install]
-WantedBy=multi-user.target"
-		echo "$SERVICE_CONTENT" > hyperion@.service
-		echo
-		sleep 1
-		echo $green'Files created.'
-		echo
-		echo $green'*********You should activate autologin in raspi-config before copying the files*********'
-		echo
-		echo $green'You are all set. Thank you for using this script.'
-		echo
-		echo
-		echo
-		exit 0
-
-elif [ $OS = "LibreELEC" ]; then
-		echo $green'hyperion.service ----- >/storage/.config/system.d/'
-# Service file for LibreELEC
-		SERVICE_CONTENT="[Unit]
-Description=Hyperion ambient light systemd service
-After=network.target
-[Service]
-Environment=DISPLAY=:0.0
-ExecStart=/storage/hyperion/bin/hyperiond --userdata /storage/hyperion/
-TimeoutStopSec=2
-Restart=always
-RestartSec=10
-
-[Install]
-WantedBy=default.target"
-		echo "$SERVICE_CONTENT" > hyperion.service
-		echo
-		echo $green'File created'
-		echo
-		echo $green'You are all set. Thank you for using this script.'
-		echo
-		echo
-		echo
-		exit 0
-
-else
-		echo $red'Unsupported OS. No files created. Quitting!'
-		echo
-		echo
-		exit 1
-fi
+# else
+# 		echo
+# 		echo
+# 		echo $green'********** Please reboot when this skript has exited **********'
+# 		echo
+# 		echo
+# 		echo
+# 		echo $yellow'I can create the files needed for a background process. I will place them in' "$HOME"'. You have to copy them into the systemd folder yourself. I will tell you the destination, when writing the files'
+# 		echo $yellow'Type Yes if you want them created'
+# 		echo
+# 		read -p '>>>' yes_no
+# 		case $yes_no in
+# 			Yes | yes )
+# 				;;
+# 				*)
+# 				echo
+# 				echo
+# 				echo $green'No files created. Your are all set. Thank you for using my script!'
+# 				echo
+# 				echo
+# 				echo
+# 				echo
+# 				exit 0
+# 			esac
+# fi
+# 
+# echo
+# echo $yellow'The files will be created in current directory. You have to copy files into:'
+# echo
+# 
+# if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ]; then
+# #Service files for RaspBian/HyperBian
+# 		echo $green'hyperiond@pi.service ---> /etc/systemd/system/multi-user.target.wants/'
+# 		echo $green'hyperiond@.service -----> /etc/systemd/system/'
+# 		SERVICE_CONTENT_MULTI="[Unit]
+# Description=Hyperion ambient light systemd service  for user %i
+# After=network.target
+# 
+# [Service]
+# ExecStart=/usr/bin/hyperiond
+# WorkingDirectory=/usr/share/hyperion/bin
+# User=%i
+# TimeoutStopSec=5
+# KillMode=mixed
+# Restart=on-failure
+# RestartSec=2
+# 
+# [Install]
+# WantedBy=multi-user.target"
+# 		echo "$SERVICE_CONTENT_MULTI" > hyperion@pi.service
+# 
+# 		SERVICE_CONTENT="[Unit]
+# Description=Hyperion ambient light systemd service  for user %i
+# After=network.target
+# 
+# [Service]
+# ExecStart=/usr/bin/hyperiond
+# WorkingDirectory=/usr/share/hyperion/bin
+# User=pi
+# TimeoutStopSec=5
+# KillMode=mixed
+# Restart=on-failure
+# RestartSec=2
+# 
+# [Install]
+# WantedBy=multi-user.target"
+# 		echo "$SERVICE_CONTENT" > hyperion@.service
+# 		echo
+# 		sleep 1
+# 		echo $green'Files created.'
+# 		echo
+# 		echo $green'*********You should activate autologin in raspi-config before copying the files*********'
+# 		echo
+# 		echo $green'You are all set. Thank you for using this script.'
+# 		echo
+# 		echo
+# 		echo
+# 		exit 0
+# 
+# elif [ $OS = "LibreELEC" ]; then
+# 		echo $green'hyperion.service ----- >/storage/.config/system.d/'
+# # Service file for LibreELEC
+# 		SERVICE_CONTENT="[Unit]
+# Description=Hyperion ambient light systemd service
+# After=network.target
+# [Service]
+# Environment=DISPLAY=:0.0
+# ExecStart=/storage/hyperion/bin/hyperiond --userdata /storage/hyperion/
+# TimeoutStopSec=2
+# Restart=always
+# RestartSec=10
+# 
+# [Install]
+# WantedBy=default.target"
+# 		echo "$SERVICE_CONTENT" > hyperion.service
+# 		echo
+# 		echo $green'File created'
+# 		echo
+# 		echo $green'You are all set. Thank you for using this script.'
+# 		echo
+# 		echo
+# 		echo
+# 		exit 0
+# 
+# else
+# 		echo $red'Unsupported OS. No files created. Quitting!'
+# 		echo
+# 		echo
+# 		exit 1
+# fi
