@@ -34,7 +34,7 @@ fi
 
 #Function Table
 function inst_compile() {
-	cd $directory_compile && sudo git pull https://github.com/hyperion-project/hyperion.ng.git master | grep "changed.*inseration.*deletion" >/dev/null 2>&1
+	cd $directory_compile && sudo git pull https://github.com/hyperion-project/hyperion.ng.git master >/dev/null 2>&1 | grep "changed.*inseration.*deletion"
         var="$?"
         sudo git pull https://github.com/hyperion-project/hyperion.ng.git master
         var=$(("$var" + "$?"))
