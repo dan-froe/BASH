@@ -8,6 +8,8 @@ This script is work in progress. It works for Raspbian/HyperBian. Libreelec is a
 
 The script tries to determine how hyperion is installed into the system (packet installation/compiling), but asks before proceeding. It basically checks for a hyperion git repository made via the compiling method described in [CompileHowto.md](https://github.com/hyperion-project/hyperion.ng/blob/master/CompileHowto.md#compiling-and-installing-hyperion).
 
+**The compiling update process can fail if the existing repository was made with root privileges granted by ```sudo```.**
+
 ```console
 bash <(wget -qO - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_update/hyper_update.sh)
 ```
