@@ -46,8 +46,14 @@ function inst_compile() {
 		echo
 		echo $green'You are already up to date! No files changed!'
 		cd $directory_last >/dev/null 2>/dev/null
+                echo
+                echo
+                echo
         else
                 echo $red'An error occurred. Wrong directory?'
+                echo
+                echo
+                echo
                 exit 1
 	fi
 
