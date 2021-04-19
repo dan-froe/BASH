@@ -164,7 +164,7 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $found_compile -eq 1 ]; th
 				read -p '>>> ' yes_no
                                 yes_no=${yes_no:-abort} 
 				[[ ${yes_no,,} == "yes" ]] && break
-				[[ ${yes_no,,:-abort} == "abort" ]] && echo 'you aborted' && exit 0
+				[[ ${yes_no,,:-abort} == "abort" ]] && echo $red'you aborted' && exit 0
 				directory_compile=$yes_no
                                 [[ $directory_compile != "/"* ]] && directory_compile=/"${directory_compile}"
 				[ -e $directory_compile ]
