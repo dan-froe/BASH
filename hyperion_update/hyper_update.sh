@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Version:0.5.5
+# Version:0.5.9
 # Script for updating Hyperion.NG on
 # Raspbian/HyperBian/LibreELEC
 # by Daniel Froebe
