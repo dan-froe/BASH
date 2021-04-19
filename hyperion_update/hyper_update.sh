@@ -21,6 +21,7 @@ directory_last=$(pwd)
 OS=$(lsb_release -i | cut -d : -f 2)
 found_compile=0
 jump="0"
+var="0"
 arch_x=$(uname -m | tr -d 'armvl')
 green=$'\033[0;32m' 
 red=$'\033[0;31m'
@@ -33,15 +34,20 @@ fi
 
 #Function Table
 function inst_compile() {
-	cd $directory_compile && sudo git pull https://github.com/hyperion-project/hyperion.ng.git master | grep "changed.*inseration.*deletion" && $(exit 0)
-	if [ $? -eq 0 ]; then
-			echo 'Uninstalling, this may take a few seconds'; sudo make uninstall >/dev/null 2>/dev/null
-                        echo 'Installation starts...'; sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
-			cd $directory_last >/dev/null 2>/dev/null
-	else
+	cd $directory_compile && sudo git pull https://github.com/hyperion-project/hyperion.ng.git master | grep "changed.*inseration.*deletion" && var="$?"
+	cd $directory_compile && sudo git pull https://github.com/hyperion-project/hyperion.ng.git master
+        var=$(("$var" + "$?") 
+	if [ $var -eq "0" ]; then
+		echo 'Uninstalling, this may take a few seconds'; sudo make uninstall >/dev/null 2>/dev/null
+                echo 'Installation starts...'; sudo cmake -DCMAKE_BUILD_TYPE=Release .. && sudo make -j $(nproc) && sudo make install/strip
+	        cd $directory_last >/dev/null 2>/dev/null
+        elif [ $var -eq "1" ]; then
 		echo
 		echo $green'You are already up to date! No files changed!'
 		cd $directory_last >/dev/null 2>/dev/null
+        else
+                echo $red'An error occurred. Wrong directory?'
+                exit 1
 	fi
 
 }
