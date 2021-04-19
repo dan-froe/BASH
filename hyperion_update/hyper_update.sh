@@ -184,7 +184,7 @@ if [ $OS = "Raspbian" ] || [ $OS = "HyperBian" ] && [ $found_compile -eq 1 ]; th
 			echo
 			echo
 			echo
-			echo $green'Compiling the newest Version.'
+#			echo $green'Compiling the newest Version.'
 			echo
 			echo
 			inst_compile
