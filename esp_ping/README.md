@@ -1,7 +1,5 @@
 # Ping Script Installation
 
-> WLED has to be instance 1 and/or 2.
-
 ### 1. Download
 Login via SSH and execute the following command:
 
