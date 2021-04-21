@@ -14,7 +14,7 @@ The script tries to determine how hyperion is installed into the system (packet 
 ```console
 bash <(wget -qO - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_update/hyper_update.sh)
 ```
-[CODE](https://raw.githubusercontent.com/dan-froe/BASH/master/update_hyperion.sh) 
+[CODE](https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_update/hyper_update.sh) 
   
 #### Script maker
 
