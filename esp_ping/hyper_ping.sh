@@ -73,7 +73,6 @@ do
        ping -c 1 -w 1 "$IP" >/dev/null 2>&1
        var="$?"
        delay_s="$IP2"
-       unset $IP2
        ip_count="1"
    fi
 
@@ -83,7 +82,7 @@ do
        do
 #         is_on_LED=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -B1 "LEDDEVICE" | grep -v name | sed -e 's/ .*"enabled": //' -e 's/,//') 
 #         [[ "$is_on_LED" = "true" ]] && is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 1,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
-          num=$(($(curl -s "http://$IP/json/info" | grep -c "Hyperion")+$(curl -s "http://$IP2/json/info" | grep -c "Hyperion")))
+          num=$(($(curl -s "http://$IP/json/info" | grep -c "Hyperion")+$(curl -s "http://$IP2/json/info" --connect-timeout 1 | grep -c "Hyperion")))
           [[ "$ip_count" = "$num" ]] && is_on="true" || is_on="false"
           instance_switch
           sleep 1
