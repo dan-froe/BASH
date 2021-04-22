@@ -41,12 +41,12 @@ function instance_switch () {
 
 #########################################################################
 #check if hyperiond is running
-while [[ $var != "active(running)" ]] && [[ $i < "4" ]]
+while [[ $var != "active(running)" ]] && [[ $i = "5" ]]
 do	
 	i=$(($i+1))
-	nc -zv $HYPERION 8090 >>info 2>&1 && break
+	nc -zv $HYPERION 8090 -w 1 >>info 2>&1 && break
 	var=$(systemctl status "hyperion*" | grep 'active (running)' | sed -e 's/Active://' -e 's/since.*ago//' | tr -d " ")
-	sleep 5
+	sleep 4
 done
 #########################################################################
 
@@ -59,7 +59,7 @@ do
    if [[ $HYPERION !=~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
      delay_s="$HYPERION"
      HYPERION="localhost"
-   else
+   fi
 
    is_on=$(curl -s -X POST -i http://$HYPERION:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -B1 "LEDDEVICE" | grep -v name | sed -e 's/ .*"enabled": //' -e 's/,//') 
 
