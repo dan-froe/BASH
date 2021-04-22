@@ -15,7 +15,7 @@ is_on="0"
 is_on_1="0"
 foo="0"
 HYPERION="$1"
-delay_s="${2:=0}"
+delay_s="${2:-0}"
 
 #function
 function instance_switch () {
