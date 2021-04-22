@@ -66,10 +66,10 @@ do
    if [[ "$is_on" = "true" ]] && [[ "$foo" = "0" ]]; then
      instance_switch && foo=1
      is_on_1="0"
-     echo true 0 >>info 2>&1
+#    echo true 0 >>info 2>&1
 
    elif [[ "$is_on" = "true" ]] && [[ "$foo" = "1" ]]; then
-     echo true 1 >>info 2>&1
+#    echo true 1 >>info 2>&1
      [[ "$is_on" != "true" ]] && foo=0
      [[ "$delay_s" > "0" ]] && sleep $delay_s || sleep 3
 
@@ -78,7 +78,7 @@ do
      [[ "$is_on_1" = "0" ]] && curl -s -X POST -i http://$HYPERION:8090/json-rpc --data '{"command" : "instance","subcommand" : "stopInstance","instance" : 2}' >/dev/null 2>&1
      [[ "$is_on" != "true" ]] && foo=0
      is_on_1="1"
-     echo false >>info 2>&1
+#    echo false >>info 2>&1
      sleep 1
 
    fi
