@@ -86,25 +86,25 @@ do
           [[ "$ip_count" = "$num" ]] && is_on="true" || is_on="false"
           instance_switch
           sleep 1
-          echo 'no instance' >>info 2>&1
+#         echo 'no instance' >>info 2>&1
 
        done
 #      curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command":"effect","effect":{"name":"Rainbow swirl"},"duration":2000,"priority":50,"origin":"My Fancy App"}' >/dev/null 2>&1
        i=1
        is_on="false"
 
-       echo 'ping successful' >>info 2>&1
+#      echo 'ping successful' >>info 2>&1
 
    #second to n successful answers
    elif [[ "$var" = "0" ]] && [[ "$i" = "1" ]]; then
 
-       echo 'ping still successful' >>info 2>&1
+#      echo 'ping still successful' >>info 2>&1
        [[ "$delay_s" > "0" ]] && sleep $delay_s || sleep 4
 
    #no one home
    else
 
-       echo 'no answer' >>info 2>&1
+#      echo 'no answer' >>info 2>&1
        i=0
        sleep 1
    fi
