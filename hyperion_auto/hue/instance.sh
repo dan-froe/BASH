@@ -51,16 +51,16 @@ done
 #########################################################################
 
 
+#heck for IP
+if [[ ! $HYPERION =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+     delay_s="$HYPERION"
+     HYPERION="localhost"
+fi
+
 
 #checking instance 0, switching 1
 while :
 do
-
-   if [[ ! $HYPERION =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-     delay_s="$HYPERION"
-     HYPERION="localhost"
-   fi
-
    is_on=$(curl -s -X POST -i http://$HYPERION:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -B1 "LEDDEVICE" | grep -v name | sed -e 's/ .*"enabled": //' -e 's/,//') 
 
    if [[ "$is_on" = "true" ]] && [[ "$foo" = "0" ]]; then
