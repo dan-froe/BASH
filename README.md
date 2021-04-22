@@ -51,7 +51,7 @@ bash <(wget -qO - https://raw.githubusercontent.com/dan-froe/BASH/master/script_
   
 This script let instance 1 and 2 follow the on/off Signal from instance 0.  
   
-You can e.g. control Philips Hue device in instance 1 and 2 to turn on/off with the status of instance 0.
+You can e.g. turn on/off a Philips Hue device in instance 1 and 2 just by switching instance 0 on or off.
 It is not required to have a 3rd instance. This script works from a remote and can be configured with two variables at the end of the command. Setting variables is not required.  
   
 ```console
