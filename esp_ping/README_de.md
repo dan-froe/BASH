@@ -1,6 +1,5 @@
 # Ping Skript Installation
 
-> Das Skript unterstützt derzeit nur WLED als Instanz 1 und/oder 2.
 
 ### 1. Download
 Per SSH einloggen und im Start Verzeichnis folgendes ausführen:
