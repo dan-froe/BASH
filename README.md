@@ -8,7 +8,7 @@
 &nbsp;
 ### Update script 
 
-*Last edit: 19.04.2021*
+*Last edit: 19.04.2021*  
 *works from remote: Yes*
 
 This script is work in progress. It works for Raspbian/HyperBian. Libreelec is available but isn't tested.  
