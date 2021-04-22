@@ -51,7 +51,7 @@ function instance_switch () {
 
 #########################################################################
 #check if hyperiond is running
-while [[ $foo != "active(running)" ]] && [[ $bar < "4" ]]
+while [[ $foo != "active(running)" ]] && [[ $bar < "5" ]]
 do	
 	bar=$(($bar+1))
 	foo=$(systemctl status "hyperion*" | grep 'active (running)' | sed -e 's/Active://' -e 's/since.*ago//' | tr -d " ")
