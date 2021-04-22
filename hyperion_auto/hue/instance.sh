@@ -56,7 +56,7 @@ done
 while :
 do
 
-   if [[ $HYPERION !=~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+   if [[ ! $HYPERION =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
      delay_s="$HYPERION"
      HYPERION="localhost"
    fi
