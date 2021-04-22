@@ -72,7 +72,7 @@ do
    else
        ping -c 1 -w 1 "$IP" >/dev/null 2>&1
        var="$?"
-       delay_s="$2"
+       delay_s="$IP2"
        ip_count="1"
    fi
 
