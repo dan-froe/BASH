@@ -53,7 +53,7 @@ done
 
 #heck for IP
 if [[ ! $HYPERION =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-     delay_s="$HYPERION"
+     delay_s="${HYPERION:=0"
      HYPERION="localhost"
 fi
 
