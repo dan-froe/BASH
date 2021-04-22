@@ -1,10 +1,10 @@
 # BASH  
   
-` `  
+&NewLine;
 Bash scripts to control Hyperion.ng instances in various cases.
   
-` `  
-` `  
+&NewLine;
+&NewLine;
 ### Update script 
 
 *Last edit: 19.04.2021*
