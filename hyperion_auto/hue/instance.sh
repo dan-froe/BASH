@@ -14,7 +14,7 @@ i="0"
 is_on="0"
 is_on_1="0"
 foo="0"
-HYPERION="${1:localhost}"
+HYPERION="${1:-localhost}"
 delay_s="${2:-0}"
 
 #function
@@ -41,7 +41,7 @@ function instance_switch () {
 
 #########################################################################
 #check if hyperiond is running
-while [[ $var != "active(running)" ]] && [[ $i = "5" ]]
+while [[ $var != "active(running)" ]] && [[ $i < "5" ]]
 do	
 	i=$(($i+1))
 	nc -zv $HYPERION 8090 -w 1 >>info 2>&1 && break
