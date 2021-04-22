@@ -1,10 +1,11 @@
 # BASH  
   
-&NewLine;
-Bash scripts to control Hyperion.ng instances in various cases.
+&nbsp;
+&nbsp;
+>Bash scripts to control Hyperion.ng instances in various cases.
   
-&NewLine;
-&NewLine;
+&nbsp;
+&nbsp;
 ### Update script 
 
 *Last edit: 19.04.2021*
@@ -20,9 +21,8 @@ bash <(wget -qO - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperio
 ```
 [CODE](https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_update/hyper_update.sh) 
   
-` `  
-` `  
-` `  
+&nbsp;
+&nbsp;
 ### Script maker  
   
 *Last edit: 17.04.2021*  
@@ -40,9 +40,8 @@ bash <(wget -qO - https://raw.githubusercontent.com/dan-froe/BASH/master/script_
 ```
 [CODE](https://raw.githubusercontent.com/dan-froe/BASH/master/script_maker/hyper_script_maker.sh) 
   
-` `  
-` `  
-` `  
+&nbsp;
+&nbsp;
 ### Instance 1/2 follow instance 0 - script  
   
 *Last edit: 22.04.2021*  
@@ -79,9 +78,8 @@ wget -O - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/h
 
 [CODE INSTALLATION](https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/hue/installation.sh) 
   
-` `  
-` `  
-` `  
+&nbsp;
+&nbsp;
 ### ESP ping script  
   
 *Last edit: 22.04.2021*  
@@ -90,5 +88,5 @@ This script starts LED and Grabber after boot for ESP devices, or other network 
 
 There is a full explanation in [ENGLISH](https://github.com/dan-froe/BASH/tree/master/esp_ping) or [DEUTSCH](https://github.com/dan-froe/BASH/blob/master/esp_ping/README_de.md) 
   
- 
-  
+&nbsp;
+&nbsp;
