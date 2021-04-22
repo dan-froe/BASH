@@ -8,9 +8,9 @@
 &nbsp;
 ### Update script 
 
-*Last edit: 19.04.2021*  
-*works from remote: Yes*
-
+*last update: 19.04.2021*  
+*works from remote: Yes*  
+  
 This script is work in progress. It works for Raspbian/HyperBian. Libreelec is available but isn't tested.  
   
 The script tries to determine how hyperion is installed into the system (packet installation/compiling), but asks before proceeding. It basically checks for a hyperion git repository made via the compiling method described in [CompileHowto.md](https://github.com/hyperion-project/hyperion.ng/blob/master/CompileHowto.md#compiling-and-installing-hyperion).
@@ -26,7 +26,8 @@ bash <(wget -qO - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperio
 &nbsp;
 ### Script maker  
   
-*Last edit: 17.04.2021*  
+*last update: 17.04.2021*  
+*works from remote: Yes*  
   
 This script is a simple interactive script maker to control as many instances as you like.  
   
@@ -45,7 +46,8 @@ bash <(wget -qO - https://raw.githubusercontent.com/dan-froe/BASH/master/script_
 &nbsp;
 ### Instance 1/2 follow instance 0 - script  
   
-*Last edit: 22.04.2021*  
+*last update: 22.04.2021*  
+*works from remote: Yes*  
   
 This script let instance 1 and 2 follow the on/off Signal from instance 0.  
   
@@ -83,7 +85,8 @@ wget -O - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/h
 &nbsp;
 ### ESP ping script  
   
-*Last edit: 22.04.2021*  
+*last update: 22.04.2021*  
+*works from remote: Yes*
   
 This script starts LED and Grabber after boot for ESP devices, or other network devices after boot or if the WLAN connection is interrupted. This script is limited to 2 ESPs.
 
