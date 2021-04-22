@@ -14,7 +14,7 @@ i="0"
 is_on="0"
 is_on_1="0"
 foo="0"
-HYPERION="${1:-localhost}"
+HYPERION="${1:-0}"
 delay_s="${2:-0}"
 
 #function
