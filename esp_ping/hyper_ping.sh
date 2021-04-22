@@ -51,7 +51,7 @@ function instance_switch () {
 
 #########################################################################
 #check if hyperiond is running
-while [[ $foo != "active(running)" ]] && [[ $bar < "4" ]]
+while [[ $foo != "active(running)" ]] && [[ $bar < "5" ]]
 do	
 	bar=$(($bar+1))
 	foo=$(systemctl status "hyperion*" | grep 'active (running)' | sed -e 's/Active://' -e 's/since.*ago//' | tr -d " ")
@@ -72,7 +72,7 @@ do
    else
        ping -c 1 -w 1 "$IP" >/dev/null 2>&1
        var="$?"
-       delay_s="$2"
+       delay_s="$IP2"
        ip_count="1"
    fi
 
@@ -86,25 +86,25 @@ do
           [[ "$ip_count" = "$num" ]] && is_on="true" || is_on="false"
           instance_switch
           sleep 1
-#         echo 'no instance' >>info 2>&1
+          echo 'no instance' >>info 2>&1
 
        done
 #      curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command":"effect","effect":{"name":"Rainbow swirl"},"duration":2000,"priority":50,"origin":"My Fancy App"}' >/dev/null 2>&1
        i=1
        is_on="false"
 
-#      echo 'ping successful' >>info 2>&1
+       echo 'ping successful' >>info 2>&1
 
    #second to n successful answers
    elif [[ "$var" = "0" ]] && [[ "$i" = "1" ]]; then
 
-#      echo 'ping still successful' >>info 2>&1
+       echo 'ping still successful' >>info 2>&1
        [[ "$delay_s" > "0" ]] && sleep $delay_s || sleep 4
 
    #no one home
    else
 
-#      echo 'no answer' >>info 2>&1
+       echo 'no answer' >>info 2>&1
        i=0
        sleep 1
    fi
