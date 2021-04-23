@@ -19,7 +19,12 @@ Add at the bottom of the file :
 ```console
 @reboot bash $HOME/hyper_ping.sh IP IP2 TIME
 ```
-The script can be configured with 3 variables.  
+The script can be configured with 3 variables in two ways.  
+  
+**Method 1**  
+  
+The script can be configured by replacing the variables IP, IP2 and TIME. 
+You have to set only IP for this script to work. Or you set none and use METHOD 2.  
   
 **IP**  
 Replace **IP** with the IP of your ESP.
@@ -47,7 +52,20 @@ or
 
 ```console
 @reboot bash $HOME/hyper_ping.sh 192.168.178.39 192.168.178.110 60
-```
+```  
+  
+**Method 2**  
+  
+You can download a configuration file and edit the file to set the variables.  
+It is possible to use this method from a remote host.  
+Setting variable "IP_Address" is the minimum configuration needed.  
+Don't set any variables after the main script as it will have priority. 
+  
+Download the "conf" file to the same directory as the main script. 
+  
+```console
+rm conf; wget -q https://raw.githubusercontent.com/dan-froe/BASH/conf-file/esp_ping/conf && nano conf
+```  
   
 ### 3. Description 
 The script starts with every boot. The script runs in an endless loop. 
