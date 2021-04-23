@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#Version:1.5.2
+#Version:1.6.2
 #script for pinging a network device
 #after succesful pong instance 0 LED on
 #check if LED on is success
