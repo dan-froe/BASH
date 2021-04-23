@@ -63,6 +63,11 @@ function instance_switch () {
          } >/dev/null 2>&1
 } 
 
+
+#break without minimum set (IP of 1st network device) 
+[[ -z "IP" ]] && exit 1
+
+
 #########################################################################
 #check if hyperiond is running
 while [[ $foo != "active(running)" ]] && [[ $bar < "5" ]]
