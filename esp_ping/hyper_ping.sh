@@ -13,39 +13,53 @@ i="0"
 var="0"
 num="0"
 ip_count="0"
+HYPERION="localhost"
 IP="$1"
 IP2="$2"
 delay_s="$3"
 is_on="false"
 is_on_LED="false"
 
+#variables substitution if file exists
+if [[ -d conf ]]; then
+   HYPERION=$(cat conf | grep HYPERION_IP | cut -d: -f2)
+   IP=$(cat conf | grep IP_Address | cut -d: -f2)
+   IP2=$(cat conf | grep IP2_Address | cut -d: -f2)
+   delay_s=$(cat conf | grep TIME_Seconds | cut -d: -f2)
+
+   HYPERION=${HYPERION:="localhost"}
+   IP=${IP:="ERROR"}
+   IP2=${IP2:="0"}
+   TIME=${TIME:="0"}
+fi
+
 #function
 function instance_switch () {
 #instance 1/2 on,LED on, V4l on
          {
-         curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "startInstance","instance" : 0}'
+         curl -i -X POST 'http://$HYPERION:8090/json-rpc' --data '{"command" : "instance","subcommand" : "startInstance","instance" : 0}'
 
-         curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "startInstance","instance" : 1}'
+         curl -i -X POST 'http://$HYPERION:8090/json-rpc' --data '{"command" : "instance","subcommand" : "startInstance","instance" : 1}'
 
-         curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "startInstance","instance" : 2}'
+         curl -i -X POST 'http://$HYPERION:8090/json-rpc' --data '{"command" : "instance","subcommand" : "startInstance","instance" : 2}'
 
-         curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 0}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":true}}'
+         curl -i -X POST 'http://$HYPERION:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 0}' --next 'http://$HYPERION:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":true}}'
 
-         curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 1}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":true}}'
+         curl -i -X POST 'http://$HYPERION:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 1}' --next 'http://$HYPERION:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":true}}'
 
-         curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 2}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":true}}'
+         curl -i -X POST 'http://$HYPERION:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 2}' --next 'http://$HYPERION:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":true}}'
 
-         curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 0}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"V4L","state":true}}'
+         curl -i -X POST 'http://$HYPERION:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 0}' --next 'http://$HYPERION:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"V4L","state":true}}'
 
-         curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 1}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"V4L","state":true}}'
+         curl -i -X POST 'http://$HYPERION:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 1}' --next 'http://$HYPERION:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"V4L","state":true}}'
 
-         curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 2}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"V4L","state":true}}'
+         curl -i -X POST 'http://$HYPERION:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 2}' --next 'http://$HYPERION:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"V4L","state":true}}'
 
-         curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 0}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"GRABBER","state":true}}'
+         curl -i -X POST 'http://$HYPERION:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 0}' --next 'http://$HYPERION:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"GRABBER","state":true}}'
 
-         curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 1}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"GRABBER","state":false}}'
+         curl -i -X POST 'http://$HYPERION:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 1}' --next 'http://$HYPERION:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"GRABBER","state":false}}'
 
-         curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 2}' --next 'http://localhost:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"GRABBER","state":false}}'
+         curl -i -X POST 'http://$HYPERION:8090/json-rpc' --data '{"command" : "instance","subcommand" : "switchTo","instance" : 2}' --next 'http://$HYPERION:8090/json-rpc' --data '{"command":"componentstate","componentstate":{"component":"GRABBER","state":false}}'
          } >/dev/null 2>&1
 } 
 
@@ -54,8 +68,9 @@ function instance_switch () {
 while [[ $foo != "active(running)" ]] && [[ $bar < "5" ]]
 do	
 	bar=$(($bar+1))
+	nc -zv $HYPERION 8090 -w 1 >>info 2>&1 && break
 	foo=$(systemctl status "hyperion*" | grep 'active (running)' | sed -e 's/Active://' -e 's/since.*ago//' | tr -d " ")
-	sleep 5
+	sleep 4
 done
 instance_switch
 #########################################################################
@@ -80,8 +95,8 @@ do
    if [[ "$var" = "0" ]] && [[ "$i" = "0" ]]; then
        while [[ "$is_on" != "true" ]]
        do
-#         is_on_LED=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -B1 "LEDDEVICE" | grep -v name | sed -e 's/ .*"enabled": //' -e 's/,//') 
-#         [[ "$is_on_LED" = "true" ]] && is_on=$(curl -s -X POST -i http://localhost:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 1,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
+#         is_on_LED=$(curl -s -X POST -i http://$HYPERION:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -B1 "LEDDEVICE" | grep -v name | sed -e 's/ .*"enabled": //' -e 's/,//') 
+#         [[ "$is_on_LED" = "true" ]] && is_on=$(curl -s -X POST -i http://$HYPERION:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -A1 '"instance": 1,' | grep -v instance | sed -e 's/ .*"running": //' -e 's/,//')
           num=$(($(curl -s "http://$IP/json/info" | grep -c "Hyperion")+$(curl -s "http://$IP2/json/info" --connect-timeout 1 | grep -c "Hyperion")))
           [[ "$ip_count" = "$num" ]] && is_on="true" || is_on="false"
           instance_switch
@@ -89,7 +104,7 @@ do
 #         echo 'no instance' >>info 2>&1
 
        done
-#      curl -i -X POST 'http://localhost:8090/json-rpc' --data '{"command":"effect","effect":{"name":"Rainbow swirl"},"duration":2000,"priority":50,"origin":"My Fancy App"}' >/dev/null 2>&1
+#      curl -i -X POST 'http://$HYPERION:8090/json-rpc' --data '{"command":"effect","effect":{"name":"Rainbow swirl"},"duration":2000,"priority":50,"origin":"My Fancy App"}' >/dev/null 2>&1
        i=1
        is_on="false"
 
