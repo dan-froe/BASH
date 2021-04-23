@@ -65,7 +65,7 @@ function instance_switch () {
 
 
 #break without minimum set (IP of 1st network device) 
-[[ $IP = "ERROR" ] || [ -z "$IP" ] || [ $IP = "IP_Address=" ]] && exit 1
+[[ $IP = "ERROR" ]] || [[ -z "$IP" ]] || [[ $IP = "IP_Address=" ]] && exit 1
 
 
 #########################################################################
