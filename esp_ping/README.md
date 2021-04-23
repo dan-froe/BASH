@@ -14,7 +14,7 @@ crontab -e
 ```
 
 choose editor when prompted.
-Add at the bottom of the file :
+Add at the bottom of the file. IP, IP2 and TIME are variables:
 
 ```console
 @reboot bash $HOME/hyper_ping.sh IP IP2 TIME
