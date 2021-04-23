@@ -29,7 +29,7 @@ if [[ -f conf ]] && [[ -z $1 ]]; then
 
    HYPERION=${HYPERION:="localhost"}
    IP=${IP:="ERROR"}
-   IP2=${IP2:="empty"}
+   IP2=${IP2:="0"}
    delay_s=${delay_s:="0"}
 fi
 
@@ -87,7 +87,8 @@ do
    else
        ping -c 1 -w 1 "$IP" >/dev/null 2>&1
        var="$?"
-       [[ $delay_s != "empty" ]] && delay_s="$IP2"
+       
+       [[ ! -f conf ]] && delay_s="$IP2"
        ip_count="1"
    fi
 
