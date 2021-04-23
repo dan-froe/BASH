@@ -21,7 +21,7 @@ is_on="false"
 is_on_LED="false"
 
 #variables substitution if file exists
-if [[ -f conf ]] && [[ -z $1 ]]; then
+if [[ -f "conf" ]] && [[ -z "$1" ]]; then
    HYPERION=$(cat conf | grep HYPERION_IP | cut -d: -f2)
    IP=$(cat conf | grep IP_Address | cut -d: -f2)
    IP2=$(cat conf | grep IP2_Address | cut -d: -f2)
@@ -65,7 +65,7 @@ function instance_switch () {
 
 
 #break without minimum set (IP of 1st network device) 
-[[ -z "$IP" ]] || [[ $IP = "IP_Address=" ]] && exit 1
+[[ $IP = "ERROR" ] || [ -z "$IP" ] || [ $IP = "IP_Address=" ]] && exit 1
 
 
 #########################################################################
