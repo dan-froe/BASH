@@ -68,7 +68,7 @@ function instance_switch () {
 while [[ $foo != "active(running)" ]] && [[ $bar < "5" ]]
 do	
 	bar=$(($bar+1))
-	nc -zv $HYPERION 8090 -w 1 >>info 2>&1 && break
+	nc -zv $HYPERION 8090 -w 1 >>/dev/null 2>&1 && break
 	foo=$(systemctl status "hyperion*" | grep 'active (running)' | sed -e 's/Active://' -e 's/since.*ago//' | tr -d " ")
 	sleep 4
 done
