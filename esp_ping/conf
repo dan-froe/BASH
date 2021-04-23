@@ -9,30 +9,34 @@
 
 #########################################################################
 
-#Hyperion server addressH, write the IP afzer the colon
+#Hyperion server address, write the IP after the equal sign. 
+#standard localhost
 
-HYPERION_IP:
-
-
-#########################################################################
-
-#IP first network device, write the IP after the colon
-
-IP_Address:
+HYPERION_IP=
 
 
 #########################################################################
 
-#IP second network device, write the IP after the colon
+#IP first network device, write the IP after the equal sign.
+#this variable has to be set, otherwise the script won't work. 
 
-IP2_Address:
+IP_Address=
 
 
 #########################################################################
 
-#waiting time in secondsafter for next check after succesful attempt
+#IP second network device, write the IP after the equal sign. 
+#a second IP isn't mandatory. 
 
-TIME_Seconds:
+IP2_Address=
+
+
+#########################################################################
+
+#waiting time in seconds for next check after succesful attempt.
+#standard 4 seconds
+
+TIME_Seconds=
 
 
 #########################################################################
