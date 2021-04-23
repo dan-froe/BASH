@@ -88,9 +88,9 @@ wget -O - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/h
 *last update: 22.04.2021*  
 *works from remote: Yes*
   
-This script starts LED and Grabber for any network devices after boot or if the WLAN connection is interrupted. This script is limited to 2 ESPs.
+This script starts LED and Grabber for a WLED devices after boot or if the WLAN connection is interrupted. This script is limited to 2 ESPs.
 
-There is a full explanation in [ENGLISH](https://github.com/dan-froe/BASH/tree/master/esp_ping) or [DEUTSCH](https://github.com/dan-froe/BASH/blob/master/esp_ping/README_de.md) 
+[Here](https://github.com/dan-froe/BASH/tree/master/esp_ping) is a full explanation.  
   
 &nbsp;
 &nbsp;
