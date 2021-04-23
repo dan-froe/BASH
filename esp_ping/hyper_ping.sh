@@ -87,8 +87,7 @@ do
    else
        ping -c 1 -w 1 "$IP" >/dev/null 2>&1
        var="$?"
-       
-       [[ ! -f conf ]] && delay_s="$IP2"
+       [[ ! -z "$1" ]] && delay_s="$IP2"
        ip_count="1"
    fi
 
