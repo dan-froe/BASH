@@ -1,0 +1,38 @@
+#######################################################################
+#                            CONFIGURATION                              #
+#                                FOR                                    #
+#                            PING   SCRIPT                              #
+#                                                                       #
+#                                                                       #
+#                                                      by daniel Froebe #
+ #######################################################################
+
+#########################################################################
+
+#Hyperion server addressH, write the IP afzer the colon
+
+HYPERION_IP:
+
+
+#########################################################################
+
+#IP first network device, write the IP after the colon
+
+IP_Address:
+
+
+#########################################################################
+
+#IP second network device, write the IP after the colon
+
+IP2_Address:
+
+
+#########################################################################
+
+#waiting time in secondsafter for next check after succesful attempt
+
+TIME_Seconds:
+
+
+#########################################################################
