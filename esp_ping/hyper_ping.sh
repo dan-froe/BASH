@@ -60,7 +60,7 @@ function instance_switch () {
          curl -i -X POST "http://$HYPERION:8090/json-rpc" --data '{"command" : "instance","subcommand" : "switchTo","instance" : 1}' --next "http://$HYPERION:8090/json-rpc" --data '{"command":"componentstate","componentstate":{"component":"GRABBER","state":false}}'
 
          curl -i -X POST "http://$HYPERION:8090/json-rpc" --data '{"command" : "instance","subcommand" : "switchTo","instance" : 2}' --next "http://$HYPERION:8090/json-rpc" --data '{"command":"componentstate","componentstate":{"component":"GRABBER","state":false}}'
-         } >>info2 2>&1
+         } >>/dev/null 2>&1
 } 
 
 
