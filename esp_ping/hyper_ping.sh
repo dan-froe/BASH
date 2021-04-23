@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #Version:1.6.2
-#script for pinging a network device
+#script for pinging a WLED device
 #after succesful pong instance 0 LED on
 #check if LED on is success
 #by Daniel Froebe
