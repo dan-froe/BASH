@@ -57,9 +57,9 @@ or
 **Method 2**  
   
 You can download a configuration file and edit the file to set the variables.  
-It is possible to use this method from a remote host.  
+It is possible to use this script from a remote host with this method.  
 Setting variable "IP_Address" is the minimum configuration needed.  
-Don't set any variables after the main script as it will have priority. 
+Don't set any variables after the main script, like method 1, as it will have priority. 
   
 Download the "conf" file to the same directory as the main script. 
   
