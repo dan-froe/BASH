@@ -31,7 +31,7 @@ Replace **IP** with the IP of your ESP.
 If you have a second ESP replace **IP2** with the IP of your second ESP.  
   
 **TIME**  
-Optional: Replace **TIME** with a duration in seconds. This extends the time between two successful ping. Standard is 4 seconds. 
+Optional: Replace **TIME** with a duration in seconds. This extends the waiting time after a successful ping. Standard is 4 seconds. 
   
 **When there is only 1 ESP, variable TIME takes the place of IP2.
 You have to provide at least one IP. IP2 and TIME are not required.**
