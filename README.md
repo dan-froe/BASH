@@ -90,7 +90,7 @@ wget -O - https://raw.githubusercontent.com/dan-froe/BASH/master/hyperion_auto/h
   
 This script starts LED and Grabber for a WLED devices after boot or if the WLAN connection is interrupted. This script is limited to 2 ESPs.
 
-[Here](https://github.com/dan-froe/BASH/tree/master/esp_ping) is a full explanation.  
+[Here](https://github.com/dan-froe/BASH/tree/master/esp_ping#ping-script-installation) is a full explanation.  
   
 &nbsp;
 &nbsp;
