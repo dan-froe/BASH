@@ -39,6 +39,15 @@ function instance_switch () {
          } >/dev/null 2>&1
 } 
 
+function instance_LED_off () {
+#instance 1/2 LED off
+         {
+         curl -i -X POST "http://$HYPERION:8090/json-rpc" --data '{"command" : "instance","subcommand" : "switchTo","instance" : 1}' --next "http://$HYPERION:8090/json-rpc" --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":false}}'
+         curl -i -X POST "http://$HYPERION:8090/json-rpc" --data '{"command" : "instance","subcommand" : "switchTo","instance" : 2}' --next "http://$HYPERION:8090/json-rpc" --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":false}}'
+         } >/dev/null 2>&1
+}
+
+
 #########################################################################
 #check if hyperiond is running
 while [[ $var != "active(running)" ]] && [[ $i < "5" ]]
@@ -49,10 +58,11 @@ do
 	sleep 4
 done
 instance_switch
+instance_LED_off
 #########################################################################
 
 
-#heck for IP
+#check for IP
 if [[ ! $HYPERION =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
      delay_s="${HYPERION:=0}"
      HYPERION="localhost"
