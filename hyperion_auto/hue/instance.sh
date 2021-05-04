@@ -20,6 +20,15 @@ HYPERION="${1:-0}"
 delay_s="${2:-0}" 
 
 
+
+#check Options for IP
+if [[ ! $HYPERION =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+     delay_s="${HYPERION:=0}"
+     HYPERION="localhost"
+fi
+
+
+
 #variables substitution if file exists
 if [[ -f "conf_auto" ]] && [[ -z "$1" ]]; then
    HYPERION=$(cat conf_auto | grep HYPERION_IP | cut -d= -f2)
@@ -79,14 +88,6 @@ do
 done
 instance_switch
 #########################################################################
-
-
-#check for IP
-if [[ ! $HYPERION =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-     delay_s="${HYPERION:=0}"
-     HYPERION="localhost"
-fi
-
 
 
 #########################################################################
