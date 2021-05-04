@@ -43,7 +43,12 @@ function instance_LED_off () {
 #instance 1/2 LED off
          {
          curl -i -X POST "http://$HYPERION:8090/json-rpc" --data '{"command" : "instance","subcommand" : "switchTo","instance" : 1}' --next "http://$HYPERION:8090/json-rpc" --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":false}}'
-         curl -i -X POST "http://$HYPERION:8090/json-rpc" --data '{"command" : "instance","subcommand" : "switchTo","instance" : 2}' --next "http://$HYPERION:8090/json-rpc" --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":false}}'
+        
+	 curl -i -X POST "http://$HYPERION:8090/json-rpc" --data '{"command" : "instance","subcommand" : "switchTo","instance" : 2}' --next "http://$HYPERION:8090/json-rpc" --data '{"command":"componentstate","componentstate":{"component":"LEDDEVICE","state":false}}'
+	
+	 curl -i -X POST "http://$HYPERION:8090/json-rpc" --data '{"command" : "instance","subcommand" : "stopInstance","instance" : 1}'
+
+         curl -i -X POST "http://$HYPERION:8090/json-rpc" --data '{"command" : "instance","subcommand" : "stopInstance","instance" : 2}'
          } >/dev/null 2>&1
 }
 
@@ -58,7 +63,6 @@ do
 	sleep 4
 done
 instance_switch
-#instance_LED_off
 #########################################################################
 
 
@@ -75,6 +79,10 @@ do
    is_on=$(curl -s -X POST -i http://$HYPERION:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -B1 "LEDDEVICE" | grep -v name | sed -e 's/ .*"enabled": //' -e 's/,//') 
 
    if [[ "$is_on" = "true" ]] && [[ "$foo" = "0" ]]; then
+    #hue doesn't start from time to time fix
+     sleep 5
+     instance_switch && sleep 1 && instance_LED_off && sleep 1
+    #end of fix
      instance_switch && foo=1
      is_on_1="0"
 #    echo true 0 >>info 2>&1
