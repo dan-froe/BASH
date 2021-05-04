@@ -72,17 +72,17 @@ if [[ ! $HYPERION =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
      HYPERION="localhost"
 fi
 
+#hue doesn't start from time to time - fix
+sleep 5
+instance_switch && sleep 1 && instance_LED_off && sleep 1
+#end of fix
 
 #checking instance 0, switching 1
 while :
 do
    is_on=$(curl -s -X POST -i http://$HYPERION:8090/json-rpc --data '{"command": "serverinfo", "tan":1}' | grep -B1 "LEDDEVICE" | grep -v name | sed -e 's/ .*"enabled": //' -e 's/,//') 
 
-   if [[ "$is_on" = "true" ]] && [[ "$foo" = "0" ]]; then
-    #hue doesn't start from time to time fix
-     sleep 5
-     instance_switch && sleep 1 && instance_LED_off && sleep 1
-    #end of fix
+   if [[ "$is_on" = "true" ]] && [[ "$foo" = "0" ]]; then 
      instance_switch && foo=1
      is_on_1="0"
 #    echo true 0 >>info 2>&1
