@@ -1,0 +1,49 @@
+#######################################################################
+
+#                            CONFIGURATION                              #
+
+#                                FOR                                    #
+
+#                            Auto   SCRIPT                              #
+
+#                                                                       #
+
+#                                                                       #
+
+#                                                      by daniel froebe #
+
+ #######################################################################
+
+#########################################################################
+
+#Hyperion server address, write the IP after the equal sign. 
+
+#standard localhost
+
+HYPERION_IP=
+
+#########################################################################
+
+#IP first network device, write the IP after the equal sign.
+
+#this variable has to be set, otherwise the script won't work. 
+
+IP_Address=
+
+#########################################################################
+
+#IP second network device, write the IP after the equal sign. 
+
+#a second IP isn't mandatory. 
+
+IP2_Address=
+
+#########################################################################
+
+#waiting time in seconds for next check after succesful attempt.
+
+#standard 4 seconds
+
+TIME_Seconds=
+
+######################################################################### 
