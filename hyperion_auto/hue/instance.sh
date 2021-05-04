@@ -11,11 +11,13 @@
 #variables
 var="0"
 i="0"
+x="0"
 is_on="0"
 is_on_1="0"
 foo="0"
+HUEIP="noIP" 
 HYPERION="${1:-0}"
-delay_s="${2:-0}"
+delay_s="${2:-0}" 
 
 #function
 function instance_switch () {
@@ -72,10 +74,18 @@ if [[ ! $HYPERION =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
      HYPERION="localhost"
 fi
 
-#hue doesn't start from time to time - fix
-sleep 5
+
+#hue doesn't start from time to time - fix######
+if [[ $HUEIP = "noIP" ]] && [[ $x < "5" ]] 
+   HUEIP=$(curl -s 'https://discovery.meethue.com/' | cut -d '"' -f 8)
+   HUEIP=${HUEIP:=noIP}
+   [[ $HUEIP != "noIP" ]] && break
+   x=$(($x+1)
+   sleep 5
+fi
 instance_switch && sleep 1 && instance_LED_off && sleep 1
-#end of fix
+#end of fix#######
+
 
 #checking instance 0, switching 1
 while :
