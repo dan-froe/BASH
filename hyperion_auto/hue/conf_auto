@@ -24,19 +24,11 @@ HYPERION_IP=
 
 #########################################################################
 
-#IP first network device, write the IP after the equal sign.
+#IP of Hue Bridge, if present. Write the IP after the equal sign.
 
-#this variable has to be set, otherwise the script won't work. 
 
-IP_Address=
+HUE_Bridge=
 
-#########################################################################
-
-#IP second network device, write the IP after the equal sign. 
-
-#a second IP isn't mandatory. 
-
-IP2_Address=
 
 #########################################################################
 
