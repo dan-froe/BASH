@@ -21,10 +21,10 @@ delay_s="${2:-0}"
 
 
 #variables substitution if file exists
-if [[ -f "conf" ]] && [[ -z "$1" ]]; then
-   HYPERION=$(cat conf | grep HYPERION_IP | cut -d= -f2)
-   HUEIP=$(cat conf | grep HUE_Bridge | cut -d= -F2) 
-   delay_s=$(cat conf | grep TIME_Seconds | cut -d= -f2)
+if [[ -f "conf_auto" ]] && [[ -z "$1" ]]; then
+   HYPERION=$(cat conf_auto | grep HYPERION_IP | cut -d= -f2)
+   HUEIP=$(cat conf_auto | grep HUE_Bridge | cut -d= -f2) 
+   delay_s=$(cat conf_auto | grep TIME_Seconds | cut -d= -f2)
 
    HYPERION=${HYPERION:="localhost"}
    HUEIP=${HUEIP:=noIP}
