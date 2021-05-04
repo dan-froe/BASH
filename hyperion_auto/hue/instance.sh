@@ -94,11 +94,10 @@ instance_switch
 #hue doesn't start from time to time - fix######
 if [[ $HUEIP != "noIP" ]] && [[ $x < "5" ]] 
    ping -c 1 -w 1 "$HUEIP" 
-   [[ $? = "0" ]] && break
+   [[ $? = "0" ]] && instance_switch && sleep 1 && instance_LED_off && sleep 1 && break
    x=$(($x+1)) 
    sleep 3
 fi
-instance_switch && sleep 1 && instance_LED_off && sleep 1
 #end of fix#######
 #########################################################################
 
