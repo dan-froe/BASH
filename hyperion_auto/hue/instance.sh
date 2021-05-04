@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-#Version:1.5.2
+#Version:1.5.6
 #script for controlling instance 1/2
 #in relation to instance 0
 #instance 1/2 follows 0
