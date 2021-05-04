@@ -80,7 +80,7 @@ if [[ $HUEIP = "noIP" ]] && [[ $x < "5" ]]
    HUEIP=$(curl -s 'https://discovery.meethue.com/' | cut -d '"' -f 8)
    HUEIP=${HUEIP:=noIP}
    [[ $HUEIP != "noIP" ]] && break
-   x=$(($x+1)
+   x=$(($x+1)) 
    sleep 5
 fi
 instance_switch && sleep 1 && instance_LED_off && sleep 1
